@@ -20,3 +20,29 @@
   - Optimizing program performance
   - Understanding link-time error
   - Avoiding security holes
+
+## Processors Read and Interpret Instructions Stored in Memory
+
+### Hardware Organization of a System
+
+- Buses:
+  - Carry bytes of information back and forth between the components
+  - Designed to transfer fixed-size chunks of bytes known as words
+  - The number of bytes in a word (the word size) is a fundamental system parameter, for most machine today
+    - 4 bytes (32 bits)
+    - 8 bytes (64 bits)
+- I/O Devices:
+  - System's connection to the external world
+  - Connected to the I/O bus by either a controller or an adapter
+- Main Memory:
+  - Temporary storage device that holds both a program and the data it manipulates while the processor is executing the program
+  - Physically, it consists of a collection of dynamic random access memory (DRAM)
+  - Logically, memory is organized as a linear array of bytes, each with its own unique address (array index) starting at zero
+- Processor:
+  - Central Processing Unit (CPU) is the engine that executes instructions stored in main memory
+  - Operation of CPU:
+    - **Load**: Copy a byte or a word from main memory into a register, overwriting previous contents in register
+    - **Store**: Copy a byte or a word from register into a a location in main memory, overwriting previous contents in that location
+    - **Operate**: Copy the contents of two registers to the ALU, perform an arithmetic operation on the two words, store the result in a register, overwriting previous contents in register
+    - **Jump**: Extract a word from the instruction itself and copy that word into the program counter (PC), overwriting previous value of the PC
+
