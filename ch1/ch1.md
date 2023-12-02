@@ -13,3 +13,10 @@
 - **Compilation phase**: Translates the text C file to an assembly-language program
 - **Assembly phase**: Translates the assembly-language program into machine-language instructions
 - **Linking phase**: Merge different machine-language instructions file together for executings
+
+## It pays to Understand How Compilation Systems Work
+
+- Reason for programmer to understand compilation systems:
+  - Optimizing program performance
+  - Understanding link-time error
+  - Avoiding security holes
