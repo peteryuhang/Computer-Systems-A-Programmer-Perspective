@@ -45,4 +45,3 @@
     - **Store**: Copy a byte or a word from register into a a location in main memory, overwriting previous contents in that location
     - **Operate**: Copy the contents of two registers to the ALU, perform an arithmetic operation on the two words, store the result in a register, overwriting previous contents in register
     - **Jump**: Extract a word from the instruction itself and copy that word into the program counter (PC), overwriting previous value of the PC
-
