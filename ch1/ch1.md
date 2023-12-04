@@ -55,4 +55,8 @@
   - To deal with this, designer include smaller faster storage devices called **cache memories (caches)**
   - The idea behind caching is that a system can get the effect of both a very large memory and a very fast one by exploiting **locality**
 
+## Storage Devices From a Hierarchy
+
+- The main idea of a memory hierarchy is that storage at one level serves as a cache for storage at the next lower level
+
 ![](./memory_hierarchy.png)
