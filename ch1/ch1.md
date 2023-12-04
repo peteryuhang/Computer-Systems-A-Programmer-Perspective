@@ -71,3 +71,29 @@
   - **files** -> I/O devices
   - **virtual memory** -> memory + I/O devices
   - **processes** -> processor + memory + I/O devices
+
+### Processes
+
+- **Process** is the operating system's abstraction for a running program
+- Multi-core processors can execute several programs simultaneously
+- A single CPU can appear to execute multiple programs concurrently by having the processor switch among them
+  - The OS perform this interleaving with a mechanism known as **context switching**
+
+### Threads
+
+- Running in the context of the process and sharing the same code and global data
+
+### Virtual Memory
+
+- An abstraction that provides each process with the illusion that it has exclusive use of the main memory
+- Each process has the same uniform view of memory, which is known as its **virtual address space**
+
+![](./virtual_memory_space.png)
+
+### Files
+
+- A file is a sequence of bytes, nothing more and nothing less
+- Every I/O devices will be modeled as a file
+- All input and output in the system is performed by reading and writing files, using a small set of system calls known as **Unix I/O**
+- File is simple but very powerful, since it provide the uniform view of all the varied I/O devices
+  - eg. the same program run on different systems that use different disk technologies
