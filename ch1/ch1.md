@@ -45,3 +45,14 @@
     - **Store**: Copy a byte or a word from register into a a location in main memory, overwriting previous contents in that location
     - **Operate**: Copy the contents of two registers to the ALU, perform an arithmetic operation on the two words, store the result in a register, overwriting previous contents in register
     - **Jump**: Extract a word from the instruction itself and copy that word into the program counter (PC), overwriting previous value of the PC
+
+## Caches Matter
+
+- A system spends a lot of time moving information from one place to another
+  - eg. Disk -> Main Memory -> Processor
+- **Processor-memory gap**: Processor can read data from the register file almost 100 times faster than from memory
+  - As semiconductor technology progresses over the years, this gap continues to increase
+  - To deal with this, designer include smaller faster storage devices called **cache memories (caches)**
+  - The idea behind caching is that a system can get the effect of both a very large memory and a very fast one by exploiting **locality**
+
+![](./memory_hierarchy.png)
