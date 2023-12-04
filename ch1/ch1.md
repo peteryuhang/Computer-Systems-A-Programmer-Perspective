@@ -60,3 +60,14 @@
 - The main idea of a memory hierarchy is that storage at one level serves as a cache for storage at the next lower level
 
 ![](./memory_hierarchy.png)
+
+## The Operating System Manages the Hardwares
+
+- Operating System as a layer of software interposed between the application program and the hardware
+- Operating System's 2 main purposes:
+  - protect hardware from misuse by runaway applications
+  - provide applications with simple and uniform mechanisms for manipulating lower-level devices
+- Operating System achieve the 2 goals via **fundamental abstractions**:
+  - **files** -> I/O devices
+  - **virtual memory** -> memory + I/O devices
+  - **processes** -> processor + memory + I/O devices
