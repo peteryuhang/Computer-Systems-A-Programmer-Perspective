@@ -97,3 +97,7 @@
 - All input and output in the system is performed by reading and writing files, using a small set of system calls known as **Unix I/O**
 - File is simple but very powerful, since it provide the uniform view of all the varied I/O devices
   - eg. the same program run on different systems that use different disk technologies
+
+## Systems Communicate with Other Systems Using Networks
+
+- From the point of view of an individual system, the network can be viewed as just another I/O device
