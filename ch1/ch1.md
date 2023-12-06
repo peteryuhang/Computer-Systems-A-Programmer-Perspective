@@ -134,3 +134,7 @@ $$ S = {1 \over (1 - a)}  $$
 
 - Allows a single instruction to cause multiple operations to be performed in parallel
 - SIMD instructions are provided mostly to speed up application that process image, sound, and video data
+
+### The importance of Abstractions in Computer Systems
+
+- A major theme in computer systems is to provide abstract representations at different levels to hide the complexity of the actual implementationss
