@@ -117,3 +117,20 @@ The speedup $ S = T_{old}/T_{new} = {1 \over (1-a) + a/k} $
 - If we set the k to `∞`, which means this part of system takes a negligible amount of time, we can get
 
 $$ S = {1 \over (1 - a)}  $$
+
+### Concurrency and Parallelism
+
+#### Thread-Level Concurrency
+
+- **Hyperthreading**, sometimes called simultaneous multi-threading, is a technique that allows a single CPU to execute multiple flows of control
+- Hyperthreading and multi-core greatly increase the availability of the thread-level parallelism
+
+#### Instruction-Level Parallelism
+
+- Modern processors can execute multiple instructions at one time
+- The is achieved by pipelining, where the actions required to execute an instruction are partitioned into different steps and the processor hardware is organized as a series of stages, each performing one of these steps. These stages can operate in parallel
+
+#### Single-Instruction, Multiple-Data (SIMD) Parallelism
+
+- Allows a single instruction to cause multiple operations to be performed in parallel
+- SIMD instructions are provided mostly to speed up application that process image, sound, and video data
