@@ -101,3 +101,19 @@
 ## Systems Communicate with Other Systems Using Networks
 
 - From the point of view of an individual system, the network can be viewed as just another I/O device
+
+## Important Themes
+
+### Amdahl's Law
+
+- When we speed up one part of a system, the effect on overall system performance depends on both how significant this part was and how much it sped up
+
+$$ T_{new} = (1 - a)T_{old} + (aT_{old})/k = T_{old}[(1 - a) + a/k]$$
+
+The speedup $ S = T_{old}/T_{new} = {1 \over (1-a) + a/k} $
+
+- `a` is fraction of the part occupy the overall time, `k` is a factor represent improvement of speed
+
+- If we set the k to `∞`, which means this part of system takes a negligible amount of time, we can get
+
+$$ S = {1 \over (1 - a)}  $$
