@@ -8,3 +8,5 @@
   - The hexadecimal digit 0 represents 4 binary zeros, so for $ n $ written in the form `i + 4j`, where `0 <= i <= 3`, we can write x with a leading hex digit of 1(i=0), 2(i=1), 4(i=2), or 8(i=3) followed by j hexadecimal 0s
 - To convert a hexadecimal number to decimal, we can multiply each of the hexadecimal digits by the appropriate power of 16
 - To convert a decimal to hexadecimal, we can repeatedly divide x by 16, the remainder r will be formed into hexadecimal
+
+### Data Sizes
