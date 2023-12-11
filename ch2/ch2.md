@@ -18,3 +18,5 @@
   - `int32_t` has exactly 4 bytes, `int64_t` has exactly 8 bytes
 - A pointer use full word size of the program
 - One aspect of portability is to make the program insensitive to the exact sizes of the different data types
+
+### Addressing and Byte Ordering
