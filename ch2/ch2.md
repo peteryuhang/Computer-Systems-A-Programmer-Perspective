@@ -30,3 +30,8 @@
   - Byte ordering becomes visible when programs are written that circumvent the normal type system (eg. cast or union in C)
 - The compiler that the program should consider the pointer to be to a sequence of bytes rather than to an object of the original data type
 - Using `sizeof` rather than fixed value is one step toward writing code that is **portable** across different machine types
+
+### Representing Strings
+
+- The strings representing is independent of the byte ordering and word size conventions
+  - As a consequence, text data are more platform independent than binary data
