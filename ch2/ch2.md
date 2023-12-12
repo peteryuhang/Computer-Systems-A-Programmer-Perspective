@@ -20,3 +20,6 @@
 - One aspect of portability is to make the program insensitive to the exact sizes of the different data types
 
 ### Addressing and Byte Ordering
+
+- **Little endian**: The least significant byte comes first
+- **Big endian**: The most significant byte comes first
