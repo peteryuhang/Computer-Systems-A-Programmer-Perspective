@@ -35,3 +35,15 @@
 
 - The strings representing is independent of the byte ordering and word size conventions
   - As a consequence, text data are more platform independent than binary data
+
+### Representing Code
+
+- Different machine types use different and incompatible instructions and encodings
+- Binary code is seldom portable across different combinations of machine and operating system
+
+### Introduction to Boolean Algebra
+
+- `~`, `&`, `|`, `^`
+- **Boolean algebra**: Boolean operations operating on bit vectors of length `w`
+- `a & (b | c) = (a & b) | (a & c)`
+- `a | (b & c) = (a | b) & (a | c)`
