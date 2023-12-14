@@ -47,3 +47,17 @@
 - **Boolean algebra**: Boolean operations operating on bit vectors of length `w`
 - `a & (b | c) = (a & b) | (a & c)`
 - `a | (b & c) = (a | b) & (a | c)`
+
+### Bit-Level Operations in C
+
+- property that `a ^ a = 0`
+
+```c
+void inplace_swap(int *x, int *y) {
+  *y = *x ^ *y; // *x, *x^*y
+  *x = *x ^ *y; // *x^*x^*y = *y, *x^*y
+  *y = *x ^ *y; // *y, *x^*y^*y = *x
+}
+```
+
+- `x ^ y = (x & ~y) | (~x & y)`
