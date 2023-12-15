@@ -76,3 +76,5 @@ void inplace_swap(int *x, int *y) {
 - Logical right shift fills the left end with k zeros
 - Arithmetic right shift fills the left end with k repetitions of the most significant bit
 - Almost all compiler/machine combinations use arithmetic right shifts for signed data, logic right shift for unsigned data
+- Arithmetic operator has higher precedence than shift operator
+  - `1 << 2 + 3 << 4` is acutally `1 << (2 + 3) << 4` in the end
