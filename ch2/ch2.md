@@ -61,3 +61,11 @@ void inplace_swap(int *x, int *y) {
 ```
 
 - `x ^ y = (x & ~y) | (~x & y)`
+
+### Logical Operations in C
+
+- `!`, `&&`, `||`
+- The logical operations treat any nonzero argument as representing TRUE and argument 0 as representing FALSE
+- The logical operators do not evaluate their second argument if the result of the expression can be determined by evaluating the first argument
+  - `a && 5/a` will never case a division by zero
+  - `p && *p++` will never case the dereferencing of a null pointers
