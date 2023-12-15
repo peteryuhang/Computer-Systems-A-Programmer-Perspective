@@ -69,3 +69,10 @@ void inplace_swap(int *x, int *y) {
 - The logical operators do not evaluate their second argument if the result of the expression can be determined by evaluating the first argument
   - `a && 5/a` will never case a division by zero
   - `p && *p++` will never case the dereferencing of a null pointers
+
+### Shift Operations in C
+
+- Shift operations associate from left to right, so `x << j << k` is equivalent to `(x << j) << k`
+- Logical right shift fills the left end with k zeros
+- Arithmetic right shift fills the left end with k repetitions of the most significant bit
+- Almost all compiler/machine combinations use arithmetic right shifts for signed data, logic right shift for unsigned data
