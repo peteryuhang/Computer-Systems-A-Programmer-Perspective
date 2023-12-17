@@ -78,3 +78,10 @@ void inplace_swap(int *x, int *y) {
 - Almost all compiler/machine combinations use arithmetic right shifts for signed data, logic right shift for unsigned data
 - Arithmetic operator has higher precedence than shift operator
   - `1 << 2 + 3 << 4` is acutally `1 << (2 + 3) << 4` in the end
+
+## Integer Representations
+
+### Integral Data Types
+
+- Both C and C++ support signed(the default) and unsigned numbers. Java supports only signed numbers
+- In C, the only machine-dependent range indicated is for size designator **long** (4 bytes in 32 bits machines, 8 bytes in 64 bits machines)
