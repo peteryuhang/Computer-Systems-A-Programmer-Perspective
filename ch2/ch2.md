@@ -85,3 +85,13 @@ void inplace_swap(int *x, int *y) {
 
 - Both C and C++ support signed(the default) and unsigned numbers. Java supports only signed numbers
 - In C, the only machine-dependent range indicated is for size designator **long** (4 bytes in 32 bits machines, 8 bytes in 64 bits machines)
+
+### Unsigned Encodings
+
+- Definition of unsigned encoding for vector $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $
+
+$$ B2U_w(\vec{x}) = \sum_{i=0}^{w-1}x_i2^i $$
+
+- Function $ B2U_w $ is a **bijection**, which refers to a function f that goes two ways
+  - $ B2U_w $ maps each bit vector of length `w` to a unique number between 0 and $ 2^w - 1 $
+  - $ U2B_w $ maps each number between 0 and $ 2^w - 1 $ to a unique pattern of `w` bits
