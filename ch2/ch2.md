@@ -95,3 +95,15 @@ $$ B2U_w(\vec{x}) = \sum_{i=0}^{w-1}x_i2^i $$
 - Function $ B2U_w $ is a **bijection**, which refers to a function f that goes two ways
   - $ B2U_w $ maps each bit vector of length `w` to a unique number between 0 and $ 2^w - 1 $
   - $ U2B_w $ maps each number between 0 and $ 2^w - 1 $ to a unique pattern of `w` bits
+
+### Two's-Complement Encodings
+
+- "Two's complement" arises from the fact that for nonnegative x we compute a w-bit representation of `-x` as $ 2^w - x $
+- Definition of two's-complement encoding for vector $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $
+
+$$ B2T_w(\vec{x}) = -x_{w-1}2^{w-1} + \sum_{i=0}^{w-2}x_i2^i $$
+
+- Similar as $ B2U_w $, $ B2T_w $ is also bijection
+- The least representable value is given by vector `[1,0,...,0]`, which is $ -2^{w-1} $
+- The greatest value is given by bit vector `[0,1,...1]`, which is $ 2^{w-1} - 1 $
+- Since 0 is nonnegative, this means that it can represent one less positive number than negative
