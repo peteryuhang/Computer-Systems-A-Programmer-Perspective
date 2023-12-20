@@ -107,3 +107,7 @@ $$ B2T_w(\vec{x}) = -x_{w-1}2^{w-1} + \sum_{i=0}^{w-2}x_i2^i $$
 - The least representable value is given by vector `[1,0,...,0]`, which is $ -2^{w-1} $
 - The greatest value is given by bit vector `[0,1,...1]`, which is $ 2^{w-1} - 1 $
 - Since 0 is nonnegative, this means that it can represent one less positive number than negative
+
+### Conversions between Signed and Unsigned
+
+- The effect of casting is to keep the bit values identical but change how these bits are interpreted
