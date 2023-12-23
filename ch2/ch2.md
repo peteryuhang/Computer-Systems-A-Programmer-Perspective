@@ -88,7 +88,7 @@ void inplace_swap(int *x, int *y) {
 
 ### Unsigned Encodings
 
-- Definition of unsigned encoding for vector $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $
+- Definition of unsigned encoding for vector $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $:
 
 $$ B2U_w(\vec{x}) = \sum_{i=0}^{w-1}x_i2^i $$
 
@@ -99,7 +99,7 @@ $$ B2U_w(\vec{x}) = \sum_{i=0}^{w-1}x_i2^i $$
 ### Two's-Complement Encodings
 
 - "Two's complement" arises from the fact that for nonnegative x we compute a w-bit representation of `-x` as $ 2^w - x $
-- Definition of two's-complement encoding for vector $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $
+- Definition of two's-complement encoding for vector $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $:
 
 $$ B2T_w(\vec{x}) = -x_{w-1}2^{w-1} + \sum_{i=0}^{w-2}x_i2^i $$
 
