@@ -111,3 +111,12 @@ $$ B2T_w(\vec{x}) = -x_{w-1}2^{w-1} + \sum_{i=0}^{w-2}x_i2^i $$
 ### Conversions between Signed and Unsigned
 
 - The effect of casting is to keep the bit values identical but change how these bits are interpreted
+- Convertion from two's complement to unsigned (this formular can be derived by previous 2's and unsiged formular)
+  - When `x < 0`, $ T2U_w(x) = x + 2^w $
+  - When `x >= 0`, $ T2U_w(x) = x $
+- From other direction, we can get:
+  - When `TMax >= u`, $ U2T_w(u) = u $
+  - When `TMax < u`, $ U2T_w(u) = u - 2^w $
+- In conclusion:
+  - For `0 <= x <= TMax`, we have $ T2U_w(x) = x $ and $ U2T_w(x) = x $
+  - For value outside the range, the conversion is either add or subtract `2^w`
