@@ -143,3 +143,11 @@ show_bytes((byte_pointer) &uy, sizeof(unsigned));   // 0xFFFFCFC7
   - $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $ -> $ \vec{x}' = [x_{w-1},...,x_{w-1},x_{w-1},x_{w-2},...,x_0] $
   - This can be proved by induction
 
+### Truncating Numbers
+
+- Truncation of an unsigned number
+  - $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $ and let x' be the truncated result $ \vec{x}' = [x_{k-1},x_{k-2},...,x_0] $
+  - then $ x' = x \ mod \ 2^k $, based on the property that $ 2^i \ mod \ 2^k = 0 $ for any $ i >= k $
+- Truncation of a two's complement number is similar, except that it then converts the most significant bit into a sign bit
+  - $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $ and let x' be the truncated result $ \vec{x}' = [x_{k-1},x_{k-2},...,x_0] $
+  - Let $ x = B2T_w(\vec{x}) $ and $ x' = B2T_k(\vec{x}') $ then $ x' = U2T_k(x \ mod \ 2^k) $, based on the property that $ 2^i \ mod \ 2^k = 0 $ for any $ i >= k $
