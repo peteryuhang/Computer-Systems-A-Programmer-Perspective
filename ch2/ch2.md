@@ -151,3 +151,27 @@ show_bytes((byte_pointer) &uy, sizeof(unsigned));   // 0xFFFFCFC7
 - Truncation of a two's complement number is similar, except that it then converts the most significant bit into a sign bit
   - $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $ and let x' be the truncated result $ \vec{x}' = [x_{k-1},x_{k-2},...,x_0] $
   - Let $ x = B2T_w(\vec{x}) $ and $ x' = B2T_k(\vec{x}') $ then $ x' = U2T_k(x \ mod \ 2^k) $, based on the property that $ 2^i \ mod \ 2^k = 0 $ for any $ i >= k $
+
+### Advice on Signed versus Unsigned
+
+- Example of some buggy code (main reason due to use unsigned in calculation):
+
+```c
+// Buggy code
+float sum_elements(float a[], unsigned length) {
+  int i;
+  float result = 0;
+  for (i = 0; i <= length - 1; i++) // (unsigned)0 - 1 = UMax
+    result += a[i];
+  return result;
+}
+```
+
+```c
+// Buggy code
+int strlonger(char* a, char* b) {
+  return strlen(a) - strlen(b) > 0;
+}
+```
+
+- Unsigned values are very useful when we want to think of words as just collections of bits with no numeric interpretation
