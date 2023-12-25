@@ -120,3 +120,26 @@ $$ B2T_w(\vec{x}) = -x_{w-1}2^{w-1} + \sum_{i=0}^{w-2}x_i2^i $$
 - In conclusion:
   - For `0 <= x <= TMax`, we have $ T2U_w(x) = x $ and $ U2T_w(x) = x $
   - For value outside the range, the conversion is either add or subtract `2^w`
+
+### Signed versus Unsigned in C
+
+- Signed and unsiged conversions can happen explicitly or implicitly
+- When an operation is performed where one operand is signed and the other is unsigned, C implicitly **casts the signed argument to unsigned and performs the operations assuming the numbers are nonnegative**
+  - eg. `-1 < 0U // -> false`
+- When converting fomr short to unsigned, the program first changes the size and then the type
+```c
+short sx = -12345;
+unsigned uy = sx;  // -> (unsigned)(int) sx
+
+printf("uy = %u:\t", uy);    // 4294954951
+show_bytes((byte_pointer) &uy, sizeof(unsigned));   // 0xFFFFCFC7
+```
+
+### Expanding the Bit Representation of a Number
+
+- Convert unsigned number to a large data type -> **zero extension**
+  - $ \vec{u} = [u_{w-1},u_{w-2},...,u_0] $ -> $ \vec{u}' = [0,...,0,u_{w-1},u_{w-2},...,u_0] $
+- Convert two's complement number to a large data type -> **sign extension**
+  - $ \vec{x} = [x_{w-1},x_{w-2},...,x_0] $ -> $ \vec{x}' = [x_{w-1},...,x_{w-1},x_{w-1},x_{w-2},...,x_0] $
+  - This can be proved by induction
+
