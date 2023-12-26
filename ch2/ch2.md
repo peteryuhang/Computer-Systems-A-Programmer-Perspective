@@ -175,3 +175,19 @@ int strlonger(char* a, char* b) {
 ```
 
 - Unsigned values are very useful when we want to think of words as just collections of bits with no numeric interpretation
+
+## Integer Arithmetic
+
+### Unsigned Addition
+
+- For unsigned addition, that $ 0 <= x, y < 2^w $
+  - (Normal) If $ x + y < 2^w $, then $ x + y = x + y $
+  - (Overflow) If $ 2^w <= x + y < 2^{w+1} $, then $ x + y = x + y - 2^w $
+- Principle for **detecting overflow of unsigned addition**:
+  - Let $ s = x + y $, then the computation overflowed if and only if $ s < x $ (or equivalently $ s < y $)
+    - If $ 2^w <= x + y < 2^{w+1} $, then $ s = x + y = x + (y - 2^w) < x (or y) $
+- **Unsigned negation**
+  - Definition: For every value x, there must be some value -x such that -x + x = 0 (additive inverse operation)
+  - For any number x such that $ 0 <= x < 2^w $, its w-bit unsigned negation -x is given below:
+    - If $ x = 0 $, then $ -x = x $
+    - If $ x > 0 $, then $ -x = 2^w - x $, because $ -x + x = (2^w - x + x) \ mod \ 2^w = 0 $
