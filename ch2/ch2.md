@@ -191,3 +191,16 @@ int strlonger(char* a, char* b) {
   - For any number x such that $ 0 <= x < 2^w $, its w-bit unsigned negation -x is given below:
     - If $ x = 0 $, then $ -x = x $
     - If $ x > 0 $, then $ -x = 2^w - x $, because $ -x + x = (2^w - x + x) \ mod \ 2^w = 0 $
+
+### Two's-Complement Addition
+
+- For integer values x and y in the range $ -2^{w-1} <= x, y <= 2^{w-1} - 1 $
+  - $ x + y = x + y - 2^w $ when $ 2^{w-1} <= x + y $ -> Positive overflow
+  - $ x + y = x + y $ when $ -2^{w-1} <= x + y < 2^{w-1} $ -> Normal
+  - $ x + y = x + y + 2^w $ when $ x + y < -2^{w-1} $ -> Negative overflow
+- The formula above can be approved by $ x + y = U2T_w(T2U_w(x) + T2U_w(y)) = U2T_w[(x_{w-1}2^w + x + y_{w-1}2^w + y) \ mod \ 2^w] = U2T_w[(x + y) \ mod \ 2^w] $
+- Principle for **detecting overflow in two's-complement addition**:
+  - Let $ s = x + y $
+    - The computation has positive overflow if and only if $ x > 0 $ and $ y > 0 $ but $ s <= 0 $
+    - The computation has negative overflow if and only if $ x < 0 $ and $ y < 0 $ but $ s >= 0 $
+- `TMin` should be included as one of the cases in any test procedure for a function
