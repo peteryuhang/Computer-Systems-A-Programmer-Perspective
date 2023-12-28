@@ -204,3 +204,5 @@ int strlonger(char* a, char* b) {
     - The computation has positive overflow if and only if $ x > 0 $ and $ y > 0 $ but $ s <= 0 $
     - The computation has negative overflow if and only if $ x < 0 $ and $ y < 0 $ but $ s >= 0 $
 - `TMin` should be included as one of the cases in any test procedure for a function
+
+### Two's Complement Negation
