@@ -207,3 +207,11 @@ int strlonger(char* a, char* b) {
 
 ### Two's Complement Negation
 
+- **Principle**:
+  - For x in the range $ TMin_w <= x <= TMax_w $, its two's complement negation -x is given:
+    - If $ x = TMin_w $, then $ -x = TMin_w $ 
+    - If $ x > TMin_w $, then $ -x = -x $ 
+- One technique for performing two's-complement negation at the bit level is to complement and then increment the result, which is `-x = ~x + 1`
+- Second way for performing two's-complement negation is:
+  - Let k be the position of the **rightmost 1**, so the bit vector is $ [x_{w-1},x_{w-2},...,x_{k+1},1,0,...,0] $
+  - Then the negation is $ [\sim x_{w-1},\sim x_{w-2},...,\sim x_{k+1},1,0,...,0] $
