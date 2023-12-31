@@ -215,3 +215,8 @@ int strlonger(char* a, char* b) {
 - Second way for performing two's-complement negation is:
   - Let k be the position of the **rightmost 1**, so the bit vector is $ [x_{w-1},x_{w-2},...,x_{k+1},1,0,...,0] $
   - Then the negation is $ [\sim x_{w-1},\sim x_{w-2},...,\sim x_{k+1},1,0,...,0] $
+
+### Unsigned Multiplication
+
+- **Principle**:
+  - For x and y such that $ 0 <= x, y <= UMax_w $, have $ x * y = (x * y) \ mod \ 2^w $
