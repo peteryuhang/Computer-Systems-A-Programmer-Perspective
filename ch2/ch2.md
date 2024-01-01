@@ -250,3 +250,28 @@ $$ (x<<(n+1)) - (x<<m) $$
   - $ (x + (1 << k) - 1) >> k $ yields the value $ \lceil x/2^k \rceil $
   - In C, the expression `(x<0 ? (x+(1<<k)-1) : x) >> k ` will compute the value $ x/2^k $
 - Unlike multiplication, we cannot express division by arbitrary constants K in terms of division by powers of 2
+
+### Final Thoughts on Integer Arithmetic
+
+- Consider the program below:
+
+```c
+int x = foo();   // Arbitrary value
+int y = bar();   // Arbitrary value
+
+unsigned ux = x;
+unsigned uy = y;
+```
+  - The expressions below are always True
+  ```c
+  (x&7) !=7 || (x<<29 < 0)
+  x < 0 || -x <= 0
+  x+y == uy+ux
+  x*~y + uy*ux == -x
+  ```
+  - The expressions below have false case(s):
+  ```c
+  (x>0) || (x-1<0)             // x = TMin
+  (x*x) >= 0                   // x = 0xFFFF
+  x > 0 || -x >= 0             // x = TMin
+  ```
