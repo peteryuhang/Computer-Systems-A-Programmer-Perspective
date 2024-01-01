@@ -228,3 +228,15 @@ int strlonger(char* a, char* b) {
 - The principle is based on that the **bit-level representation of product operation is identical for both unsigned and two's-complement multiplication**
 
 ### Multiplying by Constants
+
+- For both unsigned and signed integer, $ x << k == x2^k $
+- When the constant's bit level representation is the form `[0,...0,1,...1,0,...0]`, we have the formula below:
+
+$$ (x<<n) + (x<<n-1) + ... + (x<<m) $$
+
+$$ or $$  
+
+$$ (x<<(n+1)) - (x<<m) $$
+
+- The formula above can be used for compiler to do the optimization by convert multiplying to shift and add/sub, which need less machine level instructions compare with multiplying
+
