@@ -240,3 +240,13 @@ $$ (x<<(n+1)) - (x<<m) $$
 
 - The formula above can be used for compiler to do the optimization by convert multiplying to shift and add/sub, which need less machine level instructions compare with multiplying
 
+### Dividing by Powers of 2
+
+- The 2 different right shift————logical and arithmetic————serve the dividing purpose for unsigned and two's-complement numbers, respectively
+- **Principle for unsigned division by a power of 2:**
+  - $ x >> k $ yields the value $ \lfloor x/2^k \rfloor $
+- **Principle for two's-complement division by a power of 2:**
+  - $ x >> k $ yields the value $ \lfloor x/2^k \rfloor $
+  - $ (x + (1 << k) - 1) >> k $ yields the value $ \lceil x/2^k \rceil $
+  - In C, the expression `(x<0 ? (x+(1<<k)-1) : x) >> k ` will compute the value $ x/2^k $
+- Unlike multiplication, we cannot express division by arbitrary constants K in terms of division by powers of 2
