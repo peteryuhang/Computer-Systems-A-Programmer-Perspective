@@ -226,3 +226,5 @@ int strlonger(char* a, char* b) {
 - **Principle**:
   - For x and y such that $ TMin_w <= x, y <= TMax_w $, have $ x * y = U2T_w((x * y) \ mod \ 2^w) $
 - The principle is based on that the **bit-level representation of product operation is identical for both unsigned and two's-complement multiplication**
+
+### Multiplying by Constants
