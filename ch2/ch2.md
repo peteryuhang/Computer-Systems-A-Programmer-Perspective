@@ -275,3 +275,16 @@ unsigned uy = y;
   (x*x) >= 0                   // x = 0xFFFF
   x > 0 || -x >= 0             // x = TMin
   ```
+
+## Floating Point
+
+### Fractional Binary Numbers
+
+- Consider notation of the form (similar as decimal):
+$$ b_mb_{m-1}...b_1b_0.b_{-1}b_{-2}...b_{-n+1}b_{-n} $$
+
+- This notation represents a number b defined as:
+
+$$ b = \sum_{i=-n}^{m}2^i * b_i $$
+
+- Fractional binary notation can only represent numbers that can be written $ x * 2^y $, other value can only be approximated
