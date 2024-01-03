@@ -288,3 +288,25 @@ $$ b_mb_{m-1}...b_1b_0.b_{-1}b_{-2}...b_{-n+1}b_{-n} $$
 $$ b = \sum_{i=-n}^{m}2^i * b_i $$
 
 - Fractional binary notation can only represent numbers that can be written $ x * 2^y $, other value can only be approximated
+
+### IEEE Floating-Point Representation
+
+- IEEE floating-point standard represents a number in a form $ V = (-1)^s * M * 2^E $
+  - The sign s determines whether the number is positive or negative
+  - M is a fractional binary number that ranges either between `[1,2)` or between `[0,1)`
+  - E weights the value by a (possibly negative) power of 2
+
+![](./IEEE_floating_point_representation.png)
+
+- **Case 1: Normalized Values**
+  - $ E = e - Bias $, where the Bias is a fix value $ 2^{k-1} - 1 $ (127 for float, 1023 for double)
+  - M is the $ 1.f_{n-1}...f_1f_0 $
+- **Case 2: Denormalized Values**
+  - $ E = e - Bias $, but the exponential field is all zeros
+  - M is the $ 0.f_{n-1}...f_1f_0 $
+  - The first purpose is to represent 0 (+0.0 and -0.0 have different s)
+  - The second purpose is to represent numbers that are very close to 0.0
+- **Case 3: Special Values**
+  - The exponential field is all zeros
+  - When the fraction field is all zeros, the resulting values represent **infinity**, negative or positive depend on s, **indicate overflow**
+  - When the fraction field is all nonzeros, the resulting value is called a **NaN**, short for "not a number", representing thing can't given as a real number
