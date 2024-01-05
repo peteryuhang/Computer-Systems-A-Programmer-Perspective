@@ -302,7 +302,7 @@ $$ b = \sum_{i=-n}^{m}2^i * b_i $$
   - $ E = e - Bias $, where the Bias is a fix value $ 2^{k-1} - 1 $ (127 for float, 1023 for double)
   - M is the $ 1.f_{n-1}...f_1f_0 $
 - **Case 2: Denormalized Values**
-  - $ E = e - Bias $, but the exponential field is all zeros
+  - $ E = 1 - Bias $, but the exponential field is all zeros
   - M is the $ 0.f_{n-1}...f_1f_0 $
   - The first purpose is to represent 0 (+0.0 and -0.0 have different s)
   - The second purpose is to represent numbers that are very close to 0.0
