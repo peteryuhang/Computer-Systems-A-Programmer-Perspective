@@ -310,3 +310,4 @@ $$ b = \sum_{i=-n}^{m}2^i * b_i $$
   - The exponential field is all zeros
   - When the fraction field is all zeros, the resulting values represent **infinity**, negative or positive depend on s, **indicate overflow**
   - When the fraction field is all nonzeros, the resulting value is called a **NaN**, short for "not a number", representing thing can't given as a real number
+
