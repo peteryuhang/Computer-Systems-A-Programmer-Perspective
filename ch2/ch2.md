@@ -335,3 +335,13 @@ $$ b = \sum_{i=-n}^{m}2^i * b_i $$
 ![](./IEEE_floating_point_round_modes.png)
 
 - We can applied these mode to binary fractional numbers. Consider least significant bit value 0 to be even and 1 to be odd
+
+### Floating-Point Operations
+
+- Operation ƒ yield `Round(x ƒ y)`
+- The lack of associativity in floating-point addition is the most important group property that is lacking, eg
+  - `(3.14+1e10)-1e10` evaluates to `0.0`, but `3.14+(1e10-1e10)` evaluates to correct answer `3.14`
+  - `(1e20*1e20)*1e-20` evaluates to ∞, but `1e20*(1e20*1e-20)` evaluates to correct answer `1e20`
+- Floating-point multiplication does not distribute over addition, eg
+  - `1e20*(1e20-1e20)` evaluate to `0.0` but `1e20*1e20-1e20*1e20` evaluate to `NaN`
+- These operation properties are serious concern for compiler writer also scientific programmers
