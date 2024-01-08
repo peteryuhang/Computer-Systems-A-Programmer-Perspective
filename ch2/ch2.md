@@ -356,3 +356,4 @@ $$ b = \sum_{i=-n}^{m}2^i * b_i $$
     - The C standards do not specify a fixed result for this case (Intel-compatible) microprocessors designate the bit pattern `[10...00]` or $ TMin_w $ as an **integer indefinite** value
     - Any conversion from floating point to integer that cannot assign a reasonable integer approximation yields this value
       - eg. `(int) 1e10` yields `-214836848`
+    - Converting large floating-point numbers to integers is a common source of programming errors
