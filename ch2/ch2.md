@@ -312,3 +312,16 @@ $$ b = \sum_{i=-n}^{m}2^i * b_i $$
   - When the fraction field is all nonzeros, the resulting value is called a **NaN**, short for "not a number", representing thing can't given as a real number
 
 ### Example Numbers
+
+- The IEEE format was designed so that floating-point numbers could be sorted using an integer sorting routine
+- Some general properties of a floating-point representation with a `k` bit exponent and an `n` bit fraction:
+  - The value `+0.0` always has a bit representation of all zeros
+  - The smallest positive denormalized value has a bit representation consisting of a 1 in the least significant bit position and otherwise all zeros
+    - $ M = f = 2^{-n} $, and $ E = -2^{k-1} + 2 $, so $ V = 2^{-n-2^{k-1}+2} $
+  - The largest positive denormalized value has exponent field all zeros and a fraction field of all ones
+    - $ M = f = 1 - 2^{-n} $, and $ E = -2^{k-1} + 2 $, so $ V = (1 - 2^{-n}) * 2^{-2^{k-1}+2} $
+  - The smallest positive normalized value has a bit representation with a 1 in the least significant bit of the exponent field and otherwise all zero
+    - $ M = 1 $, and $ E = -2^{k-1} + 2 $, so $ V = 2^{-2^{k-1}+2} $
+  - The value `1.0` has a bit representation with all but the most significant bit of the exponent field equal to 1 and all other bits equals to 0
+  - The largest normalized value has a bit representation with the least significant bit of the exponent equal to 0, and all other bits equal to 1
+    - $ M = 2 - 2^{-n} $, and $ E = 2^{k-1} - 1 $, so $ V = (2 - 2^{-n}) * 2^{2^{k-1}-1} = (1 - 2^{-n-1}) * 2^{2^{k-1}} $
