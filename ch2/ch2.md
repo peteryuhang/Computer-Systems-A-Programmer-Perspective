@@ -345,3 +345,14 @@ $$ b = \sum_{i=-n}^{m}2^i * b_i $$
 - Floating-point multiplication does not distribute over addition, eg
   - `1e20*(1e20-1e20)` evaluate to `0.0` but `1e20*1e20-1e20*1e20` evaluate to `NaN`
 - These operation properties are serious concern for compiler writer also scientific programmers
+
+### Floating Point in C
+
+- When casting values between `int`, `float` and `double`:
+  - From `int` to `float`, the number can not overflow, but it may be rounded
+  - From `int` or `float` to `double`, the exact numeric value can be preserved because `double` has both greater range as well as greater precision
+  - From `double` to `float` the value can overflow. It also may be rounded
+  - From `double` or `float` to `int`, the value will be rounded to zero. Furthermore, the value may be overflow
+    - The C standards do not specify a fixed result for this case (Intel-compatible) microprocessors designate the bit pattern `[10...00]` or $ TMin_w $ as an **integer indefinite** value
+    - Any conversion from floating point to integer that cannot assign a reasonable integer approximation yields this value
+      - eg. `(int) 1e10` yields `-214836848`
