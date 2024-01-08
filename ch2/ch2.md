@@ -327,3 +327,11 @@ $$ b = \sum_{i=-n}^{m}2^i * b_i $$
   - The value `1.0` has a bit representation with all but the most significant bit of the exponent field equal to 1 and all other bits equals to 0
   - The largest normalized value has a bit representation with the least significant bit of the exponent equal to 0, and all other bits equal to 1
     - $ M = 2 - 2^{-n} $, and $ E = 2^{k-1} - 1 $, so $ V = (2 - 2^{-n}) * 2^{2^{k-1}-1} = (1 - 2^{-n-1}) * 2^{2^{k-1}} $
+
+### Rounding
+
+- The IEEE floating-point format defines four different **rounding modes**, the default method finds a closest match (round-to-even)
+
+![](./IEEE_floating_point_round_modes.png)
+
+- We can applied these mode to binary fractional numbers. Consider least significant bit value 0 to be even and 1 to be odd
