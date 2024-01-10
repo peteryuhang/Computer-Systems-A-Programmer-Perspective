@@ -281,6 +281,7 @@ unsigned uy = y;
 ### Fractional Binary Numbers
 
 - Consider notation of the form (similar as decimal):
+
 $$ b_mb_{m-1}...b_1b_0.b_{-1}b_{-2}...b_{-n+1}b_{-n} $$
 
 - This notation represents a number b defined as:
