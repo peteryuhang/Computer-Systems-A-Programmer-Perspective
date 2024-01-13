@@ -28,3 +28,38 @@ $> gcc -Og -o p p1.c p2.c
   - A set of vector registers can each hold one or more integer or floating-point values
 - Machine code views the memory as simply a large byte-addressable array (virtual addresses)
   - Operation system manage virtual addresses and transform them to physical addresses
+
+#### Code Examples
+
+```c
+// mstore.c
+long mult2(long, long);
+
+void multstore(long x, long y, long *dest) {
+  long t = mult2(x, y);
+  *dest = t;
+}
+```
+
+- After execute `$> gcc -Og -S mstore.c` we can get assembly code file
+- After execute `$> gcc -Og -c mstore.c` we can get object code file
+- After execute `$> objdump -d mstore.o`, we can get assembly code from corresponding byte:
+
+```
+mstore.o:       file format mach-o 64-bit x86-64
+
+Disassembly of section __TEXT,__text:
+
+0000000000000000 <_multstore>:
+       0: 55                            pushq   %rbp
+       1: 48 89 e5                      movq    %rsp, %rbp
+       4: 53                            pushq   %rbx
+       5: 50                            pushq   %rax
+       6: 48 89 d3                      movq    %rdx, %rbx
+       9: e8 00 00 00 00                callq   0xe <_multstore+0xe>
+       e: 48 89 03                      movq    %rax, (%rbx)
+      11: 48 83 c4 08                   addq    $8, %rsp
+      15: 5b                            popq    %rbx
+      16: 5d                            popq    %rbp
+      17: c3                            retq
+```
