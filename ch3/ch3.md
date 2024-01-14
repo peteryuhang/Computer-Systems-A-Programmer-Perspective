@@ -82,3 +82,21 @@ Disassembly of section __TEXT,__text:
 - When instructions have registers as destinations, 2 conventions arise for what happens to the remaining bytes in the register for instructions that generate less than 8 bytes:
   1. Those that generate 1-byte or 2-byte quantities leave the remaining bytes unchanged
   2. Those that generate 4-byte quantities set the upper 4 bytes of the register to zero (adopted as part of the expansion from IA32 to x86-64)
+
+#### Operand Specifiers
+
+- There are many different addressing modes allowing different forms of memory references, below is the most general form:
+
+$$ Imm(r_b,r_i,s) $$
+
+- 4 components:
+  1. Immediate offset `Imm`
+  2. A base register $ r_b $
+  3. An index register $ r_i $
+  4. A scale factor s
+
+- The effective address is computed as
+
+$$ Imm + R[r_b] + R[r_i] * s $$
+
+![](./operand_forms.png)
