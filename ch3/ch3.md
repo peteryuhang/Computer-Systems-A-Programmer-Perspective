@@ -74,3 +74,11 @@ Disassembly of section __TEXT,__text:
   - 64-bit quantities as `quad words`
 
 ![](./size_of_C_datatype_in_x86.png)
+
+### Accessing Information
+
+![](./integer_register.png)
+
+- When instructions have registers as destinations, 2 conventions arise for what happens to the remaining bytes in the register for instructions that generate less than 8 bytes:
+  1. Those that generate 1-byte or 2-byte quantities leave the remaining bytes unchanged
+  2. Those that generate 4-byte quantities set the upper 4 bytes of the register to zero (adopted as part of the expansion from IA32 to x86-64)
