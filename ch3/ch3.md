@@ -66,3 +66,11 @@ Disassembly of section __TEXT,__text:
 
 - In assembly code, all lines beginning with `.` are directives to guide the assembler and linker
 - There are 2 version of assembly-code: ATT (Default in GCC) and Intel
+
+### Data Formats
+
+- Due to its origins as a 16-bit architecture, Intel uses the term `word` to refer to a 16-bit datatype
+  - 32-bit quantities as `double words`
+  - 64-bit quantities as `quad words`
+
+![](./size_of_C_datatype_in_x86.png)
