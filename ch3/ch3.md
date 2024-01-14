@@ -63,3 +63,6 @@ Disassembly of section __TEXT,__text:
       16: 5d                            popq    %rbp
       17: c3                            retq
 ```
+
+- In assembly code, all lines beginning with `.` are directives to guide the assembler and linker
+- There are 2 version of assembly-code: ATT (Default in GCC) and Intel
