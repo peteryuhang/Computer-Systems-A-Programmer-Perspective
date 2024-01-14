@@ -100,3 +100,20 @@ $$ Imm(r_b,r_i,s) $$
 $$ Imm + R[r_b] + R[r_i] * s $$
 
 ![](./operand_forms.png)
+
+#### Data Movement Instructions
+
+- x86-64 imposes the restriction that a move instruction cannot have both operands refer to memory locations (which requires 2 instructions)
+
+![](./simple_data_movement_instructions.png)
+
+- The `movq` instruction can only have immediate source operands that can be represented as 32-bit two's-complement numbers, which is sign extended to produce the 64-bit value for the destination
+- The `movabsq` instruction can hava an arbitrary 64-bit immediate value as its source operand and can only have a register as a destination
+
+- Beside the simple movement instructions, we also have zero-extending and sign-extending movement instructions
+
+![](./zero_extending_data_movement_instructions.png)
+
+![](./sign_extending_data_movement_instructions.png)
+
+- There is no `movzlq` which can be implemented using a `movl` instruction
