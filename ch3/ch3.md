@@ -140,3 +140,27 @@ exchange:
 
 - `pointer` in C are simply addresses
 - Local variable such as `x` are often kept in register rather than memory
+
+#### Pushing and Popping Stack Data
+
+- With x86-64, the program stack is stored in some region of memory
+- There are 2 instruction to push data onto and pop data from program stack
+
+![](./pushing_and_poping_instructions.png)
+
+- The stack grows downward such that the top element of the stack has the lowest address of all stack element
+
+![](./illustration_of_stack_operation.png)
+
+- The behavior of the instruction `pushq %rbp` is equal to instructions below(pushq instruction just single byte, but the instruction below need 8 bytes):
+```
+subq $8, %rsp
+movq %rbp, (%rsp)
+```
+- The behavior of the instruction `pupq %rax` is equal to instructions below:
+```
+movq (%rsp), %rax
+addq $8, %rsp
+```
+
+- Stack is contained in the same memory as the program code and other forms of program data, programs can access arbitrary position within the stack using the standard memory addressing methods. eg. `movq 8(%rsp), %rdx`
