@@ -117,3 +117,26 @@ $$ Imm + R[r_b] + R[r_i] * s $$
 ![](./sign_extending_data_movement_instructions.png)
 
 - There is no `movzlq` which can be implemented using a `movl` instruction
+- `cltq` is same as `movslq %eax %rax` but has a more compact encodings
+
+#### Data Movement Example
+
+```c
+long exchange(long *xp, long *yp) {
+  long x = *xp;
+  *xp = y;
+  return x;
+}
+```
+
+will be translated in assembly code below:
+
+```
+exchange:
+  movq  (%rdi), %rax
+  movq  %rsi, (%rdi)
+  ret
+```
+
+- `pointer` in C are simply addresses
+- Local variable such as `x` are often kept in register rather than memory
