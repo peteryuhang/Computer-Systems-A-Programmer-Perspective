@@ -164,3 +164,9 @@ addq $8, %rsp
 ```
 
 - Stack is contained in the same memory as the program code and other forms of program data, programs can access arbitrary position within the stack using the standard memory addressing methods. eg. `movq 8(%rsp), %rdx`
+
+### Arithmetic and Logical Operations
+
+- The x86-64 integer and logic operations instruction classes (Only leaq has no variants, just single instruction)
+
+![](./integer_arithmetic_operations.png)
