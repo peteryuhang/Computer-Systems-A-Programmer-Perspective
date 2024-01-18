@@ -170,3 +170,6 @@ addq $8, %rsp
 - The x86-64 integer and logic operations instruction classes (Only leaq has no variants, just single instruction)
 
 ![](./integer_arithmetic_operations.png)
+
+#### Load Effective Address
+
