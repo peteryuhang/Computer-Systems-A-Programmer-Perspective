@@ -173,3 +173,23 @@ addq $8, %rsp
 
 #### Load Effective Address
 
+- `leaq` is actually a variant of the `movq` instruction, it has the form that reads from memory to a register, but it does not reference at all
+- Its first operand appears to be a memory reference, but **instead of reading from the designated location, the instruction copies the effective address to the destination**
+- This instruction can be used to generate pointers for later memory references
+
+- eg. compiler often find clever uses of `leaq` that have nothing to do with effective address computation
+```c
+long scale(long x, long y, long z) {
+  long t = x + 4 * y + 12 * z;
+  return t;
+}
+```
+
+```
+x in %rdi, y in %rsi, z in %rdx
+scale:
+  leaq  (%rdi,%rsi,4), %rax
+  leaq  (%rdx,%rdx,2), %rdx
+  leaq  (%rax,%rdx,4), %rax
+  ret
+```
