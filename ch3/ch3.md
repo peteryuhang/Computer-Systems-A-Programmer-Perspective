@@ -193,3 +193,12 @@ scale:
   leaq  (%rax,%rdx,4), %rax
   ret
 ```
+
+#### Unary and Binary Operations
+
+- **Unary operation** with the single operand serving as both source and destination
+  - eg. `incq (%rsp)` causes the 8-byte element on the top of stack to be incremented
+- **Binary operation** with the second operand is used as both a source and a destination
+  - eg. `subq %rax,%rdx` decrements register `%rdx` by the value in `%rax`
+  - As with the `MOV` instructions, the two operands cannot both be memory locations
+
