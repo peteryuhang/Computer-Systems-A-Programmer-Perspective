@@ -203,3 +203,6 @@ scale:
   - As with the `MOV` instructions, the two operands cannot both be memory locations
 
 #### Shift Operations
+
+- Shift amount is given first and the value to shift is given second
+- The destination operand of a shift operation can be either a register or a memory location
