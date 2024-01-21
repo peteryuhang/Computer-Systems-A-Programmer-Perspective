@@ -202,3 +202,4 @@ scale:
   - eg. `subq %rax,%rdx` decrements register `%rdx` by the value in `%rax`
   - As with the `MOV` instructions, the two operands cannot both be memory locations
 
+#### Shift Operations
