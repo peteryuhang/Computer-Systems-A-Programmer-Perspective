@@ -207,3 +207,5 @@ scale:
 - Shift amount is given first and the value to shift is given second
 - The destination operand of a shift operation can be either a register or a memory location
 - These instructions are unusual in only allowing `%cl` as the operand
+
+#### Special Arithmetic Operations
