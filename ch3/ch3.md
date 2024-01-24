@@ -209,3 +209,7 @@ scale:
 - These instructions are unusual in only allowing `%cl` as the operand
 
 #### Special Arithmetic Operations
+
+- Instructions that support generating the full 128-bit product of two 64-bit numbers, as well as integer division:
+
+![](./special_arithmetic_operations.png)
