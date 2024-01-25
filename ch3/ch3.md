@@ -213,3 +213,28 @@ scale:
 - Instructions that support generating the full 128-bit product of two 64-bit numbers, as well as integer division:
 
 ![](./special_arithmetic_operations.png)
+
+- Although the name `imulq` is used for two distinct multiplication operations, the assembler can tell which one is intended by counting the number of operands
+- eg for multiplication.
+
+```c
+#include <inttypes.h>
+
+typedef unsigned __int128 uint128_t;
+
+void store_uprod(uint128_t *dest, uint64_t x, uint64_t y) {
+  *dest = x * (uint128_t)y;
+}
+```
+
+```
+dest in %rdi, x in %rsi, y in %rdx
+store_uprod:
+  movq  %rsi, %rax
+  mulq  %rdx
+  movq  %rax, (%rdi)
+  movq  %rax, 8(%rdi)
+  ret
+```
+
+- Storing the product requires two `movq` instructions
