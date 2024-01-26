@@ -238,3 +238,8 @@ store_uprod:
 ```
 
 - Storing the product requires two `movq` instructions
+
+### Control
+
+- 2 mechanisms for implementing conditional behavior in machine code:
+  - Tests data values and then alters either the **control flow** or the **data flow** based on the results of these tests
