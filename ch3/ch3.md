@@ -243,3 +243,13 @@ store_uprod:
 
 - 2 mechanisms for implementing conditional behavior in machine code:
   - Tests data values and then alters either the **control flow** or the **data flow** based on the results of these tests
+
+#### Condition Codes
+
+- CPU maintains a set of single-bit **condition code** registers describing attributes of the most recent arithmetic or logical operation:
+  - CF: Carry Flag -> Used to detect overflow for unsigned operations
+  - ZF: Zero Flag -> The most recent operation yielded zero
+  - SF: Sign Flag -> The most recent operation yielded a negative value
+  - OF: Overflow Flag -> The most recent operation caused a two's-complement overflow - either negative or positive
+- Two instruction classes that set condition code without altering any other registers
+
