@@ -254,3 +254,15 @@ store_uprod:
 - Two instruction classes that set condition code without altering any other registers
 
 ![](./comparison_and_test_instructions.png)
+
+#### Accessing the Condition Codes
+
+- 3 common ways of using the condition codes:
+  1. Set a single byte to 0 or 1 depending on some combination of the condition codes
+  2. Conditionally jump to other part of the program
+  3. Conditionally transfer data
+- For the first case:
+
+![](./set_instructions.png)
+
+- For these instructions, the suffixes denote different conditions and not different operand sizes
