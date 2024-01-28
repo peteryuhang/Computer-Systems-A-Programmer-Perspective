@@ -253,3 +253,4 @@ store_uprod:
   - OF: Overflow Flag -> The most recent operation caused a two's-complement overflow - either negative or positive
 - Two instruction classes that set condition code without altering any other registers
 
+![](./comparison_and_test_instructions.png)
