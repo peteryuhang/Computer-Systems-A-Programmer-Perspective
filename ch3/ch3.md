@@ -266,3 +266,13 @@ store_uprod:
 ![](./set_instructions.png)
 
 - For these instructions, the suffixes denote different conditions and not different operand sizes
+
+#### Jump Instructions
+
+- Different jump instructions:
+
+![](./jump_instructions.png)
+
+- **Direct Jump**: Jump target is encoded as part of the instructions
+- **Indirect Jump**: Jump target is read from a register or a memory location
+- **Conditional Jump**: Jump or not depending on some combination of the condition codes (can only be direct)
