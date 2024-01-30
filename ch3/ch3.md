@@ -276,3 +276,46 @@ store_uprod:
 - **Direct Jump**: Jump target is encoded as part of the instructions
 - **Indirect Jump**: Jump target is read from a register or a memory location
 - **Conditional Jump**: Jump or not depending on some combination of the condition codes (can only be direct)
+
+#### Jump Instruction Encodings
+
+- Common encoding ways (assembler and linker will select appropriate one):
+  1. Encode the difference between the address of the target instruction and the address of the instruction immediately following the jump
+  2. Give an "absolute" address, using 4 bytes to directly specify the target
+
+- eg.
+
+```
+1 movq %rdi, %rax
+2 jmp .L2
+3 .L3:
+4 sarq %rax
+5 .L2:
+6 testq %rax, %rax
+7 jg .L3
+8 rep; ret
+```
+
+assembler will generate machine code below:
+
+```
+1 0: 48 89 f8 mov %rdi,%rax
+2 3: eb 03 jmp 8 <loop+0x8>
+3 5: 48 d1 f8 sar %rax
+4 8: 48 85 c0 test %rax,%rax
+5 b: 7f f8 jg 5 <loop+0x5>
+6 d: f3 c3 repz retq
+```
+
+After linker:
+
+```
+1 4004d0: 48 89 f8 mov %rdi,%rax
+2 4004d3: eb 03 jmp 4004d8 <loop+0x8>
+3 4004d5: 48 d1 f8 sar %rax
+4 4004d8: 48 85 c0 test %rax,%rax
+5 4004db: 7f f8 jg 4004d5 <loop+0x5>
+6 4004dd: f3 c3 repz retq
+```
+
+- The jump instructions provide a means to implement conditional execution (if), as well as several different loop constructs
