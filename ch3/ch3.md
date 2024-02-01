@@ -321,3 +321,79 @@ After linker:
 - The jump instructions provide a means to implement conditional execution (if), as well as several different loop constructs
 
 #### Implementing Conditional Branches with Conditional Control
+
+- eg. original C code
+```c
+long lt_cnt = 0;
+long ge_cnt = 0;
+long absdiff_se(long x, long y)
+{
+  long result;
+  if (x < y) {
+  lt_cnt++;
+  result = y - x;
+  }
+  else {
+  ge_cnt++;
+  result = x - y;
+  }
+  return result;
+}
+```
+
+- equivalent goto version
+
+```c
+long gotodiff_se(long x, long y)
+{
+  long result;
+  if (x >= y)
+    goto x_ge_y;
+  lt_cnt++;
+  result = y - x;
+  return result;
+  x_ge_y:
+    ge_cnt++;
+    11 result = x - y;
+    return result;
+}
+```
+
+- Generated assembly code
+
+```
+long absdiff_se(long x, long y)
+x in %rdi, y in %rsi
+1 absdiff_se:
+2 cmpq %rsi, %rdi Compare x:y
+3 jge .L2 If >= goto x_ge_y
+4 addq $1, lt_cnt(%rip) lt_cnt++
+5 movq %rsi, %rax
+6 subq %rdi, %rax result=y-x
+7 ret Return
+8 .L2: x_ge_y:
+9 addq $1, ge_cnt(%rip) ge_cnt++
+10 movq %rdi, %rax
+11 subq %rsi, %rax result=x-y
+12 ret Return
+```
+
+- That the control flow of the assembly code generated for `absdiff_se` closely follows the goto code of `gotodiff_se`
+
+```c
+if (test-expr)
+  then-statement
+else
+  else-statement
+```
+
+```c
+  t = test-expr;
+  if (!t)
+    goto false;
+  then-statement
+  goto done;
+false:
+  else-statement
+done:
+```
