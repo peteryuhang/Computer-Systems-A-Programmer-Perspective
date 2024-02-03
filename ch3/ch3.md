@@ -330,12 +330,12 @@ long absdiff_se(long x, long y)
 {
   long result;
   if (x < y) {
-  lt_cnt++;
-  result = y - x;
+    lt_cnt++;
+    result = y - x;
   }
   else {
-  ge_cnt++;
-  result = x - y;
+    ge_cnt++;
+    result = x - y;
   }
   return result;
 }
