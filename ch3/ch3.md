@@ -400,3 +400,67 @@ done:
 
 #### Implementing Conditional Branches with Conditional Moves
 
+- Original C code
+
+```c
+long lt_cnt = 0;
+long ge_cnt = 0;
+long absdiff(long x, long y)
+{
+  long result;
+  if (x < y)
+    result = y - x;
+  else
+    result = x - y;
+  return result;
+}
+```
+
+- Implementation using conditional assignment
+
+```c
+long cmovdiff(long x, long y)
+{
+  long rval = y-x;
+  long eval = x-y;
+  long ntest = x >= y;
+  /* Line below requires single instruction: */
+  if (ntest) rval = eval;
+  return rval;
+}
+```
+
+- Generated assembly code
+
+```
+long absdiff(long x, long y)
+x in %rdi, y in %rsi
+absdiff:
+  movq %rsi, %rax
+  subq %rdi, %rax                         rval = y-x
+  movq %rdi, %rdx
+  subq %rsi, %rdx                         eval = x-y
+  cmpq %rsi, %rdi                         Compare x:y
+  cmovge %rdx, %rax                       If >=, rval = eval
+  ret                                     Return tval
+```
+
+- The key point is `cmovge` which will transfer the data from the source register to the desination, only if the cmpq instruction of line 6 indicates that one value is greater than or equal to the other (as indicated by the suffix ge)
+- The flow of control does not depend on data, and this makes it easier for the processor to keep its pipeline full
+
+- Conditional move instructions available with x86-64:
+
+![](./conditional_move_instructions.png)
+
+- The source and destination values can be 16, 32 or 64 bits long. Single byte conditional moves are not supported
+- The assembler can infer the operand length of a conditional move instruction from the name of the destination register
+  - So the same instruction name can be used for all operand lengths
+
+- General code structure for conditional move
+```
+v  = then-expr;
+ve = else-expr;
+t  = test-expr;
+if(!t) v = ve;
+```
+
