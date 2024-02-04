@@ -464,3 +464,28 @@ t  = test-expr;
 if(!t) v = ve;
 ```
 
+#### Loops
+
+- Combinations of conditional tests and jumps are used to implement the effect of loops, there are 2 basic loop patterns
+
+##### Do-While Loop
+
+```
+do
+  body-statement
+while (test-expr);
+```
+
+can be translated to `goto` statement below:
+
+```
+loop:
+  body-statement
+  t = test-expr;
+  if(t)
+    goto loop
+```
+
+- eg.
+
+![](./do_while_loop.png)
