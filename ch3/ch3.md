@@ -545,3 +545,50 @@ done:
 ![](./while_loop_guarded_do.png)
 
 - Using this implementation strategy, the compiler can often optimize the initial test
+
+##### For Loops
+
+
+```
+for (init-expr; test-expr; update-expr)
+  body-statement
+```
+
+- Such a loop is identical to the following code using a while loop:
+
+```
+init-expr;
+while (test-expr) {
+  body-statement
+  update-expr;
+}
+```
+
+- Using **jump-to-middle** strategy
+```
+  init-expr;
+  goto test;
+loop:
+  body-statement
+  update-expr;
+test:
+  t = test-expr;
+  if (t)
+    goto loop;
+```
+
+- Using **guarded-do** strategy:
+```
+  init-expr;
+  t = test-expr;
+  if (!t)
+    goto done;
+loop:
+  body-statement
+  update-expr;
+  t = test-expr;
+  if (t)
+    goto loop;
+done:
+```
+
