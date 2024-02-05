@@ -489,3 +489,59 @@ loop:
 - eg.
 
 ![](./do_while_loop.png)
+
+##### While Loops
+
+```
+while (test-expr)
+  body-statement
+```
+
+- First translation method - **jump to middle**:
+
+```
+goto test;
+loop:
+  body-statement
+test:
+  t = test-expr;
+  if (t)
+    goto loop;
+```
+
+- eg.
+
+![](./while_loop.png)
+
+- Second translation method - **guarded do**
+
+- First transforms the code into do-while
+```
+t = test-expr;
+if (!t)
+  goto done;
+do
+  body-statement
+  while (test-expr);
+done:
+```
+
+- Then, transform into `goto` code
+
+```
+t = test-expr;
+if (!t)
+  goto done;
+loop:
+  body-statement
+  t = test-expr;
+  if (t)
+  goto loop;
+done:
+```
+
+- eg.
+
+![](./while_loop_guarded_do.png)
+
+- Using this implementation strategy, the compiler can often optimize the initial test
