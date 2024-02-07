@@ -593,3 +593,116 @@ done:
 ```
 
 #### Switch Statements
+
+- The advantage of using a jump table over a long sequence of if-else statements is that the time token to perform the switch is independent of the number of switch cases
+- The author of GCC created a new operator `&&` to create a pointer for a code location
+
+- eg.
+
+```c
+void switch_eg(long x, long n, long *dest)
+{
+  long val = x;
+  switch (n) {
+  case 100:
+    val *= 13;
+    break;
+  case 102:
+    val += 10;
+    /* Fall through */
+  case 103:
+    val += 11;
+    break;
+  case 104:
+  case 106:
+    val *= val;
+    break;
+  default:
+    val = 0;
+  }
+  *dest = val;
+}
+```
+
+- Trnaslation into extended C
+
+```c
+void switch_eg_impl(long x, long n, long *dest)
+{
+  /* Table of code pointers */
+  static void *jt[7] = {
+    &&loc_A, &&loc_def, &&loc_B,
+    &&loc_C, &&loc_D, &&loc_def,
+    &&loc_D
+  };
+  unsigned long index=n- 100;
+  long val;
+
+  if (index > 6)
+    goto loc_def;
+  /* Multiway branch */
+  goto *jt[index];
+
+  loc_A: /* Case 100 */
+    val = x * 13;
+    goto done;
+  loc_B: /* Case 102 */
+    x = x + 10;
+    /* Fall through */
+  loc_C: /* Case 103 */
+    val = x + 11;
+    goto done;
+  loc_D: /* Cases 104, 106 */
+    val = x * x;
+    goto done;
+  loc_def: /* Default case */
+    val = 0;
+  done:
+    *dest = val;
+}
+```
+
+- Assembly code:
+
+```
+void switch_eg(long x, long n, long *dest)
+x in %rdi, n in %rsi, dest in %rdx
+switch_eg:
+  subq $100, %rsi                             Compute index = n-100
+  cmpq $6, %rsi                               Compare index:6
+  ja .L8                                      If >, goto loc_def
+  jmp *.L4(,%rsi,8)                           Goto *jg[index]
+.L3:                                          loc_A:
+  leaq (%rdi,%rdi,2), %rax                    3*x
+  leaq (%rdi,%rax,4), %rdi                    val = 13*x
+  jmp .L2                                     Goto done
+.L5:                                          loc_B:
+  addq $10, %rdi                              x = x + 10
+.L6:                                          loc_C:
+  addq $11, %rdi                              val = x + 11
+  jmp .L2                                     Goto done
+.L7:                                          loc_D:
+  imulq %rdi, %rdi                            val = x * x
+  jmp .L2                                     Goto done
+.L8:                                          loc_def:
+  movl $0, %edi                               val = 0
+.L2:                                          done:
+  movq %rdi, (%rdx)                           *dest = val
+  ret                                         Return
+```
+
+- In the assembly code, the jump table is indicated by the following declarations
+```
+  .section .rodata
+  .align 8                              Align address to multiple of 8
+.L4:
+  .quad .L3                             Case 100: loc_A
+  .quad .L8                             Case 101: loc_def
+  .quad .L5                             Case 102: loc_B
+  .quad .L6                             Case 103: loc_C
+  .quad .L7                             Case 104: loc_D
+  .quad .L8                             Case 105: loc_def
+  .quad .L7                             Case 106: loc_D
+```
+
+- The key step in executing a switch statement is to access a code location through the jump table
