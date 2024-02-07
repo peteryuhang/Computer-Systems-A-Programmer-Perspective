@@ -706,3 +706,11 @@ switch_eg:
 ```
 
 - The key step in executing a switch statement is to access a code location through the jump table
+
+### Procedures
+
+- Procedures are key abstraction in software. Come in many guises in different programming languages - functions, methods, subroutines, handlers, etc
+- Mechanism in procedures:
+  - **Passing control**
+  - **Passing data**
+  - **Allcating and deallocating memory**
