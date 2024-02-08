@@ -714,3 +714,13 @@ switch_eg:
   - **Passing control**
   - **Passing data**
   - **Allcating and deallocating memory**
+
+#### The Run-Time Stack
+
+![](./general_stack_frame_structure.png)
+
+- **Return Address**: Indicating where the program should resume once callee function return
+- The frame for the currently executing procedure is always at the top of the stack
+- Procedure can pass up to **six** integral values, for more arguments, can be stored within its stack frame prior to the call
+- Many functions do not even require a stack frame. This occurs when all of the local variables can be held in registers and the function does not call any other functions
+
