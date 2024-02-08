@@ -734,3 +734,12 @@ switch_eg:
 
 - `%rsp` -> stack pointer
 - `%rip` -> program counter
+
+#### Data Transfer
+
+- With x86-64, up to six integral arguments can be passed via registers
+
+![](./registers_for_passing_args.png)
+
+- When a function has more than six integral arguments, the other ones are passed on the stack
+- When passing parameters on the stack, all data sizes are rounded up to be multiples of eight
