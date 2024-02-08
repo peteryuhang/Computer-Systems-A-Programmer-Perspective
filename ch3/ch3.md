@@ -724,3 +724,13 @@ switch_eg:
 - Procedure can pass up to **six** integral values, for more arguments, can be stored within its stack frame prior to the call
 - Many functions do not even require a stack frame. This occurs when all of the local variables can be held in registers and the function does not call any other functions
 
+#### Control Transfer
+
+- Example of calls and returns
+
+![](./procedure_calls_and_returns.png)
+
+![](./procedure_calls_and_returns_2.png)
+
+- `%rsp` -> stack pointer
+- `%rip` -> program counter
