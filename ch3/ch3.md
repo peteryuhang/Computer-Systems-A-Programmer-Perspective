@@ -776,3 +776,12 @@ switch_eg:
 - eg.
 
 ![](./example_of_array_declarations.png)
+
+#### Pointer Arithmetic
+
+- `Expr` denoting some object, `&Expr` is a pointer giving the address of the object
+- `AExpr` denoting an address, `*AExpr` gives the value at that address
+
+- Suppose the starting address of integer array `E` and integer `i` are stored in register `%rdx` and `%rcx`, respectively
+
+![](./pointer_arithmetic_example.png)
