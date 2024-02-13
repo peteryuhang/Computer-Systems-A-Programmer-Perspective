@@ -874,3 +874,19 @@ Registers: n in %rdi, Arow in %rsi, Bptr in %rcx
   cmpq %rdi, %rdx                            Compare j:n
   jne .L24                                   If !=, goto loop
 ```
+
+### Heterogeneous Data Structures
+
+- **structures**: Aggregate multiple objects into a single unit/object
+- **unions**: Allow an object to be referenced using several different types
+
+#### Structures
+
+- The compiler maintains information about each structure type indicating the byte offset of each field
+- eg.
+
+![](./structures_offset_eg.png)
+
+- `rp->v` is equivalent to the expression `(*rp).v`
+- The selection of the different fields of a structures is handled completely at compile time
+  - The machine code contains no information about the field declarations or the name of the fields
