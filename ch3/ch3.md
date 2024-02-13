@@ -785,3 +785,18 @@ switch_eg:
 - Suppose the starting address of integer array `E` and integer `i` are stored in register `%rdx` and `%rcx`, respectively
 
 ![](./pointer_arithmetic_example.png)
+
+#### Nested Arrays
+
+- For an array declared as `T D[R][C]`, array element `D[i][j]` is at memory address (L is the size of type T):
+
+$$ &D[i][j] = x_D + L(C * i + j) $$
+
+- Following assembly code can use to copy the element to register:
+
+```
+D in %rdi, i in %rsi, and j in %rdx
+  leaq (%rsi,%rsi,2), %rax
+  leaq (%rdi,%rax,4), %rax
+  movl (%rax,%rdx,4), %eax
+```
