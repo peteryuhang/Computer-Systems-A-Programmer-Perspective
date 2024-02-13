@@ -830,3 +830,47 @@ fix_prod_ele:
   jne .L7                                                           If !=, goto loop
   rep; ret                                                          Return
 ```
+
+
+#### Variable-Size Arrays
+
+- eg.
+
+```c
+int var_ele(long n, int A[n][n], long i, long j) {
+  return A[i][j];
+}
+```
+
+will generate following assembly code:
+
+```
+int var_ele(long n, int A[n][n], long i, long j)
+n in %rdi, A in %rsi, i in %rdx, j in %rcx
+var_ele:
+  imulq %rdx, %rdi                          Compute n * i
+  leaq (%rsi,%rdi,4), %rax                  Compute xA + 4(n * i)
+  movl (%rax,%rcx,4), %eax                  Read from M[xA + 4(n * i) + 4 * j ]
+  ret
+```
+
+- The dynamic version must use a multiplication instruction to scale i by n, rather than a series of shifts and adds
+  - This multiplication can incur a significant performance penalty
+- The compiler often do some optimization for this when variable-size arrays are referenced within a loop, eg.
+
+![](./variable_size_array_opt_eg.png)
+
+- Corresponding assembly code:
+
+```
+Registers: n in %rdi, Arow in %rsi, Bptr in %rcx
+4n in %r9, result in %eax, j in %edx
+.L24:                                        loop:
+  movl (%rsi,%rdx,4), %r8d                   Read Arow[j]
+  imull (%rcx), %r8d                         Multiply by *Bptr
+  addl %r8d, %eax                            Add to result
+  addq $1, %rdx                              j++
+  addq %r9, %rcx                             Bptr += n
+  cmpq %rdi, %rdx                            Compare j:n
+  jne .L24                                   If !=, goto loop
+```
