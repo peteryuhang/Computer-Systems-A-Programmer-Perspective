@@ -765,3 +765,14 @@ switch_eg:
 ![](./recursive_factorial_program.png)
 
 - Calling a function recursively proceeds just like any other function call
+
+### Array Allocation and Access
+
+#### Basic Principle
+
+- Array element `i` can be access at address $ x_A + L * i $
+  - $ x_A $ is the starting location/address
+  - $ L $ is the size of data type
+- eg.
+
+![](./example_of_array_declarations.png)
