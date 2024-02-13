@@ -757,3 +757,11 @@ switch_eg:
 - Register `%rbx`, `%rbp`, and `%r12-%r15` are classified as **callee-saved** registers
   - When procedure P call procedure Q, Q must preserve the values of these registers, ensuring that they have the same values when Q returns to P as they did when Q was called
   - Procedure Q can preserve a register value by either not changing it at all or by pushing the original value on the stack (**Saved Register**), altering it and poping the old value from stack before returning
+
+#### Recursive Procedure
+
+- eg.
+
+![](./recursive_factorial_program.png)
+
+- Calling a function recursively proceeds just like any other function call
