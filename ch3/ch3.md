@@ -800,3 +800,33 @@ D in %rdi, i in %rsi, and j in %rdx
   leaq (%rdi,%rax,4), %rax
   movl (%rax,%rdx,4), %eax
 ```
+
+#### Fixed-Size Arrays
+
+- The C compiler is able to make many optimizations for code operating on multidimensional arrays of fixed size
+
+- eg.
+
+![](./fix_size_array_optimization.png)
+
+- corresponding assembly code
+
+```
+int fix_prod_ele_opt(fix_matrix A, fix_matrix B, long i, long k)
+A in %rdi, B in %rsi, i in %rdx, k in %rcx
+fix_prod_ele:
+  salq $6, %rdx                                                     Compute 64 * i
+  addq %rdx, %rdi                                                   Compute Aptr = xA + 64i = &A[i][0]
+  leaq (%rsi,%rcx,4), %rcx                                          Compute Bptr = xB + 4k = &B[0][k]
+  leaq 1024(%rcx), %rsi                                             Compute Bend = xB + 4k + 1024 = &B[N][k]
+  movl $0, %eax                                                     Set result = 0
+.L7:                                                                loop:
+  movl (%rdi), %edx                                                 Read *Aptr
+  imull (%rcx), %edx                                                Multiply by *Bptr
+  addl %edx, %eax                                                   Add to result
+  addq $4, %rdi                                                     Increment Aptr ++
+  addq $64, %rcx                                                    Increment Bptr += N
+  cmpq %rsi, %rcx                                                   Compare Bptr:Bend
+  jne .L7                                                           If !=, goto loop
+  rep; ret                                                          Return
+```
