@@ -890,3 +890,5 @@ Registers: n in %rdi, Arow in %rsi, Bptr in %rcx
 - `rp->v` is equivalent to the expression `(*rp).v`
 - The selection of the different fields of a structures is handled completely at compile time
   - The machine code contains no information about the field declarations or the name of the fields
+
+#### Unions
