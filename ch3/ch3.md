@@ -892,3 +892,5 @@ Registers: n in %rdi, Arow in %rsi, Bptr in %rcx
   - The machine code contains no information about the field declarations or the name of the fields
 
 #### Unions
+
+- The overall size of a union equals the maximum size of any of its fields
