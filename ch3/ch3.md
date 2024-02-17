@@ -949,3 +949,7 @@ double uu2double(unsigned word0, unsigned word1) {
   - eg. if p is a pointer of type `char *`, `(int *) p + 7` computes `p + 28`, while `(int *) (p + 7)` compute `p + 7`
 - Pointer can also point to functions
   - eg. `int (*fp)(int, int *)`
+
+#### Life in the Real World: Using the GDB Debugger
+
+![](./example_gdb_commands.png)
