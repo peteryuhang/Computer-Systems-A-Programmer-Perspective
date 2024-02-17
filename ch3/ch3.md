@@ -924,3 +924,15 @@ double uu2double(unsigned word0, unsigned word1) {
 ```
 
 - The result on little-endian machine will be different from big-endian
+
+
+#### Data Alignment
+
+- Alignment rule is based on the principle that **any primitive object of K bytes must have an address that is a multiple of K**
+- **Alignment restrictions** simplify the design of the hardware forming the interface between the processor and the memory system
+- Gaps will be inserted in the field allocation to ensure that each structure element satisfies its alignment requirement
+- The compiler places directives in the assembly code indicating the desired alignment for global data eg.
+```
+.align 8
+```
+- This ensures that the data following it will start with an address that is a multiple of 8
