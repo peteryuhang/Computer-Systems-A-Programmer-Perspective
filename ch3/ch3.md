@@ -893,4 +893,34 @@ Registers: n in %rdi, Arow in %rsi, Bptr in %rcx
 
 #### Unions
 
+- Union allow a single object to be referenced according to multiple types
 - The overall size of a union equals the maximum size of any of its fields
+- eg.
+
+```c
+unsigned long double2bits(double d) {
+  union {
+    double d;
+    unsigned long u;
+  } temp;
+  temp.d = d;
+  return temp.u;
+}
+```
+
+- The result will be that `u` will have the same bit representation as `d`
+- When using unions to combine data types of different sizes, byte-ordering issues can become important, eg.
+
+```c
+double uu2double(unsigned word0, unsigned word1) {
+  union {
+    double d;
+    unsigned u[2];
+  } temp;
+  temp.u[0] = word0;
+  temp.u[1] = word1;
+  return temp.d;
+}
+```
+
+- The result on little-endian machine will be different from big-endian
