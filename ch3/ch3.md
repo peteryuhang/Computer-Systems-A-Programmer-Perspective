@@ -925,7 +925,6 @@ double uu2double(unsigned word0, unsigned word1) {
 
 - The result on little-endian machine will be different from big-endian
 
-
 #### Data Alignment
 
 - Alignment rule is based on the principle that **any primitive object of K bytes must have an address that is a multiple of K**
@@ -936,3 +935,17 @@ double uu2double(unsigned word0, unsigned word1) {
 .align 8
 ```
 - This ensures that the data following it will start with an address that is a multiple of 8
+
+### Combining Control and Data in Machine-Level Programs
+
+#### Understanding Pointers
+
+- Pointer types are not part of machine code; they are an abstraction provided by C to help programmers avoid addressing errors
+- The special `NULL(0)` value indicates that the pointer does not point anywhere
+- `&` operator can be applied to any C expression that is categorized as an **lvalue**, meaning an expression that can appear on the left side of an assignment
+- Both array referencing and pointer arithmetic require scaling the offsets by the object size
+  - eg. when we write an expression `p+i` for pointer p with value `q`, the resulting address is computed as `q + L * i`, the `L` is the size of the data type associated with p
+- Casting from one type of pointer to another changes its type but not its value
+  - eg. if p is a pointer of type `char *`, `(int *) p + 7` computes `p + 28`, while `(int *) (p + 7)` compute `p + 7`
+- Pointer can also point to functions
+  - eg. `int (*fp)(int, int *)`
