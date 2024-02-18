@@ -953,3 +953,7 @@ double uu2double(unsigned word0, unsigned word1) {
 #### Life in the Real World: Using the GDB Debugger
 
 ![](./example_gdb_commands.png)
+
+- Worms and viruses
+  - worm is a program that can run by itself and can propagate a fully working version of itself to other machines
+  - virus is a piece of code that adds itself to other programs, **it cannot run independently**
