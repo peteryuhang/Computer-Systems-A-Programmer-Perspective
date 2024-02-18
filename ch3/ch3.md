@@ -957,3 +957,15 @@ double uu2double(unsigned word0, unsigned word1) {
 - Worms and viruses
   - worm is a program that can run by itself and can propagate a fully working version of itself to other machines
   - virus is a piece of code that adds itself to other programs, **it cannot run independently**
+
+#### Thwarting Buffer Overflow Attacks
+
+- **Stack Randomization**
+  - Make the position of the stack vary from one run of program to another
+  - standard practice in Linux system: address-space layout randomization (ASLR)
+- **Stack Corruption Detection**
+  - Before restoring the register state and returning from the function, the program checks if the canary has been altered
+  - ![](./stack_corruption_detection.png)
+- **Limiting Executable Code Regions**
+  - Limit which memory regions hold executable code
+  - This tech can reduce the ability of an attacker to insert executable code into a system
