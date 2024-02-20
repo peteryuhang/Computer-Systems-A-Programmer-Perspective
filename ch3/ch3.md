@@ -969,3 +969,24 @@ double uu2double(unsigned word0, unsigned word1) {
 - **Limiting Executable Code Regions**
   - Limit which memory regions hold executable code
   - This tech can reduce the ability of an attacker to insert executable code into a system
+
+#### Supporting Variable-Size Stack Frames
+
+- Some function require a variable amount of local storage, eg.
+
+![](./func_requiring_using_frame_pointer.png)
+
+- `%rbp` to serve as a **frame pointer**, it must be saved by callee since it is called-saved register
+- The `leave` instruction equivalent to executing the following 2 instructions
+
+```
+movq %rbp, %rsp                         Set stack pointer to beginning of frame
+popq %rbp                               Restore saved %rbp and set stack ptr to end of caller’s frame
+```
+
+- The stack frame is showed below
+
+![](./vframe_stack_frame_struct.png)
+
+- S2 is computed the offset between S1 of multiple of 16
+- p will be aligned of multiple of 8
