@@ -990,3 +990,11 @@ popq %rbp                               Restore saved %rbp and set stack ptr to 
 
 - S2 is computed the offset between S1 of multiple of 16
 - p will be aligned of multiple of 8
+
+### Floating-Point Code
+
+- Some points need to be included:
+  - How floating point values are stored and accessed
+  - The instruction that operate on floating point data
+  - The conventions used for passing floating-point values as arguments to functions and for returning them as results
+  - The conventions for how registers are preserved during function calls
