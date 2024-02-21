@@ -998,3 +998,11 @@ popq %rbp                               Restore saved %rbp and set stack ptr to 
   - The instruction that operate on floating point data
   - The conventions used for passing floating-point values as arguments to functions and for returning them as results
   - The conventions for how registers are preserved during function calls
+- History of floating point architecture
+  - The introduction of the Pentium/MMX in 1997 start the generation of **media instruction** which support graph and image processing
+    - Media instruction originally focused on allowing multiple operation to be performed in a parallel mode known as **single instruction, multiple data (SIMD)**
+  - MMX -> SSE (streaming SIMD extensions) `MM` registers (64 bits) for MMX, `XMM` registers (128 bits) for SSE
+  - SSE -> AVX (advanced vector extensions) `YMM` registers (256 bits) for AVX
+- The presentation is based on AVX2
+
+![](./media_registers.png)
