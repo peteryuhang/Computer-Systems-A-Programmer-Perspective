@@ -1006,3 +1006,5 @@ popq %rbp                               Restore saved %rbp and set stack ptr to 
 - The presentation is based on AVX2
 
 ![](./media_registers.png)
+
+#### Floating-Point Movement and Conversion Operations
