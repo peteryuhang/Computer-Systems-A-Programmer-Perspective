@@ -1008,3 +1008,63 @@ popq %rbp                               Restore saved %rbp and set stack ptr to 
 ![](./media_registers.png)
 
 #### Floating-Point Movement and Conversion Operations
+
+- Instructions for transferring floating-point data between memory and XMM registers:
+
+![](./floating_point_movement_instructions.png)
+
+- Instructions for converting from a floating-point value read from either an XMM register or memory and write the result to a general-purpose register (eg. `%rax`, `%ebx` etc)
+
+![](./two_operand_floating_point_conversion_op.png)
+
+- Instructions for converting from integer to floating point
+
+![](./three_operand_floating_point_conversion_op.png)
+
+- The instruction `vcvtss2sd %xmm0, %xmm0, %xmm0` are converting single-precision value to double-precision, but the GCC did the different thing:
+
+```
+Conversion from single to double precision
+  vunpcklps %xmm0, %xmm0, %xmm0                          Replicate first vector element
+  vcvtps2pd %xmm0, %xmm0                                 Convert two vector elements to double
+```
+
+- Similar `vcvtsd2ss %xmm0, %xmm0, %xmm0` are converting double-precision value to single-precision, but the GCC did the different thing:
+
+```
+Conversion from double to single precision
+  vmovddup %xmm0, %xmm0                                   Replicate first vector element
+  vcvtpd2psx %xmm0, %xmm0                                 Convert two vector elements to single
+```
+
+- eg.
+
+```c
+double fcvt(int i, float *fp, double *dp, long *lp) {
+  float f = *fp; double d = *dp; long l = *lp;
+  *lp = (long) d;
+  *fp = (float) i;
+  *dp = (double) l;
+  return (double) f;
+}
+```
+
+and its associate x86-64 assembly code
+
+```
+double fcvt(int i, float *fp, double *dp, long *lp)
+in %edi, fp in %rsi, dp in %rdx, lp in %rcx
+fcvt:
+  vmovss (%rsi), %xmm0                                   Get f = *fp
+  movq (%rcx), %rax                                      Get l = *lp
+  vcvttsd2siq (%rdx), %r8                                Get d = *dp and convert to long
+  movq %r8, (%rcx)                                       Store at lp
+  vcvtsi2ss %edi, %xmm1, %xmm1                           Convert i to float
+  vmovss %xmm1, (%rsi)                                   Store at fp
+  vcvtsi2sdq %rax, %xmm1, %xmm1                          Convert l to double
+  vmovsd %xmm1, (%rdx)                                   Store at dp
+The following two instructions convert f to double
+  vunpcklps %xmm0, %xmm0, %xmm0
+  vcvtps2pd %xmm0, %xmm0
+  ret                                                    Return f
+```
