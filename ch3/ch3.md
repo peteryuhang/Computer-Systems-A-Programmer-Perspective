@@ -1104,3 +1104,31 @@ The following two instructions convert x to double
   vsubsd %xmm2, %xmm0, %xmm0                                Subtract from a*x
   ret                                                       Return
 ```
+
+#### Defining and Using Floating-Point Constants
+
+- AVX floating-point operations cannot have immediate values as operands
+
+- eg.
+```c
+double cel2fahr(double temp) {
+  return 1.8 * temp + 32.0;
+}
+```
+
+The x86-64 assembly code are as follows:
+
+```
+double cel2fahr(double temp)
+temp in %xmm0
+cel2fahr:
+  vmulsd .LC2(%rip), %xmm0, %xmm0                       Multiply by 1.8
+  vaddsd .LC3(%rip), %xmm0, %xmm0                       Add 32.0
+  ret
+.LC2:
+  .long 3435973837                                      Low-order 4 bytes of 1.8
+  .long 1073532108                                      High-order 4 bytes of 1.8
+.LC3:
+  .long 0                                               Low-order 4 bytes of 32.0
+  .long 1077936128                                      High-order 4 bytes of 32.0
+```
