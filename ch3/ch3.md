@@ -1071,3 +1071,36 @@ The following two instructions convert f to double
 
 #### Floating-Point Code in Procedures
 
+- Up to 8 floating-point arguments can be passed in XMM registers (`%xmm0 ~ %xmm7`). Additional floating-point arguments can be passed on the stack
+- A function that return a floating-point value does so in register `%xmm0`
+- All XMM registers are **caller saved**. The callee may overwrite any of these registers w/o first saving it
+
+#### Floating-Point Arithmetic Operations
+
+- The first source operand `S1` can be either an XMM register or a memory location. The second source operand and the destination operand must be XMM registers
+
+![](./scalar_floating_point_arithmetic_op.png)
+
+- eg.
+
+```c
+double funct(double a, float x, double b, int i) {
+  return a*x - b/i;
+}
+```
+
+The x86-64 code is as follow:
+
+```
+double funct(double a, float x, double b, int i)
+a in %xmm0, x in %xmm1, b in %xmm2, i in %edi
+funct:
+The following two instructions convert x to double
+  vunpcklps %xmm1, %xmm1, %xmm1
+  vcvtps2pd %xmm1, %xmm1
+  vmulsd %xmm0, %xmm1, %xmm0                                Multiply a by x
+  vcvtsi2sd %edi, %xmm1, %xmm1                              Convert i to double
+  vdivsd %xmm1, %xmm2, %xmm2                                Compute b/i
+  vsubsd %xmm2, %xmm0, %xmm0                                Subtract from a*x
+  ret                                                       Return
+```
