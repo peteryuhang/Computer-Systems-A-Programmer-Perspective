@@ -1132,3 +1132,17 @@ cel2fahr:
   .long 0                                               Low-order 4 bytes of 32.0
   .long 1077936128                                      High-order 4 bytes of 32.0
 ```
+
+#### Using Bitwise Operations in Floating-Point Code
+
+- These operations all act on packed data, meaning that type update the entire destination XMM register, applying the bitwise operation to all data in the two source registers
+
+![](./bitwise_operation_on_packed_data.png)
+
+#### Floating-Point Comparison Operations
+
+![](./avx2_comparison_op.png)
+
+- The **Unordered** case occurs when either operand is NaN
+
+![](./condition_code_avx2_comparison.png)
