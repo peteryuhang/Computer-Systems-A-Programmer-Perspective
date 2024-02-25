@@ -15,3 +15,16 @@
 - The program counter (PC) holds the address of the instruction currently been executed
 - The memory can be viewed as a large array of bytes (implemented by virtual addresses)
 - A status code Stat, indicating the overall state of program execution (normal operation or exeception)
+
+#### Y86-64 Instructions
+
+- Individual instruction in Y86-64:
+
+![](./y86-64_instruction_set.png)
+![](./y86-64_instruction_set_function_codes.png)
+
+- x86-64 movq instruction been split into 4 different instruction: `irmovq`, `rrmovq`, `mrmovq`, and `rmmovq`
+  - The source is either immediate (i), register (r) or memory (m)
+  - The destination is either register (r) or memory (m)
+- There are 6 conditional move instructions (`cmovXX`), the destination register is updated only if the condition codes satisfy the required constraints
+- The `halt` instruction stops instruction execution
