@@ -8,3 +8,5 @@ Note of reading book - Computer Systems - A Programmer's Perspective (CSAPP)
 ## [Representing and Manipulating Information](./ch2/ch2.md)
 
 ## [Machine-Level Representation of Programs](./ch3/ch3.md)
+
+## [Processor Architecture](./ch4/ch4.md)
