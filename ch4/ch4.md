@@ -28,3 +28,13 @@
   - The destination is either register (r) or memory (m)
 - There are 6 conditional move instructions (`cmovXX`), the destination register is updated only if the condition codes satisfy the required constraints
 - The `halt` instruction stops instruction execution
+
+#### Instruction Encoding
+
+- Register encoding in Y86-64
+
+![](./y86-64_register_encoding.png)
+
+- As an example, `rmmovq %rsp, 0x123456789abcd(%rdx)` will be encoded to `4042cdab896745230100`
+- One important property of any instruction set is that the byte encoding must have a unique interpretation
+  - Y86-64 hold this property because every instruction has a unique combination of code and function in its **initial byte**
