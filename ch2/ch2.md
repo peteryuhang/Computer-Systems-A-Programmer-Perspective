@@ -232,11 +232,11 @@ int strlonger(char* a, char* b) {
 - For both unsigned and signed integer, $x << k == x2^k$
 - When the constant's bit level representation is the form `[0,...0,1,...1,0,...0]`, we have the formula below:
 
-$$ (x<<n) + (x<<n-1) + ... + (x<<m) $$
+$$(x<<n) + (x<<n-1) + ... + (x<<m)$$
 
-$$ or $$  
+$$ or $$
 
-$$ (x<<(n+1)) - (x<<m) $$
+$$(x<<(n+1)) - (x<<m)$$
 
 - The formula above can be used for compiler to do the optimization by convert multiplying to shift and add/sub, which need less machine level instructions compare with multiplying
 
@@ -282,11 +282,11 @@ unsigned uy = y;
 
 - Consider notation of the form (similar as decimal):
 
-$$ b_mb_{m-1}...b_1b_0.b_{-1}b_{-2}...b_{-n+1}b_{-n} $$
+$$b_mb_{m-1}...b_1b_0.b_{-1}b_{-2}...b_{-n+1}b_{-n}$$
 
 - This notation represents a number b defined as:
 
-$$ b = \sum_{i=-n}^{m}2^i * b_i $$
+$$b = \sum_{i=-n}^{m}2^i * b_i$$
 
 - Fractional binary notation can only represent numbers that can be written $x * 2^y$, other value can only be approximated
 
