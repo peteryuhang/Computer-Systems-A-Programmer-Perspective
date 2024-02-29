@@ -38,3 +38,12 @@
 - As an example, `rmmovq %rsp, 0x123456789abcd(%rdx)` will be encoded to `4042cdab896745230100`
 - One important property of any instruction set is that the byte encoding must have a unique interpretation
   - Y86-64 hold this property because every instruction has a unique combination of code and function in its **initial byte**
+
+#### Y86-64 Exceptions
+
+- Possible value for the `Stat` in programmer-visible state:
+
+![](./y86-64_status_codes.png)
+
+- In Y86-64, we simply have the processor stop executing instructions when it encounters any of the exceptions listed (2~4)
+- In a more complete design, processor would typically invoke an **exception handler**
