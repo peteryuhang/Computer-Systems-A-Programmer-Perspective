@@ -49,3 +49,31 @@
 - In a more complete design, processor would typically invoke an **exception handler**
 
 #### Y86-64 Programs
+
+- The comparison between Y86-64 and X86-86
+
+for the program below:
+
+```c
+long sum(long *start, long count) {
+  long sum = 0;
+  while (count) {
+    sum += *start;
+    start++;
+    count--;
+  }
+  return sum;
+}
+```
+
+The corresponding assembly code:
+
+![](./comparison_between_y_86_and_x_86.png)
+
+The complete program file written in Y86-64
+
+![](./program_writtenin_y86_64.png)
+
+- Loads constants into register since it cannot use immediate data in arithmetic instructions
+- Y86-64 code require 2 instructions to read a value from memory and add it to a register, x86-64 can do with single addq
+- Words beginning with `.` are **assembly directives** telling the assembler to adjust the address at which it is generating code or insert some words of data
