@@ -77,3 +77,12 @@ The complete program file written in Y86-64
 - Loads constants into register since it cannot use immediate data in arithmetic instructions
 - Y86-64 code require 2 instructions to read a value from memory and add it to a register, x86-64 can do with single addq
 - Words beginning with `.` are **assembly directives** telling the assembler to adjust the address at which it is generating code or insert some words of data
+
+#### Some Y86-64 Instruction Details
+
+- `pushq` push the original value of `%rsp` instead of the decremented value of `%rsp`
+  - `pushq` both decrements the stack pointer by 8 and writes a register value to memory
+- `popq` read from the memory
+  - eg. `popq %rsp` equivalent to `mrmovq (%rsp), %rsp`
+- We try to devise a consistent set of conventions for instructions that push or pop the stack pointer
+  - Different x86 processor will actuall do different thing on this, so we need to make thing clear on Y86-84
