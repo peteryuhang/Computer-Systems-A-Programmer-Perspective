@@ -86,3 +86,5 @@ The complete program file written in Y86-64
   - eg. `popq %rsp` equivalent to `mrmovq (%rsp), %rsp`
 - We try to devise a consistent set of conventions for instructions that push or pop the stack pointer
   - Different x86 processor will actuall do different thing on this, so we need to make thing clear on Y86-84
+
+### Logic Design and the Hardware Control Language HCL
