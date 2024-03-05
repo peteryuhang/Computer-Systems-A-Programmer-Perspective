@@ -88,3 +88,14 @@ The complete program file written in Y86-64
   - Different x86 processor will actuall do different thing on this, so we need to make thing clear on Y86-84
 
 ### Logic Design and the Hardware Control Language HCL
+
+- 3 major components are required to implement a digital system:
+  - **combinational logic** to compute functions on the bits
+  - **memory elements** to store bits
+  - **clock signals** to regulate the updating of the memory elements
+- Hardward Description Language (HDL)
+  - A textual notation that looks similar to a programming language but that is used to describe hardware structures rather than program behavior
+  - In the mid-1980s researchers developed **logic synthesis** programs that could generate efficient circuit designs from HDL description
+  - eg. Verilog, VHDL
+
+#### Logic Gates
