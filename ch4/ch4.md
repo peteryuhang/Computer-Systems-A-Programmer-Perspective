@@ -99,3 +99,10 @@ The complete program file written in Y86-64
   - eg. Verilog, VHDL
 
 #### Logic Gates
+
+![](./logic_gate_types.png)
+
+- `&&` for and, `||` for or, `!` for not
+  - Use these instead of bit level operation beacuse logic gates operate on single bit quantities, not entire word
+- Logic gates are always active
+  - If some input to a gate changes, then within some small amount of time, the output will change accordingly
