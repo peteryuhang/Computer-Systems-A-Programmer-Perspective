@@ -188,9 +188,9 @@ int strlonger(char* a, char* b) {
     - If $2^w <= x + y < 2^{w+1}$, then $s = x + y = x + (y - 2^w) < x (or y)$
 - **Unsigned negation**
   - Definition: For every value x, there must be some value -x such that -x + x = 0 (additive inverse operation)
-  - For any number x such that $ 0 <= x < 2^w $, its w-bit unsigned negation -x is given below:
+  - For any number x such that $0 <= x < 2^w$, its w-bit unsigned negation -x is given below:
     - If $x = 0$, then $-x = x$
-    - If $x > 0$, then $ -x = 2^w - x$, because $-x + x = (2^w - x + x) \ mod \ 2^w = 0$
+    - If $x > 0$, then $-x = 2^w - x$, because $-x + x = (2^w - x + x) \ mod \ 2^w = 0$
 
 ### Two's-Complement Addition
 
