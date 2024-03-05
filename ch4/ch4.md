@@ -123,3 +123,55 @@ The complete program file written in Y86-64
   - In the hardware (HCL), the outputs continually respond to changes in the inputs, but a C expression is only evaluated when it is encountered during the execution of a program
   - The logical expression in C allow the argument to be any arguments. But Logic gates only operate over the bit value 0 and 1
   - Partially evaluated in C, eg. `bool out = (s && a) || (!s && b);`, but combination logic doesn't have this property
+
+#### Word-Level Combinational Circuits and HCL Integer Expression
+
+- In HCL, we will declare any word-level signal as an `int` without specifying the word size
+- eg. The word level equality:
+
+![](./word_level_equality_circuit.png)
+
+- eg. The word level multiplexor
+
+![](./word_level_multiplexor_circuit.png)
+
+- The format of case expressions in HCL
+
+```
+[
+  select1 : expr1;
+  select2 : expr2;
+  .
+  .
+  .
+  selectk : exprk;
+]
+```
+
+- The selection expressions can sometime be simplified since only the first matching case is selected
+- eg. HCL case expression for find the minimum of A, B, C
+
+```
+word Min3 = [
+  A <= B && A <= C : A;
+  B <= A && B <= C : B;
+  1 : C;
+];
+```
+
+- eg. HCL case expression for multiplexor of A, B, C, D
+
+```
+word Out4 = [
+  !s1 && !s0 : A; # 00
+  !s1        : B; # 01
+  !s0        : C; # 10
+  1          : D; # 11
+];
+```
+
+- One important combinational circuit, known as an **arithmetic/logic unit(ALU)**:
+
+![](./alu_example.png)
+
+- The 4 operations diagrammed for this ALU correspond to the 4 different integer operation supported by the Y86-64 instruction set, and the control values match the function codes for these instructions
