@@ -194,7 +194,7 @@ int strlonger(char* a, char* b) {
 
 ### Two's-Complement Addition
 
-- For integer values x and y in the range $ -2^{w-1} <= x, y <= 2^{w-1} - 1 $
+- For integer values x and y in the range $-2^{w-1} <= x, y <= 2^{w-1} - 1$
   - $x + y = x + y - 2^w$ when $2^{w-1} <= x + y$ -> Positive overflow
   - $x + y = x + y$ when $-2^{w-1} <= x + y < 2^{w-1}$ -> Normal
   - $x + y = x + y + 2^w$ when $x + y < -2^{w-1}$ -> Negative overflow
