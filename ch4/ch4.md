@@ -106,3 +106,20 @@ The complete program file written in Y86-64
   - Use these instead of bit level operation beacuse logic gates operate on single bit quantities, not entire word
 - Logic gates are always active
   - If some input to a gate changes, then within some small amount of time, the output will change accordingly
+
+#### Combinational Circuits and HCL Boolean Expression
+
+![](./combinational_circuit_eq.png)
+
+- Example for test bit equality
+- The HCL is `bool eq = (a && b) || (!a && !b);`
+
+![](./combinational_circuit_multiplexor.png)
+
+- A multiplexor selects a value from among a set of different data signals (a, b), depending on the value of a control input single (s)
+- The HCL is `bool out = (s && a) || (!s && b);`
+
+- The difference between HCL and C:
+  - In the hardware (HCL), the outputs continually respond to changes in the inputs, but a C expression is only evaluated when it is encountered during the execution of a program
+  - The logical expression in C allow the argument to be any arguments. But Logic gates only operate over the bit value 0 and 1
+  - Partially evaluated in C, eg. `bool out = (s && a) || (!s && b);`, but combination logic doesn't have this property
