@@ -189,3 +189,18 @@ iexpr in {iexpr1, iexpr2, ..., iexprk}
 - The simple example for decide control signal from single code:
 
 ![](./set_membership_from_code.png)
+
+#### Memory and Clocking
+
+- Combinational circuits do not store any information, they just react to the input signal and generating corresponding output
+- **Sequential circuits** - systems that have state and perform computations on that state
+- 2 classes of memory devices:
+  - **Clocked registers**: store the individual bis or words. The clock signal controls the loading of the register with the value at its input
+    - The register serve as barriers between the combinational logic in different parts of the circuit
+    - Y86-64 processor will use clocked register to hold the program counter (PC), the condition codes (CC) and the program status (Stat)
+  ![](./register_operation.png)
+  - **Random access memories**: store multiple words, using an address to select which word should be read or written
+    - virtual memory system
+    - register file (register identifiers serve as the addresses, in Y86-64, %rax ~ %r14)
+  ![](./typical_register_file.png)
+  ![](./data_memory_eg.png)
