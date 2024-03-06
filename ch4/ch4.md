@@ -175,3 +175,17 @@ word Out4 = [
 ![](./alu_example.png)
 
 - The 4 operations diagrammed for this ALU correspond to the 4 different integer operation supported by the Y86-64 instruction set, and the control values match the function codes for these instructions
+
+#### Set Membership
+
+- The general form of a set membership test is
+
+```
+iexpr in {iexpr1, iexpr2, ..., iexprk}
+```
+
+- `iexpr1` through `iexprk` are all integer expressions
+
+- The simple example for decide control signal from single code:
+
+![](./set_membership_from_code.png)
