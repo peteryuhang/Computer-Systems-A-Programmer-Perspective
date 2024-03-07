@@ -308,7 +308,7 @@ $$b = \sum_{i=-n}^{m}2^i * b_i$$
   - The first purpose is to represent 0 (+0.0 and -0.0 have different s)
   - The second purpose is to represent numbers that are very close to 0.0
 - **Case 3: Special Values**
-  - The exponential field is all zeros
+  - The exponential field is all ones
   - When the fraction field is all zeros, the resulting values represent **infinity**, negative or positive depend on s, **indicate overflow**
   - When the fraction field is all nonzeros, the resulting value is called a **NaN**, short for "not a number", representing thing can't given as a real number
 
