@@ -204,3 +204,28 @@ iexpr in {iexpr1, iexpr2, ..., iexprk}
     - register file (register identifiers serve as the addresses, in Y86-64, %rax ~ %r14)
   ![](./typical_register_file.png)
   ![](./data_memory_eg.png)
+
+### Sequential Y86-64 Implementation
+
+#### Organizing Processing into Stages
+
+- Processing an instruction involves a number of operations, we organize them into a uniform sequnece of stages:
+
+1. **Fetch**: Reads the bytes of instruction from memory, using the program counter (PC) as the memory address
+2. **Decode**: Reads the two operands from the register file, giving them val
+3. **Execute**: ALU either performs the operation specified by the instruction or increments or decrements the stack pointer, or set the conditional code
+4. **Memory**:  Write/Read data from memory 
+5. **Write Back**: Writes up to two results to the register file
+6. **PC Update**: PC is set to the address of the next instruction
+
+- The processor loops indefinitely, performing these stages
+- The cost of duplicating blocks of logic in hardware is much higher than the cost of having multiple copies of code in software
+- Y86-64 instructions sequential stage:
+
+![](./computations_in_sequential_y86_64.png)
+![](./computations_in_sequential_y86_64_2.png)
+![](./computations_in_sequential_y86_64_3.png)
+![](./computations_in_sequential_y86_64_4.png)
+
+- `pushq` should decrement the stack pointer before writing
+- `popq` should first read memory and then increment the stack pointer
