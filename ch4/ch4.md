@@ -207,6 +207,8 @@ iexpr in {iexpr1, iexpr2, ..., iexprk}
 
 ### Sequential Y86-64 Implementation
 
+- Processor called SEQ (for "sequential" processor)
+
 #### Organizing Processing into Stages
 
 - Processing an instruction involves a number of operations, we organize them into a uniform sequnece of stages:
@@ -231,3 +233,19 @@ iexpr in {iexpr1, iexpr2, ..., iexprk}
 - `popq` should first read memory and then increment the stack pointer
 
 #### SEQ Hardware Structure
+
+- Processing is performed by hardware unit associated with different stages
+- The abstract view of SEQ:
+
+![](./abstract_view_of_seq.png)
+
+- More detail view of hardware required to implement SEQ
+  - **Clocked registers are shown as white rectangles** - The only one is PC
+  - **Hardware units are shown as light blue boxes** - Include memories, ALU etc
+  - **Control logic blocks are drawn as gray rounded rectangles**
+  - **Wire names are indicated in white circles** - Just label on the wire instead of any kind of hardware element
+  - **Word-wide data connections are shown as medium lines** - Each of these lines actually represents a bundle of 64 wires
+  - **Byte and narrower data connections are shown as thin lines** - Each of these lines actually represents a bundle of 4 or 8 wires
+  - **Single-bit connections are shown as dotted lines**
+
+![](./hardware_structure_of_seq.png)
