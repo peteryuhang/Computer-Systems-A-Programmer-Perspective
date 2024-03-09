@@ -229,3 +229,5 @@ iexpr in {iexpr1, iexpr2, ..., iexprk}
 
 - `pushq` should decrement the stack pointer before writing
 - `popq` should first read memory and then increment the stack pointer
+
+#### SEQ Hardware Structure
