@@ -249,3 +249,15 @@ iexpr in {iexpr1, iexpr2, ..., iexprk}
   - **Single-bit connections are shown as dotted lines**
 
 ![](./hardware_structure_of_seq.png)
+
+#### SEQ Timing
+
+- The hardware operates in a different way, with a single clock transition triggering a flow through combinational logic to execute the entire instruction
+- This works because our instruction stage obey the principle that - **No reading back**
+  - The processor never needs to read back the state updated by an instruction in order to complete the processing of this instruction
+  - eg.  suppose we implemented the pushq instruction by first decrementing %rsp by 8 and then using the updated value of %rsp as the address of a write operation. This approach would violate the principle stated above
+- Eg of executing instruction:
+
+![](./tracing_2_cycles_of_executing_by_SEQ.png)
+
+- Every time the clock transitions from low to high, the processor begins executing a new instruction
