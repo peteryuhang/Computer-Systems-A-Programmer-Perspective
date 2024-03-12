@@ -314,7 +314,7 @@ word dstE = [
 ];
 ```
 
-#### Execute Stage
+##### Execute Stage
 
 ![](./SEQ_execute_stage.png)
 
@@ -340,11 +340,52 @@ word aluB = [
 ];
 ```
 
-- HCL descriptions for `ALU fun`
+- HCL descriptions for `ALU fun` and `Set CC`
 
 ```
 word alufun = [
   icode == IOPQ : ifun;
   1 : ALUADD;
+];
+
+bool set_cc = icode in { IOPQ };
+```
+
+##### Memory Stage
+
+![](./SEQ_memory_stage.png)
+
+- Address for memory reads and writes is always `valE` or `valA`
+
+- HCL descriptions for `Mem addr`
+
+```
+word mem_addr = [
+  icode in { IRMMOVQ, IPUSHQ, ICALL, IMRMOVQ } : valE;
+  icode in { IPOPQ, IRET } : valA;
+  # Other instructions don’t need address
+];
+```
+
+- HCL descriptions for `Mem read`
+
+```
+bool mem_read = icode in { IMRMOVQ, IPOPQ, IRET };
+```
+
+- HCL descriptions for `Mem write`
+
+```
+bool mem_write = icode in { IRMMOVQ, IPUSHQ, ICALL };
+```
+
+- HCL descriptions for `Stat`
+
+```
+bool stat = [
+  mem_error || dmem_error: SADR;
+  !instr_valid: SINS;
+  icode == IHALT: SHLT;
+  1: SAOK
 ];
 ```
