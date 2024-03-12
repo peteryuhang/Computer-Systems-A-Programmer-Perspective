@@ -285,3 +285,31 @@ bool need_regids = icode in { IRRMOVQ, IOPQ, IPUSHQ, IPOPQ, IIRMOVQ, IRMMOVQ, IM
 ```
 bool need_regid = icode in { IIRMOVQ, IRMMOVQ, IMRMOVQ, IJXX, ICALL  };
 ```
+
+##### Decode and Write-Back Stages
+
+![](./SEQ_decode_and_write_back_stage.png)
+
+- `valA` and `valB` is for read output data, `srcA` and `srcB` is for corresponding read input address
+- `valM` and `valE` is for write input data, `dstE` and `dstM` is for corresponding address need to be replaced/written
+
+- HCL descriptions for `srcA`
+
+```
+word srcA = [
+  icode in { IRRMOVQ, IRMMOVQ, IOPQ, IPUSHQ } : rA;
+  icode in { IPOPQ, IRET } : RRSP;
+  1 : RNONE; # Don’t need register
+  ];
+```
+
+- HCL descriptions for `destE` (w/o consider conditional move)
+
+```
+word dstE = [
+  icode in { IRRMOVQ } : rB;
+  icode in { IIRMOVQ, IOPQ} : rB;
+  icode in { IPUSHQ, IPOPQ, ICALL, IRET } : RRSP;
+  1 : RNONE; # Don’t write any register
+];
+```
