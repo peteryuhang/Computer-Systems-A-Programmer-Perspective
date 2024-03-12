@@ -261,3 +261,27 @@ iexpr in {iexpr1, iexpr2, ..., iexprk}
 ![](./tracing_2_cycles_of_executing_by_SEQ.png)
 
 - Every time the clock transitions from low to high, the processor begins executing a new instruction
+
+
+#### SEQ Stage Implementations
+
+- The nop instruction simply flows through stages without much processing, except to increment the PC by 1
+- Constant values used in HCL descriptions:
+
+![](./constant_values_used_in_HCL.png)
+
+##### Fetch Stage
+
+![](./SEQ_fetch_stage.png)
+
+- HCL descriptions for `Need regids`:
+
+```
+bool need_regids = icode in { IRRMOVQ, IOPQ, IPUSHQ, IPOPQ, IIRMOVQ, IRMMOVQ, IMRMOVQ };
+```
+
+- HCL descriptions for `Need valC`:
+
+```
+bool need_regid = icode in { IIRMOVQ, IRMMOVQ, IMRMOVQ, IJXX, ICALL  };
+```
