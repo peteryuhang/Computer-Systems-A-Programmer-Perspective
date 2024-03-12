@@ -270,6 +270,9 @@ iexpr in {iexpr1, iexpr2, ..., iexprk}
 
 ![](./constant_values_used_in_HCL.png)
 
+- The clock must run slowly enough so that signals can propagate through all of the stages within a single cycle
+- Each unit is only active for a fraction of the total clock cycle
+
 ##### Fetch Stage
 
 ![](./SEQ_fetch_stage.png)
@@ -387,5 +390,22 @@ bool stat = [
   !instr_valid: SINS;
   icode == IHALT: SHLT;
   1: SAOK
+];
+```
+
+##### PC Update Stage
+
+![](./SEQ_PC_update_stage.png)
+
+```
+word new_pc = [
+  # Call. Use instruction constant
+  icode == ICALL : valC;
+  # Taken branch. Use instruction constant
+  icode == IJXX && Cnd : valC;
+  # Completion of RET instruction. Use value from stack
+  icode == IRET : valM;
+  # Default: Use incremented PC
+  1 : valP;
 ];
 ```
