@@ -409,3 +409,5 @@ word new_pc = [
   1 : valP;
 ];
 ```
+
+### General Principles of Pipelining
