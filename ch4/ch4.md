@@ -411,3 +411,7 @@ word new_pc = [
 ```
 
 ### General Principles of Pipelining
+
+- A key feature of pipelining is that it increase the **throughput** of the system, but it may also slightly increase the **latency**
+
+#### Computational Pipelines
