@@ -450,3 +450,11 @@ word new_pc = [
 
 - As the combination logic is split into shorter blocks, the delay due to register updating becomes a limiting factor
 - The circuit designer carefully design the pipeline registers to minimize their delay. The chip designer must also carefully design the clock distribution network to ensure that the clock changes at the exact same time across the entire chip
+
+#### Pipelining a System with Feedback
+
+- There are potential dependencies between successive instructions
+- In attempting to speed up the system via pipelining, we have changed the system behavior
+- We must deal with feedback effects properly
+
+![](./limitations_of_pipelining_due_to_logical_dependencies.png)
