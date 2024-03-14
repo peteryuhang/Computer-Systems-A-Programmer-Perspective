@@ -429,3 +429,11 @@ word new_pc = [
 
 - The thoughput is: `1 instruction / (100 + 20) ps * (1000 ps / 1 ns) = 8.33 GIPS`, which is bigger compare with previous'
 - The latency is: `360 ps`, which is slightly larger compare with previous'
+
+#### A Detail Look at Pipeline Operation
+
+- One clock cycle of pipeline operation
+
+![](./one_clock_cycle_of_pipeline_op.png)
+
+- We could have disastrous effects if the clock were run too fast
