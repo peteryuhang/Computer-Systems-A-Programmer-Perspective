@@ -415,3 +415,17 @@ word new_pc = [
 - A key feature of pipelining is that it increase the **throughput** of the system, but it may also slightly increase the **latency**
 
 #### Computational Pipelines
+
+- In unpipelined computation hardware, one instruction must been completed before beginning the next:
+
+![](./unpipelined_computation_hardware.png)
+
+- The thoughput is: `1 instruction / (300 + 20) ps * (1000 ps / 1 ns) = 3.12 GIPS`, GIPS is units of giga-instructions per second, or billions of instruction per second
+- The latency is: `320 ps`, **the reciprocal of the throughput**
+
+- After we make this into a pipeline below:
+
+![](./three_stage_pipelined_computation_hardware.png)
+
+- The thoughput is: `1 instruction / (100 + 20) ps * (1000 ps / 1 ns) = 8.33 GIPS`, which is bigger compare with previous'
+- The latency is: `360 ps`, which is slightly larger compare with previous'
