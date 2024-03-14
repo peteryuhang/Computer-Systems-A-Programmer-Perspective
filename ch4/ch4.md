@@ -437,3 +437,16 @@ word new_pc = [
 ![](./one_clock_cycle_of_pipeline_op.png)
 
 - We could have disastrous effects if the clock were run too fast
+
+#### Limitations of Pipelining
+
+##### Nonuniform Partitioning
+
+- The rate at which we can operate the clock is limited by the delay of the slowest stage
+
+![](./limitation_of_pipelining_nonuniform_stage.png)
+
+##### Diminishing Returns of Deep Pipelining
+
+- As the combination logic is split into shorter blocks, the delay due to register updating becomes a limiting factor
+- The circuit designer carefully design the pipeline registers to minimize their delay. The chip designer must also carefully design the clock distribution network to ensure that the clock changes at the exact same time across the entire chip
