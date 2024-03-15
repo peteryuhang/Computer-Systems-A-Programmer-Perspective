@@ -458,3 +458,14 @@ word new_pc = [
 - We must deal with feedback effects properly
 
 ![](./limitations_of_pipelining_due_to_logical_dependencies.png)
+
+### Pipelined Y86-64 Implementations
+
+#### SEQ+: Rearranging the Computation Stages
+
+- SEQ+: change the order of SEQ by making it compute the PC value for the current instruction
+- SEQ+ Hardware:
+
+![](./SEQ%2B_hardware_structure.png)
+
+- From SEQ to SEQ+ is general transformation known as **circuit retiming** - change the state representation of a system without changing its logical behavior, often used to balance the delays between the different stages of a pipelined system
