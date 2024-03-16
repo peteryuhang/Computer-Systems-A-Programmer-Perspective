@@ -469,3 +469,11 @@ word new_pc = [
 ![](./SEQ%2B_hardware_structure.png)
 
 - From SEQ to SEQ+ is general transformation known as **circuit retiming** - change the state representation of a system without changing its logical behavior, often used to balance the delays between the different stages of a pipelined system
+
+#### Inserting Pipeline Registers
+
+- After we added the register to each stage, we have the figure below:
+
+![](./hardware_structure_of_pipe-.png)
+
+- These white boxes represent actual hardware components
