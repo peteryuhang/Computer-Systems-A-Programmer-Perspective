@@ -477,3 +477,8 @@ word new_pc = [
 ![](./hardware_structure_of_pipe-.png)
 
 - These white boxes represent actual hardware components
+
+#### Rearranging and Relabeling Signals
+
+- As a general principle, we want to keep all of the information about a particular instruction contained within a single pipeline stage
+- Block `Select A` is to reduce the amount of state that must be carried forward to pipeline registers `E` and `M`
