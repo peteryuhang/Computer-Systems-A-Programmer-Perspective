@@ -482,3 +482,12 @@ word new_pc = [
 
 - As a general principle, we want to keep all of the information about a particular instruction contained within a single pipeline stage
 - Block `Select A` is to reduce the amount of state that must be carried forward to pipeline registers `E` and `M`
+
+#### Next PC Prediction
+
+- If the fetched instruction is `ret` or conditional jump, the PC can't been decided in `fetch` stage
+- **Branch prediction**: Guessing the branch direction, fetching and initiating the instruction according to the guessing
+- The `Select PC` choose one of three values below:
+  - predicted PC (in Y86-64, branch are alway token)
+  - the value of `valP` for a non-taken branch instruction that reaches pipeline register `M` (`M_valA`)
+  - the return address for `ret` in register `W` (`W_valM`)
