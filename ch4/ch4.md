@@ -506,3 +506,8 @@ word new_pc = [
 
 ![](./no_data_hazard_example.png)
 
+- We can avoiding data hazards by **stalling**, holding back the instruction in the decode stage until the instructions generating its source operands have passed through the write-back stage eg.
+
+![](./fix_data_hazard_by_stalling.png)
+
+- This will cause the pipeline to stall for up to three cycles, reducing the overall throughput significantly
