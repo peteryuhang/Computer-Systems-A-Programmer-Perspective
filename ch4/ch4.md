@@ -511,3 +511,12 @@ word new_pc = [
 ![](./fix_data_hazard_by_stalling.png)
 
 - This will cause the pipeline to stall for up to three cycles, reducing the overall throughput significantly
+
+- Another way is by **forwarding**, bypassing a result value directly from on pipeline stage to an earlier one, eg.
+
+![](./fix_data_hazard_by_forwarding.png)
+
+- To make forwarding work, we need to introduce hardware component to original PIPE:
+
+![](./data_forwarding_pipe.png)
+
