@@ -491,3 +491,18 @@ word new_pc = [
   - predicted PC (in Y86-64, branch are alway token)
   - the value of `valP` for a non-taken branch instruction that reaches pipeline register `M` (`M_valA`)
   - the return address for `ret` in register `W` (`W_valM`)
+
+#### Pipeline Hazards
+
+- We need to solve dependencies situation when design the pipeline
+
+##### Data Dependencies
+
+- The data hazard can happen on the situation below:
+
+![](./data_hazard_example.png)
+
+- A data hazard can arise for an instruction when one of its operands is updated by any of the three preceding instruction, eg. the below one doesn't have the issue:
+
+![](./no_data_hazard_example.png)
+
