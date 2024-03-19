@@ -520,3 +520,10 @@ word new_pc = [
 
 ![](./data_forwarding_pipe.png)
 
+- There is one situation which couldn't be handled properly by data forwarding, which is **Load/Use data hazards**
+
+![](./load_use_data_hazard.png)
+
+- We can avoid a load/use data hazard with combination of stalling and forwarding:
+
+![](./handling_load_use_data_hazard.png)
