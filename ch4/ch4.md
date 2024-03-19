@@ -527,3 +527,5 @@ word new_pc = [
 - We can avoid a load/use data hazard with combination of stalling and forwarding:
 
 ![](./handling_load_use_data_hazard.png)
+
+- The use of a stall to handle a load/use hazard is called a **load interlock**
