@@ -544,3 +544,14 @@ word new_pc = [
 ![](./mispredicted_branch_instructions.png)
 
 - The pipeline just `cancel` (or `instruction squashing`) the two misfetched instructions by injecting bubbles. The two misfetched instruction will then simply disappear from the pipeline
+
+#### Exception Handling
+
+- Our instruction set includes 3 different internally generated exceptions:
+  1. A `halt` instruction
+  2. An instruction with an invalid combination of instruction and function code
+  3. An attempt to access an invalid address
+
+- It is possible to have exceptions triggered by multiple instructions simultaneously
+- The basic rule is to put priority on the exception triggered by the instruction that is furthest along the pipeline
+- The pipeline control logic must disable any updating of the condition code register or the data memory whene an instruction in the memory or write-back stage has caused an exception
