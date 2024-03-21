@@ -555,3 +555,71 @@ word new_pc = [
 - It is possible to have exceptions triggered by multiple instructions simultaneously
 - The basic rule is to put priority on the exception triggered by the instruction that is furthest along the pipeline
 - The pipeline control logic must disable any updating of the condition code register or the data memory whene an instruction in the memory or write-back stage has caused an exception
+
+#### PIPE Stage Implementations
+
+##### PC Selection and Fetch Stage
+
+![](./PC_selection_and_fetch_logic.png)
+
+- HCL description for `f_pc`:
+
+```
+word f_pc = [
+  # Mispredicted branch. Fetch at incremented PC
+  M_icode == IJXX && !M_Cnd : M_valA;
+  # Completion of RET instruction
+  W_icode == IRET : W_valM;
+  # Default: Use predicted value of PC
+  1 : F_predPC;
+];
+```
+
+- HCL description for `f_predPC`:
+
+```
+word f_predPC = [
+  f_icode in { IJXX, ICALL } : f_valC;
+  1 : f_valP;
+];
+```
+
+#### Decode and Write-Back Stages
+
+![](./decode_and_write_back_stage_logic.png)
+
+- There are 5 different forwarding sources:
+
+|Data word| Register ID| Source description|
+|:-----|:------|------:|
+| e_valE | e_dstE | ALU output|
+| m_valM | M_dstM | Memory output|
+| M_valE | M_dstE | Pending write to port E in memory stage|
+| W_valM | W_dstM | Pending write to port M in write-back stage|
+| W_valE | W_dstE | Pending write to port E in write-back stage|
+
+- HCL description for the new valA for pipeline register E (The priority is very important):
+
+```
+word d_valA = [
+  D_icode in { ICALL, IJXX } : D_valP; # Use incremented PC
+  d_srcA == e_dstE : e_valE; # Forward valE from execute
+  d_srcA == M_dstM : m_valM; # Forward valM from memory
+  d_srcA == M_dstE : M_valE; # Forward valE from memory
+  d_srcA == W_dstM : W_valM; # Forward valM from write back
+  d_srcA == W_dstE : W_valE; # Forward valE from write back
+  1 : d_rvalA; # Use value read from register file
+];
+```
+
+- To imitate this behavior, our pipelined implementation should always give priority to the forwarding source in the earliest pipeline stage, since it holds the latest instruction in the program sequence setting the register
+
+##### Execute Stage
+
+![](./execute_stage_logic.png)
+
+- `Set CC` which determines whether or not to update the condition codes has `W_stat` and `m_stat` as inputs
+
+##### Memory Stage
+
+![](./memory_stage_logic.png)
