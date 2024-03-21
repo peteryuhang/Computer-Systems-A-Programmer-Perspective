@@ -529,3 +529,18 @@ word new_pc = [
 ![](./handling_load_use_data_hazard.png)
 
 - The use of a stall to handle a load/use hazard is called a **load interlock**
+
+##### Control Dependencies
+
+- Control hazards arise when the processor cannot reliably determine the address of the next instruction based on the current instruction in the fetch stage
+- Handling the `ret` instruction:
+
+![](./ret_instruction_processing.png)
+
+- We insert bubble until `ret` instruction reaches the write-back stage, the PC selection logic will set the program counter to the return address
+
+- Handling a mispredicted branch:
+
+![](./mispredicted_branch_instructions.png)
+
+- The pipeline just `cancel` (or `instruction squashing`) the two misfetched instructions by injecting bubbles. The two misfetched instruction will then simply disappear from the pipeline
