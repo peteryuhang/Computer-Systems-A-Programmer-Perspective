@@ -623,3 +623,21 @@ word d_valA = [
 ##### Memory Stage
 
 ![](./memory_stage_logic.png)
+
+
+#### Pipeline Control Logic
+
+##### Desired Handling of Special Control Cases
+
+- For a load/use hazard, we need:
+  1. detecting the hazard condition
+  2. keeping pipeline registers F and D fixed
+  3. injecting a bubble into the execute stage
+- Processing `ret`
+  - Stall the fetch stage for three cycles
+- Mispredicted branch
+  - The control logic will injects bubbles into the decode and execute stages on the next cycle, causing the incorrectly fetched instruction to be canceled
+- An instruction that causes an exception
+  1. disabling the setting of condition codes by instructions in the execute stage
+  2. injecting bubbles into the memory stage to disable any writing to the data memory
+  3. stalling the write-back stage when it has an excepting instruction, thus bringing the pipeling to a halt
