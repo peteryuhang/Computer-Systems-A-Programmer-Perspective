@@ -641,3 +641,5 @@ word d_valA = [
   1. disabling the setting of condition codes by instructions in the execute stage
   2. injecting bubbles into the memory stage to disable any writing to the data memory
   3. stalling the write-back stage when it has an excepting instruction, thus bringing the pipeling to a halt
+
+##### Detecting Special Control Conditions
