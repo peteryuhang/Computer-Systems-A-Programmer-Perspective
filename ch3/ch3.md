@@ -157,7 +157,7 @@ exchange:
 subq $8, %rsp
 movq %rbp, (%rsp)
 ```
-- The behavior of the instruction `pupq %rax` is equal to instructions below:
+- The behavior of the instruction `popq %rax` is equal to instructions below:
 ```
 movq (%rsp), %rax
 addq $8, %rsp
