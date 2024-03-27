@@ -91,8 +91,8 @@ $$ Imm(r_b,r_i,s) $$
 
 - 4 components:
   1. Immediate offset `Imm`
-  2. A base register $ r_b $
-  3. An index register $ r_i $
+  2. A base register $r_b$
+  3. An index register $r_i$
   4. A scale factor s
 
 - The effective address is computed as
@@ -354,7 +354,7 @@ long gotodiff_se(long x, long y)
   return result;
   x_ge_y:
     ge_cnt++;
-    11 result = x - y;
+    result = x - y;
     return result;
 }
 ```
@@ -713,7 +713,7 @@ switch_eg:
 - Mechanism in procedures:
   - **Passing control**
   - **Passing data**
-  - **Allcating and deallocating memory**
+  - **Allocating and deallocating memory**
 
 #### The Run-Time Stack
 
@@ -770,9 +770,9 @@ switch_eg:
 
 #### Basic Principle
 
-- Array element `i` can be access at address $ x_A + L * i $
-  - $ x_A $ is the starting location/address
-  - $ L $ is the size of data type
+- Array element `i` can be access at address $x_A + L * i$
+  - $x_A$ is the starting location/address
+  - $L$ is the size of data type
 - eg.
 
 ![](./example_of_array_declarations.png)
