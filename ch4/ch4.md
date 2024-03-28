@@ -643,3 +643,17 @@ word d_valA = [
   3. stalling the write-back stage when it has an excepting instruction, thus bringing the pipeling to a halt
 
 ##### Detecting Special Control Conditions
+
+- The HCL for the special cases:
+
+![](./detection_conditions_for_pipeline_control_logic.png)
+
+##### Pipeline Control Mechanisms
+
+- Low-level mechanisms that allow the pipeline control logic to **hold back an instruction in a pipeline register** or **to inject a bubble into the pipeline**
+
+![](./additional_pipeline_register_operations.png)
+
+- Also, the action for pipeline control logic:
+
+![](./actions_for_pipeline_control_logic.png)
