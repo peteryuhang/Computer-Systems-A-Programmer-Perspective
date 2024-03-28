@@ -635,7 +635,7 @@ void switch_eg_impl(long x, long n, long *dest)
     &&loc_C, &&loc_D, &&loc_def,
     &&loc_D
   };
-  unsigned long index=n- 100;
+  unsigned long index = n - 100;
   long val;
 
   if (index > 6)
@@ -790,7 +790,7 @@ switch_eg:
 
 - For an array declared as `T D[R][C]`, array element `D[i][j]` is at memory address (L is the size of type T):
 
-$$ &D[i][j] = x_D + L(C * i + j) $$
+$$ \&D[i][j] = x_D + L(C * i + j) $$
 
 - Following assembly code can use to copy the element to register:
 
