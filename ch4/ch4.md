@@ -722,3 +722,18 @@ $$ CPI = (C_i + C_b) / C_i = 1 + C_b/C_i $$
 - Another form of CPI is
 
 $$ CPI = 1.0 + lp + mp + rp $$
+
+#### Unfinished Business
+
+##### Multicycle Instructions
+
+- In a more complete instruction set, we would need to implement instructions requiring more complex operations such as integer multiplicaiton and division and floating-point operations. 
+- One simple approach - simply expand the capabilities of the execute stage logic with integer and floating-point arithmetic units, but the rest instruction will be block by these time consuming one
+- With special hardware functional units that operate independently of the main pipeline - eg. one functional unit perform integer multiplication and division, and another perform floating-point operations, but we also need to handle the dependencies thing
+
+##### Interfacing with the Memory System
+
+- In our PIPE, we assuming that both the instruction and fetch unit and the data memory could read or write any memory location in on clock cycle
+- But the memory system is organized as a hierarchy
+- This situation need hardware and operation system to cooperate
+  - eg. page fault exception
