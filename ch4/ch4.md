@@ -672,3 +672,41 @@ word d_valA = [
 - When a program having combination B was executed, the control logic would set both the bubble and the stall signals for pipeline register D to 1:
 
 ![](./combination_b_pipeline_register.png)
+
+##### Control Logic Implementation
+
+- Overall structure of the pipeline control logic:
+
+![](./overall_structure_of_the_pipeline_control_logic.png)
+
+- eg. the HCL for `F_stall`:
+
+```
+bool F_stall =
+  # Conditions for a load/use hazard
+  E_icode in { IMRMOVQ, IPOPQ } &&
+  E_dstM in { d_srcA, d_srcB } ||
+  # Stalling at fetch while ret passes through pipeline
+  IRET in { D_icode, E_icode, M_icode };
+```
+
+- eg. the HCL for `D_stall`:
+
+```
+bool D_stall =
+  # Conditions for a load/use hazard
+  E_icode in { IMRMOVQ, IPOPQ } &&
+  E_dstM in { d_srcA, d_srcB };
+```
+
+- eg. the HCL for `D_bubble`:
+
+```
+bool D_bubble =
+  # Mispredicted branch
+  (E_icode == IJXX && !e_Cnd) ||
+  # Stalling at fetch while ret passes through pipeline
+  # but not condition for a load/use hazard
+  !(E_icode in { IMRMOVQ, IPOPQ } && E_dstM in { d_srcA, d_srcB }) &&
+  IRET in { D_icode, E_icode, M_icode };
+```
