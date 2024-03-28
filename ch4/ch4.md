@@ -657,3 +657,18 @@ word d_valA = [
 - Also, the action for pipeline control logic:
 
 ![](./actions_for_pipeline_control_logic.png)
+
+
+##### Combinations of Control Conditions
+
+- A common bug in designing a system is to fail to handle instances where multiple special conditions arise simultaneously
+
+![](./pipeline_states_for_special_control_conditions.png)
+
+- For combination A requires the `ret` to be stall in the fetch stage
+
+![](./combination_a_pipeline_register.png)
+
+- When a program having combination B was executed, the control logic would set both the bubble and the stall signals for pipeline register D to 1:
+
+![](./combination_b_pipeline_register.png)
