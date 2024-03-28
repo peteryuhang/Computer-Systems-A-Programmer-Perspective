@@ -710,3 +710,15 @@ bool D_bubble =
   !(E_icode in { IMRMOVQ, IPOPQ } && E_dstM in { d_srcA, d_srcB }) &&
   IRET in { D_icode, E_icode, M_icode };
 ```
+
+#### Performance Analysis
+
+- **CPI** - cycles per instruction
+- Assuming $C_i$ is the number of instructions processed, $C_b$ is the number of bubbles processed, the computation of CPI is:
+
+$$ CPI = (C_i + C_b) / C_i = 1 + C_b/C_i $$
+
+- which is the 1.0 plus a penalty term indicating the average number of bubbles injected per instruction executed
+- Another form of CPI is
+
+$$ CPI = 1.0 + lp + mp + rp $$
