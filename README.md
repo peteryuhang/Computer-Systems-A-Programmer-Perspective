@@ -10,3 +10,5 @@ Note of reading book - Computer Systems - A Programmer's Perspective (CSAPP)
 ## [Machine-Level Representation of Programs](./ch3/ch3.md)
 
 ## [Processor Architecture](./ch4/ch4.md)
+
+## [Optimizing Program Performance](./ch5/ch5.md)
