@@ -790,7 +790,7 @@ switch_eg:
 
 - For an array declared as `T D[R][C]`, array element `D[i][j]` is at memory address (L is the size of type T):
 
-$$ \&D[i][j] = x_D + L(C \* i + j) $$
+$$\&D[i][j]=x_D+L(C*i+j)$$
 
 - Following assembly code can use to copy the element to register:
 
