@@ -46,4 +46,3 @@ long func1opt() {
 - Inline optimization will make any attempt to trace or set a breakpoint for that call fail
 
 ### Express Program Performance
-
