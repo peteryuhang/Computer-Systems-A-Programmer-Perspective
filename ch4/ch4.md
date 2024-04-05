@@ -52,7 +52,7 @@
 
 - The comparison between Y86-64 and X86-86
 
-for the program below:
+For the program below:
 
 ```c
 long sum(long *start, long count) {
