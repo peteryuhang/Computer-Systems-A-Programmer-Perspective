@@ -149,3 +149,66 @@ void combine2(vec_ptr v, data_t *dest) {
   }
 }
 ```
+
+### Reducing Procedure Calls
+
+```c
+data_t *get_vec_start(vec_ptr v) {
+  return v->data;
+}
+
+/* Direct access to vector data */
+void combine3(vec_ptr v, data_t *dest) {
+  long i;
+  long length = vec_length(v);
+  data_t *data = get_vec_start(v);
+  *dest = IDENT;
+  for (i = 0; i < length; i++) {
+    *dest = *dest OP data[i];
+  }
+}
+```
+
+### Eliminating Unneeded Memory References
+
+- The assembly can give more clue about optimization
+
+```c
+# Inner loop of combine3. data_t = double, OP = *
+# dest in %rbx, data+i in %rdx, data+length in %rax
+.L17:                                 # loop:
+  vmovsd (%rbx), %xmm0                # Read product from dest
+  vmulsd (%rdx), %xmm0, %xmm0         # Multiply product by data[i]
+  vmovsd %xmm0, (%rbx)                # Store product at dest
+  addq $8, %rdx                       # Increment data+i
+  cmpq %rax, %rdx                     # Compare to data+length
+  jne .L17                            # If !=, goto loop
+```
+
+- `vmovsd (%rbx), %xmm0` and `vmovsd %xmm0, (%rbx)` is not necessary, code below give same result but less instruction:
+
+```c
+# Inner loop of combine4. data_t = double, OP = *
+# acc in %xmm0, data+i in %rdx, data+length in %rax
+.L25:                                 # loop:
+  vmulsd (%rdx), %xmm0, %xmm0         # Multiply acc by data[i]
+  addq $8, %rdx                       # Increment data+i
+  cmpq %rax, %rdx                     # Compare to data+length
+  jne .L25                            # If !=, goto loop
+```
+
+- Corresponding C code
+
+```c
+/* Accumulate result in local variable */
+void combine4(vec_ptr v, data_t *dest) {
+  long i;
+  long length = vec_length(v);
+  data_t *data = get_vec_start(v);
+  data_t acc = IDENT;
+  for (i = 0; i < length; i++) {
+    acc = acc OP data[i];
+  }
+  *dest = acc;
+}
+```
