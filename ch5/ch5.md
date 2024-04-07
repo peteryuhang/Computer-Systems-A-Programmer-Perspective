@@ -132,4 +132,20 @@ void combine1(vec_ptr v, data_t *dest) {
 
 ![](./program_example_cpe.png)
 
+### Eliminating Loop Inefficiencies
 
+- **code motion**: Remove computation performed multiple time, but the result of computation won't be change
+
+```c
+/* Move call to vec_length out of loop */
+void combine2(vec_ptr v, data_t *dest) {
+  long i;
+  long length = vec_length(v);
+  *dest = IDENT;
+  for (i = 0; i < length; i++) {
+    data_t val;
+    get_vec_element(v, i, &val);
+    *dest = *dest OP val;
+  }
+}
+```
