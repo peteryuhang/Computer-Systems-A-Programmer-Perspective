@@ -76,3 +76,60 @@ void psum2(float a[], float p[], long n) {
 
 ![](./performace_of_prefixsum_func.png)
 
+### Program Example
+
+- Program example for optimization
+
+```c
+typedef long data_t;
+
+// #define IDENT 0
+// #define OP +
+
+#define IDENT 1
+#define OP *
+
+/* Create abstract data type for vector */
+typedef struct {
+  long len;
+  data_t *data;
+} vec_rec, *vec_ptr;
+
+/*
+ * Retrieve vector element and store at dest.
+ * Return 0 (out of bounds) or 1 (successful)
+ */
+int get_vec_element(vec_ptr v, long index, data_t *dest) {
+  if (index < 0 || index >= v->len)
+    return 0;
+
+  *dest = v->data[index];
+  return 1;
+}
+
+/* Return length of vector */
+long vec_length(vec_ptr v) {
+  return v->len;
+}
+```
+
+- First version of program
+
+```c
+/* Implementation with maximum use of data abstraction */
+void combine1(vec_ptr v, data_t *dest) {
+  long i;
+  *dest = IDENT;
+  for (i = 0; i < vec_length(v); i++) {
+    data_t val;
+    get_vec_element(v, i, &val);
+    *dest = *dest OP val;
+  }
+}
+```
+
+- Enabling some level of optimization can save the cost:
+
+![](./program_example_cpe.png)
+
+
