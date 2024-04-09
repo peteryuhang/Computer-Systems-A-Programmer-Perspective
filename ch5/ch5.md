@@ -212,3 +212,15 @@ void combine4(vec_ptr v, data_t *dest) {
   *dest = acc;
 }
 ```
+
+### Understanding Modern Processors
+
+#### Overall Operation
+
+- Simple view of a modern microprocessor
+
+![](./block_diagram_of_out_of_order_processor.png)
+
+- The processor can perform multiple operations on every clock and **out of order**
+- Any updates to the program registers occur only as instructions are being retired
+- **register renaming**: By this, values can be forwarded directly from one operation to another
