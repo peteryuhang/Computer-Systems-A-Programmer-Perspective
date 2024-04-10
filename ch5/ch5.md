@@ -224,3 +224,16 @@ void combine4(vec_ptr v, data_t *dest) {
 - The processor can perform multiple operations on every clock and **out of order**
 - Any updates to the program registers occur only as instructions are being retired
 - **register renaming**: By this, values can be forwarded directly from one operation to another
+
+#### Functional Unit Performance
+
+- Intel Core i7 Haswell performance of some of the arithmetic operation
+
+![](./arithmetic_operation_performance.png)
+
+- **Latency**: Total time (clock cycle) required to perform operation
+- **Issue**: Minimum number of clock cycles between two independent operations of the same type
+- **Capacity**: Number of functional units capable of performing the operation
+
+- The processor can achieve `C/I` throughput, where `C` is the capacity and `I` is the issue time
+- The throughput also been limited by other factor, eg. arithmetic unit been limited by load and store unit
