@@ -300,3 +300,52 @@ double polyh(double a[], double x, long degree) {
 ```
 
 - `poly` is much faster than `polyh` because `poly`'s critical path is just one `mul` operation, but `polyh` critical path is `mul` + `add`
+
+### Loop Unrolling
+
+- Loop unrolling is a program transformation that reduces the number of iterations in a loop by increasing the numebr of elements computed on each iteration
+- `combine4` can be converted to program below:
+
+```c
+/* 2 x 1 loop unrolling */
+void combine5(vec_ptr v, data_t *dest) {
+  long i;
+  long length = vec_length(v);
+  long limit = length-1;
+  data_t *data = get_vec_start(v);
+  data_t acc = IDENT;
+  /* Combine 2 elements at a time */
+  for (i = 0; i < limit; i+=2) {
+    acc = (acc OP data[i]) OP data[i+1];
+  }
+  /* Finish any remaining elements */
+  for (; i < length; i++) {
+    acc = acc OP data[i];
+  }
+  *dest = acc;
+}
+```
+
+- We can also generalize this idea to yielding k X 1 loop unrolling
+- The CPE change listed below:
+
+![](./CPE_measurements_from_combine5.png)
+
+- The corresponding assembly code:
+
+```
+# Inner loop of combine5. data_t = double, OP = *
+# i in %rdx, data %rax, limit in %rbx, acc in %xmm0
+  .L35:                                  # loop:
+  vmulsd (%rax,%rdx,8), %xmm0, %xmm0     # Multiply acc by data[i]
+  vmulsd 8(%rax,%rdx,8), %xmm0, %xmm0    # Multiply acc by data[i+1]
+  addq $2, %rdx                          # Increment i by 2
+  cmpq %rdx, %rbp                        # Compare to limit:i
+  jg .L35                                # If >, goto loop
+```
+
+- The data dependencies graph:
+
+![](./data_flow_representation_of_combine5.png)
+
+- gcc will perform some forms of loop unrolling when invoked with optimization level 3 or higher
