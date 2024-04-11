@@ -173,7 +173,7 @@ void combine3(vec_ptr v, data_t *dest) {
 
 - The assembly can give more clue about optimization
 
-```c
+```
 # Inner loop of combine3. data_t = double, OP = *
 # dest in %rbx, data+i in %rdx, data+length in %rax
 .L17:                                 # loop:
@@ -187,7 +187,7 @@ void combine3(vec_ptr v, data_t *dest) {
 
 - `vmovsd (%rbx), %xmm0` and `vmovsd %xmm0, (%rbx)` is not necessary, code below give same result but less instruction:
 
-```c
+```
 # Inner loop of combine4. data_t = double, OP = *
 # acc in %xmm0, data+i in %rdx, data+length in %rax
 .L25:                                 # loop:
@@ -237,3 +237,66 @@ void combine4(vec_ptr v, data_t *dest) {
 
 - The processor can achieve `C/I` throughput, where `C` is the capacity and `I` is the issue time
 - The throughput also been limited by other factor, eg. arithmetic unit been limited by load and store unit
+
+#### An Abstract Model of Processor Operation
+
+- Based on the code below:
+
+```
+# Inner loop of combine4. data_t = double, OP = *
+# acc in %xmm0, data+i in %rdx, data+length in %rax
+.L25:                                 # loop:
+  vmulsd (%rdx), %xmm0, %xmm0         # Multiply acc by data[i]
+  addq $8, %rdx                       # Increment data+i
+  cmpq %rax, %rdx                     # Compare to data+length
+  jne .L25                            # If !=, goto loop
+```
+
+we can get draw the dependencies graph:
+
+![](./graphical_representation_of_combine4_inner_loop.png)
+
+- We can classify the register into 4 categories:
+  - **Read-only**: eg. `%rax`
+  - **Write-only**: Only been used as destination of data movement instruction
+  - **Local**: Updated adn used within the loop, but there is no dependency from one iteration to another, eg. condition code register
+  - **Loop**: Both as source values and as destinations for the loop, eg. `%xmm0` and `%rdx`
+
+- We can simply the graph:
+
+![](./abstract_operations_of_combine4.png)
+
+- Also expend to n element (loop)
+
+![](./data_flow_representation_of_inner_loop_of_combine4.png)
+
+- The critical path will decide the lower bound on how many cycle the program required
+- The reason that integer addition not close to latency bound because add is fast and not become the critical path
+
+![](./CPE_measurements_from_combine4.png)
+
+```c
+double poly(double a[], double x, long degree) {
+  long i;
+  double result = a[0];
+  double xpwr = x; /* Equals x^i at start of loop */
+  for (i = 1; i <= degree; i++) {
+    result += a[i] * xpwr;
+    xpwr = x * xpwr;
+  }
+  return result;
+}
+```
+
+```c
+/* Apply Horner’s method */
+double polyh(double a[], double x, long degree) {
+  long i;
+  double result = a[degree];
+  for (i = degree-1; i >= 0; i--)
+    result = a[i] + x*result;
+    return result;
+}
+```
+
+- `poly` is much faster than `polyh` because `poly`'s critical path is just one `mul` operation, but `polyh` critical path is `mul` + `add`
