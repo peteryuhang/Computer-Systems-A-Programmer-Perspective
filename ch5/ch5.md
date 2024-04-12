@@ -314,10 +314,12 @@ void combine5(vec_ptr v, data_t *dest) {
   long limit = length-1;
   data_t *data = get_vec_start(v);
   data_t acc = IDENT;
+
   /* Combine 2 elements at a time */
   for (i = 0; i < limit; i+=2) {
     acc = (acc OP data[i]) OP data[i+1];
   }
+
   /* Finish any remaining elements */
   for (; i < length; i++) {
     acc = acc OP data[i];
@@ -336,7 +338,7 @@ void combine5(vec_ptr v, data_t *dest) {
 ```
 # Inner loop of combine5. data_t = double, OP = *
 # i in %rdx, data %rax, limit in %rbx, acc in %xmm0
-  .L35:                                  # loop:
+.L35:                                    # loop:
   vmulsd (%rax,%rdx,8), %xmm0, %xmm0     # Multiply acc by data[i]
   vmulsd 8(%rax,%rdx,8), %xmm0, %xmm0    # Multiply acc by data[i+1]
   addq $2, %rdx                          # Increment i by 2
