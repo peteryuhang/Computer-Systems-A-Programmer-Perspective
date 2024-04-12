@@ -351,3 +351,52 @@ void combine5(vec_ptr v, data_t *dest) {
 ![](./data_flow_representation_of_combine5.png)
 
 - gcc will perform some forms of loop unrolling when invoked with optimization level 3 or higher
+
+### Enhancing Parallelism
+
+- In the previous loop, we can't compute a new value (acc) until preceding computation complete
+
+#### Multiple Accumulators
+
+- We can modify previous program and generate the one below:
+
+```c
+/* 2 x 2 loop unrolling */
+void combine6(vec_ptr v, data_t *dest) {
+  long i;
+  long length = vec_length(v);
+  long limit = length-1;
+  data_t *data = get_vec_start(v);
+  data_t acc0 = IDENT;
+  data_t acc1 = IDENT;
+
+  /* Combine 2 elements at a time */
+  for (i = 0; i < limit; i+=2) {
+    acc0 = acc0 OP data[i];
+    acc1 = acc1 OP data[i+1];
+  }
+
+  /* Finish any remaining elements */
+  for (; i < length; i++) {
+    acc0 = acc0 OP data[i];
+  }
+  *dest = acc0 OP acc1;
+}
+```
+
+- The performance comparsion showed below:
+
+![](./multiple_accumulators_performance.png)
+
+- Data-flow of the corresponding function:
+
+![](./data_flow_of_combine6.png)
+
+- CPE of performance:
+
+![](./CPE_of_performance_of_combine6.png)
+
+- The program can achieve throghtput bound for an operation only when it can keep the pipelines filled for all the functional units capable of performing that operation
+  - One functional unit could take multiple operation parallely
+  - with `k >= L * C` where `L` is latency and `C` is capacity
+- Floating-point addition and multiplication are not accociative but most of time it won't be the problem
