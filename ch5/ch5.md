@@ -400,3 +400,35 @@ void combine6(vec_ptr v, data_t *dest) {
   - One functional unit could take multiple operation parallely
   - with `k >= L * C` where `L` is latency and `C` is capacity
 - Floating-point addition and multiplication are not accociative but most of time it won't be the problem
+
+#### Reassociation Transformation
+
+- Similarly, we can change the operation order to achieve improvement:
+
+```c
+/* 2 x 1a loop unrolling */
+void combine7(vec_ptr v, data_t *dest) {
+  long i;
+  long length = vec_length(v);
+  long limit = length-1;
+  data_t *data = get_vec_start(v);
+  data_t acc = IDENT;
+
+  /* Combine 2 elements at a time */
+  for (i = 0; i < limit; i+=2) {
+    acc = acc OP (data[i] OP data[i+1]);
+  }
+
+  /* Finish any remaining elements */
+  for (; i < length; i++) {
+    acc = acc OP data[i];
+  }
+  *dest = acc;
+}
+```
+
+- Corresponding data flow:
+
+![](./data_flow_of_combine7.png)
+
+- The performance improvement is similar to combine6
