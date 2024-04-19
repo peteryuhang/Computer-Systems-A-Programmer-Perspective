@@ -561,6 +561,13 @@ void clear_array(long *dest, long n) {
 
 - For the example A, load not depend on store, and give CPE 1.3 for each iteration
 - For the example B, load depend on store give CPE 7.3
+
+- Detailed look at the load and store execution units
+
+![](./detail_of_load_and_store_units.png)
+
+- This buffer is provided so that a series of store operations can be executed without having to wait for each one to update the cache
+
 - The data dependencies graph shows below:
 
 ![](./data_flow_repr_of_fun_write_read.png)
