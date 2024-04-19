@@ -432,3 +432,62 @@ void combine7(vec_ptr v, data_t *dest) {
 ![](./data_flow_of_combine7.png)
 
 - The performance improvement is similar to combine6
+
+### Some Limiting Factors
+
+#### Register Spilling
+
+- If the parallelism P that exceeds the number of available register, then the space will be allocating on the run-time stack, which will have some overhead, eg.
+
+![](./CPE_register_spilling.png)
+
+- code of 10 X 10 inner loop:
+
+```
+# Updating of accumulator acc0 in 10 x 10 urolling
+vmulsd (%rdx), %xmm0, %xmm0              # acc0 *= data[i]
+```
+
+- code of 20 X 20 inner loop:
+
+```
+# Updating of accumulator acc0 in 20 x 20 unrolling
+vmovsd 40(%rsp), %xmm0
+vmulsd (%rdx), %xmm0, %xmm0
+vmovsd %xmm0, 40(%rsp)
+```
+
+#### Branch Prediction and Misprediction Penalties
+
+- The loop-closing branches in our combining routines would typically be predicted as being taken, and hence would only incur a misprediction penalty on the last time around
+- Program performance can be greatly enhanced if the compiler is able to generate code using conditional data transfers rather than conditional control transfers
+
+- The example below show a CPE of around 13.5 for random data
+```c
+/* Rearrange two vectors so that for each i, b[i] >= a[i] */
+void minmax1(long a[], long b[], long n) {
+  long i;
+  for (i = 0; i < n; i++) {
+    if (a[i] > b[i]) {
+      long t = a[i];
+      a[i] = b[i];
+      b[i] = t;
+    }
+  }
+}
+```
+
+- Optimize to code below show a CPE of around 4.0 for random data
+
+```c
+/* Rearrange two vectors so that for each i, b[i] >= a[i] */
+void minmax2(long a[], long b[], long n) {
+  long i;
+  for (i = 0; i < n; i++) {
+    long min = a[i] < b[i] ? a[i] : b[i];
+    long max = a[i] < b[i] ? b[i] : a[i];
+    a[i] = min;
+    b[i] = max;
+  }
+}
+```
