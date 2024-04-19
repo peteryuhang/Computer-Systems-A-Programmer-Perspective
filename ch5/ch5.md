@@ -491,3 +491,79 @@ void minmax2(long a[], long b[], long n) {
   }
 }
 ```
+
+### Understanding Memory Performance
+
+#### Load Performance
+
+- We use the program below to determine load performance:
+
+```c
+typedef struct ELE {
+  struct ELE *next;
+  long data;
+} list_ele, *list_ptr;
+
+long list_len(list_ptr ls) {
+  long len = 0;
+  while (ls) {
+    len++;
+    ls = ls->next;
+  }
+  return len;
+}
+```
+
+- The `list_len` has a CPE of 4.0, which is a direct indication of the latency of the load operation
+- Corresponding assembly code:
+
+```
+# Inner loop of list_len
+# ls in %rdi, len in %rax
+.L3:                      # loop:
+  addq $1, %rax             # Increment len
+  movq (%rdi), %rdi         # ls = ls->next
+  testq %rdi, %rdi          # Test ls
+  jne .L3                   # If nonnull, goto loop
+```
+
+#### Store Performance
+
+- Unlike the other operations we have considered so far, the store operation does not affect any register values. Thus, by their very nature, a series of store operations cannot create a data dependency
+- Only a load operation is affected by the result of a store operation
+- The program below have CPE 1.0 (Best we can achieve on a machine with a single store functional unit):
+
+```c
+/* Set elements of array to 0 */
+void clear_array(long *dest, long n) {
+  long i;
+  for (i = 0; i < n; i++)
+    dest[i] = 0;
+}
+```
+
+- Code to write and read memory locations:
+
+![](./code_write_read_memory_locations.png)
+
+- Assembly code of function `write_read`:
+
+```
+# Inner loop of write_read
+# src in %rdi, dst in %rsi, val in %rax
+.L3:                          # loop:
+  movq %rax, (%rsi)           # Write val to dst
+  movq (%rdi), %rax           # t = *src
+  addq $1, %rax               # val = t+1
+  subq $1, %rdx               # cnt--
+  jne .L3                     # If != 0, goto loop
+```
+
+- For the example A, load not depend on store, and give CPE 1.3 for each iteration
+- For the example B, load depend on store give CPE 7.3
+- The data dependencies graph shows below:
+
+![](./data_flow_repr_of_fun_write_read.png)
+
+- Two computations are performed independently can be important to program performance
+- With memory operations, on the other hand, the processor cannot predict which will affect which others until the load and store addresses have been computed
