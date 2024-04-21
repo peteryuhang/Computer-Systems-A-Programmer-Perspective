@@ -574,3 +574,14 @@ void clear_array(long *dest, long n) {
 
 - Two computations are performed independently can be important to program performance
 - With memory operations, on the other hand, the processor cannot predict which will affect which others until the load and store addresses have been computed
+
+### Life in the Real World: Performance Improvement Techniques
+
+- **High level design**: eg. choose appropriate alogrithm
+- **Basic coding principles** - Avoid optimization blockers so that a compiler can generate efficient code
+  - Eliminate excessive function calls inside loop
+  - Elimiate unnecessary memory references
+- **Low-level optimizations** - Structure code to take advantage of the hardware capabilities
+  - Unroll loops to reduce overhead and to enable further optimizations
+  - Find ways to increase instruction-level parallelism, eg. multiple accumulators, reassociation
+  - Rewrite conditional operations in a functional style to enable compilation via conditional data transfers
