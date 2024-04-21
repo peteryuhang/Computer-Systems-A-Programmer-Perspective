@@ -585,3 +585,31 @@ void clear_array(long *dest, long n) {
   - Unroll loops to reduce overhead and to enable further optimizations
   - Find ways to increase instruction-level parallelism, eg. multiple accumulators, reassociation
   - Rewrite conditional operations in a functional style to enable compilation via conditional data transfers
+
+### Identifying and Eliminating Performance Bottlenecks
+
+#### Program Profiling
+
+- One strength of profiling is that it can be performed while running the actual program on realistic benchmark data
+- Unix systems provide the profiling program `GPROF`. Profiling with `GPROF` requires three steps:
+```
+# compile and link for profiling, simply including the run-time flag `-pg` on the command line
+>$ gcc -Og -pg prog.c -o prog
+
+# Execute the program as usual
+>$ ./prog
+
+# GPROF is invoked to analyze the data in gmon.out
+>$ phrof prog
+```
+
+- Some properties of GPROF:
+  - The timing is not very precise since it is based on a simple **interval counting** scheme, but the os might interrupt the execution which also been countered
+  - The calling information is quite reliable, assuming no inline substitutions have been performed
+  - By default, the timings for library functions are not shown.  Instead, these times are incorporated into the times for the calling functions
+
+#### Using a Profiler to Guide Optimization
+
+- The profiler helps us focus our attention on the most time-consuming parts of the program and also provides useful information about the procedure call structure
+- When one bottleneck is eliminated, a new one arises, and so gaining additional speedup required focusing on other parts of the program
+- Amdahl's law (discussed in CH1) can be used to analyze the optimization result
