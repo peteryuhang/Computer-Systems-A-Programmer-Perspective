@@ -12,3 +12,5 @@ Note of reading book - Computer Systems - A Programmer's Perspective (CSAPP)
 ## [Processor Architecture](./ch4/ch4.md)
 
 ## [Optimizing Program Performance](./ch5/ch5.md)
+
+## [The Memory Hierarchy](./ch6/ch6.md)
