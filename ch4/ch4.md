@@ -554,7 +554,7 @@ word new_pc = [
 
 - It is possible to have exceptions triggered by multiple instructions simultaneously
 - The basic rule is to put priority on the exception triggered by the instruction that is furthest along the pipeline
-- The pipeline control logic must disable any updating of the condition code register or the data memory whene an instruction in the memory or write-back stage has caused an exception
+- The pipeline control logic must disable any updating of the condition code register or the data memory when an instruction in the memory or write-back stage has caused an exception
 
 #### PIPE Stage Implementations
 
