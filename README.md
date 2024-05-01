@@ -14,3 +14,5 @@ Note of reading book - Computer Systems - A Programmer's Perspective (CSAPP)
 ## [Optimizing Program Performance](./ch5/ch5.md)
 
 ## [The Memory Hierarchy](./ch6/ch6.md)
+
+## [Linking](./ch7/ch7.md)
