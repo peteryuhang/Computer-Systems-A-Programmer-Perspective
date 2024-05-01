@@ -43,3 +43,12 @@
 - **Synchronous DRAM (SDRAM)**: Optimize control signal
 - **Double Data-Rate Synchronous DRAM (DDR SDRAM)**: doubles the speed of the DRAM by using both clock edges as control signals
 - **Video RAM (VRAM)**: Used in the frame buffers of graphics systems, allows concurrent reads and writes to the memory
+
+##### Nonvolatile Memory
+
+- For historical reasons, they are referred to collectively as read-only memories (ROMs), even though some types of ROMs can be written to as well as read
+- **programmable ROM (PROM)**: can be programmed exactly once
+- **erasable programmable ROM (EPROM)**: can be erased and reprogrammed on the order of 1,000 times
+- **electrically erasable PROM (EEPROM)**: can be reprogrammed on the order of 10^5 times before it wears out
+- **Flash memory**: based on EEPROMs
+- Programs stored in ROM devices are often referred to as **firmware**
