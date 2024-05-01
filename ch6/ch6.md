@@ -52,3 +52,16 @@
 - **electrically erasable PROM (EEPROM)**: can be reprogrammed on the order of 10^5 times before it wears out
 - **Flash memory**: based on EEPROMs
 - Programs stored in ROM devices are often referred to as **firmware**
+
+##### Accessing Main Memory
+
+- **Bus transaction**
+  - **read transaction**: data from the main memory to CPU
+  - **write transaction**: data from CPU to the main memory
+- The control wires carry signals that synchronize the transaction and identify what kind of transaction is currently being performed
+
+- First -> address, Second -> data
+
+![](./memory_read_transaction_for_a_load_op.png)
+
+![](./memory_write_transaction_for_a_store_op.png)
