@@ -184,3 +184,46 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
 - In general, devices lower in the hierarchy (further from the CPU) have longer access times, and thus tend to use larger block sizes in order to amortize these longer access times
 - Hardware caches typically implement a simpler placement policy that restricts a particular block at level k + 1 to a small subset (sometimes a singleton) of the blocks at level k
 - The compiler manages the register file, the highest level of the cache hierarchy
+
+### Cache Memories
+
+- General organization of cache:
+
+![](./general_org_of_cache.png)
+
+- Summary of cache parameters:
+
+![](./summary_of_cache_parameters.png)
+
+#### Direct-Mapped Caches
+
+- A cache with exactly one line per set (E = 1) is known as a direct-mapped cache
+
+![](./direct_mapped_caches.png)
+
+- The process that a cache goes through of determining whether a request is a hit or a miss and then extracting the requested word consists of three steps:
+  - (1) set selection
+  - (2) line matching
+  - (3) word extraction
+
+![](./direct_mapped_caches_op.png)
+
+#### Set Associative Caches
+
+- A cache with 1 < E < C/B is often called an E-way set associative cache
+
+![](./set_associative_caches.png)
+
+- An associative memory is an array of (key, value) pairs that takes as input the key and returns a value from one of the (key, value) pairs that matches the input key
+- Line matching & word selection:
+
+![](./line_matching_and_word_selection.png)
+
+#### Fully Associative Caches
+
+- A fully associative cache consists of a single set (i.e., E = C/B) that contains all of the cache lines
+
+![](./fully_associative_caches.png)
+
+- Because the cache circuitry must search for many matching tags in parallel, it is difficult and expensive to build an associative cache that is both large and fast
+- As a result, fully associative caches are only appropriate for small caches, such as the translation lookaside buffers (TLBs) in virtual memory systems that cache page table entries
