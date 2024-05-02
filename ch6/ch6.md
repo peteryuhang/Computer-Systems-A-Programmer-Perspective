@@ -65,3 +65,31 @@
 ![](./memory_read_transaction_for_a_load_op.png)
 
 ![](./memory_write_transaction_for_a_store_op.png)
+
+#### Disk Storage
+
+##### Disk Geometry
+
+- Disk structure:
+
+![](./disk_geometry.png)
+
+- Platter -> Surface -> Track -> Sector -> Bits
+- We refer disk as rotating disk to distinguish them from SSD
+
+##### Disk Capacity
+
+- The capacity of a disk is given by:
+
+$$Capacity = \frac{\# bytes}{sector} \times \frac{average \# sectors}{track} \times \frac{\# track}{surface} \times \frac{\# surface}{platter} \times \frac{\# platter}{disk}$$
+
+- For example, suppose we have a disk with five platters, 512 bytes per sector, 20,000 tracks per surface, and an average of 300 sectors per track. Then the capacity of the disk is:
+
+$$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \frac{20000 track}{surface} \times \frac{2 surface}{platter} \times \frac{5 platter}{disk} = 30,720,000,000 \ bytes = 30.72 \ GB$$
+
+- The storage unit is depend on context:
+  - For measures that relate to the capacity of DRAMs and SRAMs, typically $K = 2^10$, $M = 2^20$, $G = 2^30$, $T = 2^40$
+  - For measures that relate to the capacity of I/O devices such as disks and networks, typically $K = 10^3$, $M = 10^6$, $G = 10^9$, $T = 10^12$
+- Rates and throughputs usually use these prefix values as well
+
+
