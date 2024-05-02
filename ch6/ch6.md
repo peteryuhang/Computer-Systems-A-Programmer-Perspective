@@ -76,6 +76,7 @@
 
 - Platter -> Surface -> Track -> Sector -> Bits
 - We refer disk as rotating disk to distinguish them from SSD
+- There are gaps between sectors, but disk is cycle, inner cycle has less space compare to outter cycle, so we introduce zone and cylinders
 
 ##### Disk Capacity
 
@@ -92,4 +93,19 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
   - For measures that relate to the capacity of I/O devices such as disks and networks, typically $K = 10^3$, $M = 10^6$, $G = 10^9$, $T = 10^12$
 - Rates and throughputs usually use these prefix values as well
 
+##### Disk Operation
 
+- Disks read and write bits stored on the magnetic surface using a read/write head connected to the end of an actuator arm:
+
+![](./disk_dynamic.png)
+
+- At any point in time, all heads are positioned on the same cylinder
+- At these tolerances, a tiny piece of dust on the surface is like a huge boulder. For this reason, disks are always sealed in airtight packages
+- Access time for disk has three main components:
+  - *seek time*: positions the head over the track that contains the target sector
+  - *rotational latency*:  the drive waits for the first bit of the target sector to pass under the head
+  - *Transfer time*: read or write the contents of the sector
+- Some important observations:
+  - Total time dominated by the seek time and the rotational latency
+  - Twice the seek time is a simple and reasonable rule for estimating disk access time
+- The disk access time, roughly 10 ms, is about 40,000 times greater than SRAM, and about 2,500 times greater than DRAM
