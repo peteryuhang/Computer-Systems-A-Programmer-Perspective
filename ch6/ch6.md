@@ -132,3 +132,17 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
 - This process, whereby a device performs a read or write bus transaction on its own, without any involvement of the CPU, is known as direct memory access (DMA):
 
 ![](./reading_a_disk_sector.png)
+
+#### Solid State Disks
+
+- Data are read and written in units of pages. A page can be written only after the entire block to which it belongs has been erased (typically, this means that all bits in the block are set to 1):
+
+![](./ssd.png)
+
+- SSDs have the potential to wear out, and SSDs are about 30 times more expensive per byte than rotating disks
+
+#### Storage Technology Trends
+
+![](./storage_and_processing_technology_trends.png)
+
+- It is much easier to increase density (and thereby reduce cost) than to decrease access time
