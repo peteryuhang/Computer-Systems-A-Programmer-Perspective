@@ -146,3 +146,22 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
 ![](./storage_and_processing_technology_trends.png)
 
 - It is much easier to increase density (and thereby reduce cost) than to decrease access time
+- The gap between different storage:
+
+![](./gap_between_different_storage.png)
+
+### Locality
+
+- **Locality**: tend to reference data items that are near other recently referenced data items or that were recently referenced themselves
+  - **temporal locality**: In a program with good temporal locality, a memory location that is referenced once is likely to be referenced again multiple times in the near future
+  - **spatial locality**: In a program with good spatial locality, if a memory location is referenced once, then the program is likely to reference a nearby memory location in the near future
+- In general, programs with good locality run faster than programs with poor locality
+- In general, as the stride increases, the spatial locality decreases:
+
+![](./locality_program_example.png)
+
+- Summary:
+  - Programs that repeatedly reference the same variables enjoy good temporal locality
+  - For programs with stride-k reference patterns, the smaller the stride, the better the spatial locality. Programs with stride-1 reference patterns have good spatial locality. Programs that hop around memory with large strides have poor spatial locality
+  - Loops have good temporal and spatial locality with respect to instruction fetches. The smaller the loop body and the greater the number of loop iterations, the better the locality
+- Nonetheless, knowing how to glance at a source code and getting a high-level feel for the locality in the program is a useful and important skill for a programmer to master
