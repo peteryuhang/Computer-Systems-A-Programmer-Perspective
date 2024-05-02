@@ -109,3 +109,26 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
   - Total time dominated by the seek time and the rotational latency
   - Twice the seek time is a simple and reasonable rule for estimating disk access time
 - The disk access time, roughly 10 ms, is about 40,000 times greater than SRAM, and about 2,500 times greater than DRAM
+
+##### Logical Disk Blocks
+
+- To hide this complexity from the operating system, modern disks present a simpler view of their geometry as a sequence of B sector-size logical blocks, numbered 0, 1,...,B-1
+- Firmware on the controller performs a fast table lookup that translates the logical block number into a `(surface, track, sector)` triple that uniquely identifies the corresponding physical sector
+- Before a disk can be used to store data, it must be formatted by the disk controller
+  - This involves filling in the gaps between sectors with information that identifies the sectors, identifying any cylinders with surface defects and taking them out of action, and setting aside a set of cylinders in each zone as spares that can be called into action if one or more cylinders in the zone goes bad during the lifetime of the disk
+
+##### Connecting I/O Devices
+
+- I/O buses are designed to be independent of the underlying CPU:
+
+![](./bus_structure.png)
+
+- I/O buses is based on the **peripheral component interconnect (PCI)** bus
+- In the PCI model, each device in the system shares the bus, and only one device at a time can access these wires
+- In modern systems, the shared PCI bus has been replaced by a PCI express (PCIe) bus, which is a set of high-speed serial, point-to-point links connected by switches
+
+##### Accessing Disks
+
+- This process, whereby a device performs a read or write bus transaction on its own, without any involvement of the CPU, is known as direct memory access (DMA):
+
+![](./reading_a_disk_sector.png)
