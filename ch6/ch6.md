@@ -269,3 +269,47 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
   - Traditionally, lower for higher cache, higher for lower cache
 - **Impact of Write Strategy**:
   - In general, caches further down the hierarchy are more likely to use write-back than write-through
+
+### Writing Cache-Friendly Code
+
+- Two suggestions:
+  - **Make the common case go fast**: Focus on the inner loops of the core functions and ignore the rest
+  - **Minimize the number of cache misses in each inner loop**
+
+### Putting It Together: The Impact of Caches on Program Performance
+
+#### The Memory Mountain
+
+- Smaller values of size result in a smaller working set size, and thus better temporal locality
+- Smaller values of stride result in better spatial locality
+- We can get the graph below after some test case:
+
+![](./a_memory_mountain.png)
+
+- Even when a program has poor temporal locality, spatial locality can still come to the rescue and make a significant difference
+- The performance of the memory system is not characterized by a single number. Instead, it is a mountain of temporal and spatial locality whose elevations can vary by over an order of magnitude
+
+#### Rearranging Loops to Increase Spatial Locality
+
+- Different versions of matrix multiply
+
+![](./six_versions_of_matrix_multiply.png)
+
+- Analysis of matrix multiply inner loops
+
+![](./analysis_of_matrix_multiply_inner_loops.png)
+
+![](./core_i7_matrix_multiply_performance.png)
+
+- Miss rate, in this case, is a better predictor of performance than the total number of memory accesses
+- For large values of n, the performance of the fastest pair of versions (`kij` and `ikj`) is constant
+- Even though the array is much larger than any of the SRAM cache memories, the prefetching hardware is smart enough to recognize the stride-1 access pattern, and fast enough to keep up with memory accesses in the tight inner loop
+- **Blocking**:
+  - The general idea of blocking is to organize the data structures in a program into large chunks called blocks
+  - It is a general concept that can produce big performance gains on systems that don’t prefetch
+
+#### Exploiting Locality in Your Programs
+
+- Focus your attention on the inner loops, where the bulk of the computations and memory accesses occur
+- Try to maximize the spatial locality in your programs by reading data objects sequentially, with stride 1, in the order they are stored in memory
+- Try to maximize the temporal locality in your programs by using a data object as often as possible once it has been read from memory
