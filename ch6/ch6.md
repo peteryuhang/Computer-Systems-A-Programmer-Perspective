@@ -240,3 +240,32 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
   - Write-through caches are typically no-write-allocate. Write-back caches are typically write-allocate
 - To the programmer trying to write reasonably cache-friendly programs, we suggest adopting a mental model that assumes write-back, write-allocate caches
 
+#### Anatomy of a Real Cache Hierarchy
+
+- Modern processors include separate i-caches (instruction only) and d-caches (program data only)
+  - The processor can read an instruction word and a data word at the same time
+  - I-caches are typically read-only, and thus simpler
+- All of the SRAM cache memories are contained in the CPU chip
+
+![](./intel_core_i7_cache_hierarchy.png)
+
+#### Performance Impact of Cache Parameters
+
+- Some important concepts:
+  - Miss rate:  #misses / #references.
+  - Hit rate: 1 - miss rate
+  - Hit time: The time to deliver a word in the cache to the CPU, including the time for set selection, line identification, and word selection
+  - Miss penalty: Any additional time required because of a miss
+
+- **Impact of Cache Size**:
+  - A larger cache will tend to increase the hit rate
+  - It is always harder to make large memories run faster
+- **Impact of Block Size**:
+  - Larger blocks can help increase the hit rate by exploiting any spatial locality that might exist in a program
+  - Larger blocks imply a smaller number of cache lines, which can hurt the hit rate in programs with more temporal locality than spatial locality
+- **Impact of Associativity**:
+  - The issue here is the impact of the choice of the parameter E, the number of cache lines per set
+  - The choice of associativity ultimately boils down to a trade-off between the hit time and the miss penalty
+  - Traditionally, lower for higher cache, higher for lower cache
+- **Impact of Write Strategy**:
+  - In general, caches further down the hierarchy are more likely to use write-back than write-through
