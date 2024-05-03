@@ -227,3 +227,16 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
 
 - Because the cache circuitry must search for many matching tags in parallel, it is difficult and expensive to build an associative cache that is both large and fast
 - As a result, fully associative caches are only appropriate for small caches, such as the translation lookaside buffers (TLBs) in virtual memory systems that cache page table entries
+
+#### Issues with Writes
+
+- After the cache updates its copy of `w`, what does it do about updating the copy of `w` in the next lower level of the hierarchy?
+  - **write-through**: immediately write `w`’s cache block to the next lower level, causing bus traffic with every write
+  - **write-back**: defers the update as long as possible by writing the updated block to the next lower level only when it is evicted from the cache by the replacement algorithm,  it has the disadvantage of additional complexity. The cache must maintain an additional dirty bit for each cache line that indicates whether or not the cache block has been modified
+
+- Another issue is how to deal with write misses
+  - **write-allocate**: loads the corresponding block from the next lower level into the cache and then updates the cache block
+  - **no-write-allocate**: bypasses the cache and writes the word directly to the next lower level
+  - Write-through caches are typically no-write-allocate. Write-back caches are typically write-allocate
+- To the programmer trying to write reasonably cache-friendly programs, we suggest adopting a mental model that assumes write-back, write-allocate caches
+
