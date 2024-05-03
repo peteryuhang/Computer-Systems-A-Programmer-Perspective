@@ -39,3 +39,13 @@
   2. **Relocation**: Associating a memory location with each symbol defintion, and modifying all the corresponding reference
 - Object files are merely collections of blocks of bytes
 - Linkers have minimal understanding of the target machine. The compilers and assemblers that generate the object files have already done most of the work.
+
+### Object Files
+
+- Object files come in three forms:
+  - Relocatable object file
+  - Executable object file
+  - Shared object file
+- Compilers and assemblers generate relocatable object files (including shared object files)
+- Linkers generate executable object files
+- Modern x86-64 Linux and Unix systems use **Executable and Linkable Format (ELF)** to organize object files
