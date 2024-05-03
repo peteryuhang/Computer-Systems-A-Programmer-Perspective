@@ -31,3 +31,11 @@
 # The shell invokes a function in the operating system called the loader, which copies the code and data in the executable file prog into memory, and then transfers control to the beginning of the program
 ```
 
+### Static Linking
+
+- Input a collection of relocatable object files and command-line arguments and generate as output a fully linked executable object file that can be loaded and run
+- The linker perform two main tasks:
+  1. **Symbol resolution**: Associate each symbol reference with exactly one symbol definition
+  2. **Relocation**: Associating a memory location with each symbol defintion, and modifying all the corresponding reference
+- Object files are merely collections of blocks of bytes
+- Linkers have minimal understanding of the target machine. The compilers and assemblers that generate the object files have already done most of the work.
