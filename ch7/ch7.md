@@ -75,3 +75,33 @@
   - `.debug`: A debugging symbol table with entries for local variables and typedefs defined in the program, global variables defined and referenced in the program, and the original C source file (only present if the compiler driver is invoked with the -g option)
   - `.line`: A mapping between line numbers in the original C source program and machine code instructions in the .text section (only present if the compiler driver is invoked with the -g option)
   - `.strtab`: A string table for the symbol tables in the .symtab and .debug sections and for the section names in the section headers
+
+### Symbols and Symbol Tables
+
+- Each relocatable object module, `m`, has a symbol table that contains information about the symbols that are defined and referenced by `m`
+- Three different kind of symbols:
+  - **Global symbols**: nonstatic C functions and global variables defined by module `m`, can be referenced by other modules
+  - Global symbols that are referenced by module m but defined by some other module, such symbols are called **externals**
+  - **Local symbols**: defined and referenced exclusively by module `m`. correspond to static C functions and global variables that are defined with the static attribute, visible anywhere within module m, but cannot be referenced by other modules
+- An ELF symbol table is contained in the `.symtab` section, contains an array of entries:
+
+```c
+typedef struct {
+  int name; /* String table offset */
+  char type:4, /* Function or data (4 bits) */
+       binding:4; /* Local or global (4 bits) */
+  char reserved; /* Unused */
+  short section; /* Section header index */
+  long value; /* Section offset or absolute address */
+  long size; /* Object size in bytes */
+} Elf64_Symbol;
+```
+
+- There are three special pseudosections that don’t have entries in the section header table:
+  - **ABS**: symbols that should not be relocated
+  - **UNDEF**: undefined symbols—that is, symbols that are referenced in this object module but defined elsewhere
+  - **COMMON**: uninitialized data objects that are not yet allocated
+- Distinction between COMMON and `.bss`:
+  - **COMMON**: Uninitialized global variables
+  - `.bss`: Uninitialized static variables, and global or static variables that are initialized to zero
+
