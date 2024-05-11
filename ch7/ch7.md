@@ -167,3 +167,33 @@ int main() {
 
 ![](./linking_with_static_libraries.png)
 
+#### How Linkers Use Static Libraries to Resolve References
+
+- During the symbol resolution phase, the linker scans the relocatable object files and archives left to right in the same sequential order that they appear on the
+compiler driver’s command line (The driver automatically translates any .c files on the command line into .o files)
+- During scan, the linker maintain three sets (initially, they are empty):
+  - `E`: relocatable object files that will be merged to form the executable
+  - `U`: unresolved symbols
+  - `D`: symbols that have been defined in previous input files
+- Steps:
+  - For each input file `f` on the command line, the linker determines if `f` is an object file or an archive
+  - If `f` is an object file, the linker adds `f` to `E`, updates `U` and `D` to reflect the symbol definitions and references in `f`, and proceeds to the next input file
+  - If `f` is an archive, the linker attempts to match the unresolved symbols in `U` against the symbols defined by the members of the archive
+    - Any member object files not contained in `E` are simply discarded and the linker proceeds to the next input file
+  - If `U` is nonempty when the linker finishes scanning the input files on the command line, it prints an error and terminates
+  - It merges and relocates the object files in E to build the output executable file
+- If the library that defines a symbol appears on the command line before the object file that references that symbol, then the reference will not be resolved and linking will fail:
+  ```bash
+  linux> gcc -static ./libvector.a main2.c
+  /tmp/cc9XH6Rp.o: In function ‘main’:
+  /tmp/cc9XH6Rp.o(.text+0x18): undefined reference to ‘addvec’
+  ```
+- The general rule for libraries is to place them at the end of the command line
+- eg. suppose `foo.c` calls functions in `libx.a` and `libz.a` that call functions in `liby.a`:
+  ```bash
+  linux> gcc foo.c libx.a libz.a liby.a
+  ```
+- eg. suppose `foo.c` calls a function in `libx.a` that calls a function in `liby.a` that calls a function in `libx.a`:
+  ```bash
+  linux> gcc foo.c libx.a liby.a libx.a
+  ```
