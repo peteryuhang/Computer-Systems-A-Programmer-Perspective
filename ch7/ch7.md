@@ -142,3 +142,28 @@ void f() {
 ```
 
 - The assignment `x = -0.0` will overwrite the memory locations for `x` and `y` in `foo5.c` with the double-precision floating-point representation of negative zero
+
+#### Linking with Static Libraries
+
+- All compilation systems provide a mechanism for packaging related object modules into a single file called a **static library**, which can then be supplied as input to the linker
+- On Linux systems, static libraries are stored on disk in a particular file format known as an **archive**
+- Eg.
+
+```c
+#include <stdio.h>
+#include "vector.h"
+
+int x[2] = {1, 2};
+int y[2] = {3, 4};
+int z[2];
+int main() {
+  addvec(x, y, z, 2);
+  printf("z = [%d %d]\n", z[0], z[1]);
+  return 0;
+}
+```
+
+- The activity of the linker:
+
+![](./linking_with_static_libraries.png)
+
