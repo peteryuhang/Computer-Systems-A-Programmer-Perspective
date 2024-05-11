@@ -105,3 +105,40 @@ typedef struct {
   - **COMMON**: Uninitialized global variables
   - `.bss`: Uninitialized static variables, and global or static variables that are initialized to zero
 
+### Symbol Resolution
+
+- The compiler allows only one definition of each local symbol per module
+- The compiler also ensures that static local variables, which get local linker symbols, have unique names
+- When the compiler encounters a symbol (either a variable or function name) that is not defined in the current module, it assumes that it is defined in some other module, generates a linker symbol table entry, and leaves it for the linker to handle
+- If the linker is unable to find a definition for the referenced symbol in any of its input modules, it prints an (often cryptic) error message and terminates
+
+#### How Linkers Resolve Duplicate Symbol Names
+
+- Functions and initialized global variables get strong symbols. Uninitialized global variables get weak symbols
+- Linux linkers use the following rules for dealing with duplicate symbol names:
+  1. Multiple strong symbols with the same name are not allowed
+  2. Given a strong symbol and multiple weak symbols with the same name, choose the strong symbol
+  3. Given multiple weak symbols with the same name, choose any of the weak symbols
+- eg.
+
+```c
+/* foo5.c */
+#include <stdio.h>
+
+void f(void);
+int y = 15212;
+int x = 15213;
+int main() {
+  f();
+  printf("x = 0x%x y = 0x%x \n", x, y);
+  return 0;
+}
+
+/* bar5.c */
+double x;
+void f() {
+  x = -0.0;
+}
+```
+
+- The assignment `x = -0.0` will overwrite the memory locations for `x` and `y` in `foo5.c` with the double-precision floating-point representation of negative zero
