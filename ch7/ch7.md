@@ -207,3 +207,22 @@ compiler driver’s command line (The driver automatically translates any .c fil
   2. **Relocating symbol references within sections**
     - The linker modifies every symbol reference in the bodies of the code and data sections so that they point to the correct run-time addresses
 
+#### Relocation Entries
+
+- Relocation entries for code are placed in `.rel.text`
+- Relocation entries for data are placed in `.rel.data`
+- Format of an ELF relocation entry:
+
+```c
+typedef struct {
+  long offset; /* Offset of the reference to relocate */
+  long type:32, /* Relocation type */
+  symbol:32; /* Symbol table index */
+  long addend; /* Constant part of relocation expression */
+} Elf64_Rela;
+```
+
+- Two most basic relocation types:
+  - `R_X86_64_PC32`: Relocate a reference that uses a 32-bit PC-relative address
+  - `R_X86_64_32`: Relocate a reference that uses a 32-bit absolute address
+  
