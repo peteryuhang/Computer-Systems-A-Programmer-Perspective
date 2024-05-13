@@ -197,3 +197,13 @@ compiler driver’s command line (The driver automatically translates any .c fil
   ```bash
   linux> gcc foo.c libx.a liby.a libx.a
   ```
+
+### Relocation
+
+- Relocation consists of two steps:
+  1. **Relocating sections and symbol definitions**
+    - The linker merges all sections of the same type into a new aggregate section of the same type
+    - After this step, each instruction and global variable in the program has a unique run-time memory address
+  2. **Relocating symbol references within sections**
+    - The linker modifies every symbol reference in the bodies of the code and data sections so that they point to the correct run-time addresses
+
