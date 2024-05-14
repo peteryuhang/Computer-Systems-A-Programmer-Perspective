@@ -247,4 +247,19 @@ foreach section s {
 }
 ```
 
-#### 
+### Executable Object Files
+
+- Typical ELF executable object file:
+
+![](./typical_elf_executable_object_file.png)
+
+### Loading Executable Object Files
+
+- This process of copying the program into memory and then running it is known as **loading**
+- Runtime memory image:
+
+![](./runtime_memory_image.png)
+
+- In practice, there is a gap between the code and data segments due to the alignment requirement on the `.data` segment
+- copy object file -> `_start()` -> `__libc_start_main()` -> `main()`
+
