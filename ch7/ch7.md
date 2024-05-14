@@ -263,3 +263,14 @@ foreach section s {
 - In practice, there is a gap between the code and data segments due to the alignment requirement on the `.data` segment
 - copy object file -> `_start()` -> `__libc_start_main()` -> `main()`
 
+### Dynamic Linking with Shared Libraries
+
+- A shared library is an object module that, at either run time or load time, can be loaded at an arbitrary memory address and linked with a program in memory
+- Shared libraries are “shared” in two different ways:
+  - Shared by object file
+  - Shared by process
+- Dynamic linking process example:
+
+![](./dynamic_linking_with_shared_libraries.png)
+
+- The basic idea is to do some of the linking statically when the executable file is created, and then complete the linking process dynamically when the program is loaded
