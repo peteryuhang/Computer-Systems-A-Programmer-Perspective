@@ -360,3 +360,32 @@ int main() {
 ![](./using_PLT_and_GOT_to_call_external_funcs.png)
 
 - Each of PLT entries is responsible for invoking a specific function
+
+### Library Interpositioning
+
+- **Library interpositioning** allows you to intercept calls to shared library functions and execute your own code instead
+
+#### Compile-Time Interpositioning
+
+- Use C preprocessor to interpose at compile time:
+
+![](./compile_time_interposition.png)
+
+#### Link-Time Interpositioning
+
+- The Linux static linker supports link-time interpositioning with the `--wrap f` flag
+  - This flag tells the linker to resolve references to symbol `f` as `__wrap_f`, and to resolve references to symbol `__real_f` as `f`
+
+![](./link_time_interpositioning.png)
+
+- Executable command:
+
+```
+linux> gcc -Wl,--wrap,malloc -Wl,--wrap,free -o intl int.o mymalloc.o
+```
+
+#### Run-Time Interpositioning
+
+- Requires access only to the executable object file is based on the dynamic linker’s `LD_PRELOAD` environment variable
+
+![](./run_time_interpositioning.png)
