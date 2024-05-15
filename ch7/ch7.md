@@ -274,3 +274,75 @@ foreach section s {
 ![](./dynamic_linking_with_shared_libraries.png)
 
 - The basic idea is to do some of the linking statically when the executable file is created, and then complete the linking process dynamically when the program is loaded
+
+### Loading and Linking Shared Libraries from Applications
+
+- It is possible for an application to request the dynamic linker to load and link arbitrary shared libraries while the application is running
+- Some examples:
+  - Distributing Software
+  - Building high-performance Web servers
+- Linux Interface to the dynamic linker:
+
+```c
+#include <dlfcn.h>
+
+// Loads and links the shared library filename
+// Returns: pointer to handle if OK, NULL on error
+void *dlopen(const char *filename, int flag);
+
+// Takes a handle to a previously opened shared library and a symbol name and returns the address of the symbol
+// Returns: pointer to symbol if OK, NULL on error
+void *dlsym(void *handle, char *symbol);
+
+// Unloads the shared library if no other shared libraries are still using it
+// Returns: 0 if OK, −1 on error
+int dlclose (void *handle);
+
+// Returns a string describing the most recent error that occurred as a result of calling dlopen, dlsym, or dlclose, or NULL if no error occurred
+// Returns: error message if previous call to dlopen, dlsym, or dlclose failed; NULL if previous call was OK
+const char *dlerror(void);
+```
+
+- eg.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <dlfcn.h>
+
+int x[2] = {1, 2};
+int y[2] = {3, 4};
+int z[2];
+
+int main() {
+  void *handle;
+  void (*addvec)(int *, int *, int *, int);
+  char *error;
+
+  /* Dynamically load the shared library containing addvec() */
+  handle = dlopen("./libvector.so", RTLD_LAZY);
+  if (!handle) {
+    fprintf(stderr, "%s\n", dlerror());
+    exit(1);
+  }
+
+  /* Get a pointer to the addvec() function we just loaded */
+  addvec = dlsym(handle, "addvec");
+  if ((error = dlerror()) != NULL) {
+    fprintf(stderr, "%s\n", error);
+    exit(1);
+  }
+
+  /* Now we can call addvec() just like any other function */
+  addvec(x, y, z, 2);
+  printf("z = [%d %d]\n", z[0], z[1]);
+  /* Unload the shared library */
+  if (dlclose(handle) < 0) {
+    fprintf(stderr, "%s\n", dlerror());
+    exit(1);
+  }
+
+  return 0;
+}
+```
+
