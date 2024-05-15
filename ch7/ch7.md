@@ -346,3 +346,17 @@ int main() {
 }
 ```
 
+### Position-Independent Code (PIC)
+
+- Code that can be loaded without needing any relocations is known as **position independent code (PIC)**
+- No matter where we load an object module (including shared object modules) in memory, the data segment is always the same distance from the code segment
+- **global offset table (GOT)** been create by compiler at the beginning of the data segment
+- The GOT contains an 8-byte entry for each global data object (procedure or global variable) that is referenced by the object module
+
+![](./using_GOT_ref_a_global_var.png)
+
+- There is a nontrivial run-time overhead the first time the function is called, but each call thereafter costs only a single instruction and a memory reference for the indirection
+
+![](./using_PLT_and_GOT_to_call_external_funcs.png)
+
+- Each of PLT entries is responsible for invoking a specific function
