@@ -46,3 +46,31 @@ entry k contains the address of the handler for exception k:
 - Happen after the current instruction finishes executing
 - Trigger interrupts by signaling a pin on the processor chip and placing onto the system bus the exception number that identifies the device that caused the interrupt
 - The effect is that the program continues executing as though the interrupt had never happened
+
+##### Traps and System Calls
+
+- Traps are intentional exceptions that occur as a result of executing an instruction
+- Process of Trap handling:
+
+![](./trap_handling.png)
+
+- Traps provide a ways for user program to call funcs in kernel environment
+
+##### Faults
+
+- Faults result from error conditions that a handler might be able to correct
+- Process of faults:
+
+![](./fault_handling.png)
+
+
+- A classic example of a fault is the page fault exception, which occurs when an instruction references a virtual address whose corresponding page is not resident in memory and must therefore be retrieved from disk
+
+##### Aborts
+
+- Aborts result from unrecoverable fatal errors, typically hardware errors such as parity errors that occur when DRAM or SRAM bits are corrupted
+- Process of aborts:
+
+![](./abort_handling.png)
+
+
