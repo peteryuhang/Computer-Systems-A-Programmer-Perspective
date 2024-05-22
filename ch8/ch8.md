@@ -12,3 +12,20 @@
   1. returns control to the current instruction $I_{curr}$,
   2. returns control to $I_{next}$
   3. aborts the interrupted program
+
+#### Exception Handling
+
+- At system boot time (when the computer is reset or powered on), the operating system allocates and initializes a jump table called an exception table, so that
+entry k contains the address of the handler for exception k:
+
+![](./exception_table.png)
+
+- The exception number is an index into the exception table, whose starting address is contained in a special CPU register called the exception table base register
+
+![](./generating_the_address_of_an_exception_handler.png)
+
+- Difference between exception and procedure call:
+  - No actual return value for exception
+  - The processor also pushes some additional processor state onto the stack that will be necessary to restart the interrupted program when the handler returns
+  - Exception will use kernel stack instead of user stack
+  - Exception handlers run in kernel mode
