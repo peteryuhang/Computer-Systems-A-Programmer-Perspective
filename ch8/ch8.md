@@ -74,3 +74,18 @@ entry k contains the address of the handler for exception k:
 ![](./abort_handling.png)
 
 
+#### Exceptions in Linux/x86-64 Systems
+
+- Examples of faults and aborts:
+  - **Divide Error**:
+    - Occurs when an application attempts to divide by zero, or when the result of a divide instruction is too big for the destination operand
+    - Unix does not attempt to recover from divide errors, opting instead to abort the program
+    - Linux shells typically report divide errors as "Floating exceptions"
+  - **General Protection Fault**:
+    - Usually because a program references an undefined area of virtual memory or because the program attempts to write to a read-only text segment
+    - Linux does not attempt to recover from this fault
+    - Linux shells typically report general protection faults as "Segmentation faults"
+  - **Page Fault**:
+    - Is an example of an exception where the faulting instruction is restarted
+  - **Machine Check**:
+    - Occurs as a result of a fatal hardware error that is detected during the execution of the faulting instruction
