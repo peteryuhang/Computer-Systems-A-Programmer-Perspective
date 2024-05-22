@@ -73,7 +73,6 @@ entry k contains the address of the handler for exception k:
 
 ![](./abort_handling.png)
 
-
 #### Exceptions in Linux/x86-64 Systems
 
 - Examples of faults and aborts:
@@ -89,3 +88,10 @@ entry k contains the address of the handler for exception k:
     - Is an example of an exception where the faulting instruction is restarted
   - **Machine Check**:
     - Occurs as a result of a fatal hardware error that is detected during the execution of the faulting instruction
+
+- Popular system calls in Linux x86-64 systems:
+
+![](./popular_system_calls_in_linux.png)
+
+- Each system call has a unique integer number that corresponds to an offset in a jump table in the kernel (not the same as the exception table)
+- All arguments to Linux system calls are passed through general-purpose registers rather than the stack
