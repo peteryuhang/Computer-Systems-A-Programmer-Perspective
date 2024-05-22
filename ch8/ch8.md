@@ -29,3 +29,20 @@ entry k contains the address of the handler for exception k:
   - The processor also pushes some additional processor state onto the stack that will be necessary to restart the interrupted program when the handler returns
   - Exception will use kernel stack instead of user stack
   - Exception handlers run in kernel mode
+
+
+#### Classes of Exceptions
+
+- Exceptions can be divided into four classes: **interrupts**, **traps**, **faults**, and **aborts**
+
+![](./classes_of_exceptions.png)
+
+##### Interrupts
+
+- Process of interrupts:
+
+![](./interrupt_handling.png)
+
+- Happen after the current instruction finishes executing
+- Trigger interrupts by signaling a pin on the processor chip and placing onto the system bus the exception number that identifies the device that caused the interrupt
+- The effect is that the program continues executing as though the interrupt had never happened
