@@ -103,3 +103,24 @@ entry k contains the address of the handler for exception k:
   - An independent logical control flow that provides the illusion that our program has exclusive use of the processor
   - A private address space that provides the illusion that our program has exclusive use of the memory system
 
+#### Logical Control Flow
+
+- This sequence of PC values is known as a logical control flow, or simply logical flow
+
+![](./logical_control_flow.png)
+
+- Each process executes a portion of its flow and then is preempted (temporarily suspended) while other processes take their turns
+
+#### Concurrent Flows
+
+- **Concurrent Flow**: CPU time not need overlap, execute time overlap
+- **Parallel Flow**: Run on different CPU core or computer
+- Each time period that a process executes a portion of its flow is called a **time slice**
+
+#### Private Address Space
+
+- A process provides each program with its own private address space
+- This space is private in the sense that a byte of memory associated with a particular address in the space cannot in general be read or written by any other process
+- General process address space:
+
+![](./process_address_space.png)
