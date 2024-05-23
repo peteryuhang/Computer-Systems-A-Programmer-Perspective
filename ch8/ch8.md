@@ -124,3 +124,24 @@ entry k contains the address of the handler for exception k:
 - General process address space:
 
 ![](./process_address_space.png)
+
+#### User and Kernel Modes
+
+- Processors typically provide this capability with a mode bit in some control register that characterizes the privileges that the process currently enjoys
+- User programs must instead access kernel code and data indirectly via the system call interface
+- Linux provides a clever mechanism, called the /proc filesystem, that allows user mode processes to access the contents of kernel data structures
+
+#### Context Switches
+
+- The kernel maintains a context for each process
+- After the kernel has scheduled a new process to run, it preempts the current process and transfers control to the new process using a mechanism called a **context switch**:
+  1. saves the context of the current process
+  2. restores the saved context of some previously preempted process
+  3. passes control to this newly restored process
+- Anatomy of a process context switch:
+
+![](./anatomy_of_a_process_context_switch.png)
+
+- Some senarios:
+  - system call
+  - interrupt
