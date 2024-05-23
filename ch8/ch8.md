@@ -95,3 +95,11 @@ entry k contains the address of the handler for exception k:
 
 - Each system call has a unique integer number that corresponds to an offset in a jump table in the kernel (not the same as the exception table)
 - All arguments to Linux system calls are passed through general-purpose registers rather than the stack
+
+### Processes
+
+- Exceptions are the basic building blocks that allow the operating system kernel to provide the notion of a **process**
+- Key abstractions that a process provides to the application:
+  - An independent logical control flow that provides the illusion that our program has exclusive use of the processor
+  - A private address space that provides the illusion that our program has exclusive use of the memory system
+
