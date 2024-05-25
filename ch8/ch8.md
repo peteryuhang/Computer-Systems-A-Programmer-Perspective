@@ -145,3 +145,40 @@ entry k contains the address of the handler for exception k:
 - Some senarios:
   - system call
   - interrupt
+
+### System Call Error Handling
+
+- here is how we might check for errors when we call the Linux fork function
+
+```c
+if ((pid = fork()) < 0) {
+  fprintf(stderr, "fork error: %s\n", strerror(errno));
+  exit(0);
+}
+```
+
+- We can optimize the by add a function:
+
+```c
+void unix_error(char *msg) { /* Unix-style error */ 
+  fprintf(stderr, "%s: %s\n", msg, strerror(errno));
+  exit(0);
+}
+
+if ((pid = fork()) < 0)
+  unix_error("fork error");
+```
+
+- We can simplify our code even further by using **error-handling wrappers**:
+
+```c
+pid_t Fork(void){
+  pid_t pid;
+
+  if ((pid = fork()) < 0)
+    unix_error("Fork error");
+  return pid;
+}
+
+pid = Fork()
+```
