@@ -264,3 +264,23 @@ int main() {
 ![](./process_graph_for8-15.png)
 
 - For a program running on a single processor, any topological sort of the vertices in the corresponding process graph represents a feasible total ordering of the statements in the program
+
+#### Reaping Child Processes
+
+- When a process terminates for any reason, the kernel does not remove it from the system immediately. Instead, the process is kept around in a terminated state until it is reaped by its parent
+- When the parent reaps the terminated child, the kernel passes the child’s exit status to the parent and then discards the terminated process, at which point it ceases to exist
+- A terminated process that has not yet been reaped is called a **zombie**
+- When a parent process terminates, the kernel arranges for the **init process** to become the adopted parent of any orphaned children
+  - The init process, which has a PID of 1, is created by the kernel during system start-up, never terminates, and is the ancestor of every process
+- Even though zombies are not running, they still consume system memory resources
+
+- A process waits for its children to terminate or stop by calling the **waitpid** function:
+
+```c
+#include <sys/types.h>
+#include <sys/wait.h>
+
+// Returns: PID of child if OK, 0 (if WNOHANG), or −1 on error
+pid_t waitpid(pid_t pid, int *statusp, int options);
+```
+
