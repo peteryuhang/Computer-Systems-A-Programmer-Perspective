@@ -219,3 +219,48 @@ void exit(int status);
 ```
 
 - The exit function terminates the process with an exit status of status. (The other way to set the exit status is to return an integer value from the main routine.)
+
+- A parent process creates a new running child process by calling the `fork` function
+
+```c
+#include <sys/types.h>
+#include <unistd.h>
+
+// Returns: 0 to child, PID of child to parent, −1 on error
+pid_t fork(void);
+```
+
+- The newly created child process is almost, but not quite, identical to the parent
+- The most significant difference between the parent and the newly created child is that they have different PIDs
+- `fork` function called once but it returns twice
+  - once in the calling process (the parent)
+  - once in the newly created child process
+- In the parent, fork returns the PID of the child. In the child, fork returns a value of 0
+- eg.
+
+```c
+int main() {
+  pid_t pid;
+  int x = 1;
+  pid = Fork();
+  if (pid == 0) { /* Child */
+    printf("child : x=%d\n", ++x); // child : x=2
+    exit(0);
+  }
+
+  /* Parent */
+  printf("parent: x=%d\n", --x); // parent: x=0
+  exit(0);
+}
+```
+
+- some subtle aspects to the `fork`:
+  - Call once, return twice
+  - Concurrent execution
+  - Duplicate but separate address spaces
+  - Shared files
+- Process Graph can help to understand `fork`, eg.
+
+![](./process_graph_for8-15.png)
+
+- For a program running on a single processor, any topological sort of the vertices in the corresponding process graph represents a feasible total ordering of the statements in the program
