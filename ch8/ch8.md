@@ -182,3 +182,40 @@ pid_t Fork(void){
 
 pid = Fork()
 ```
+
+### Process Control
+
+#### Obtaining Process IDs
+
+```c
+#include <sys/types.h>
+#include <unistd.h>
+
+// returns the PID of the calling process
+pid_t getpid(void);
+
+// returns the PID of its parent
+pid_t getppid(void);
+```
+
+- The getpid and getppid routines return an integer value of type pid_t, which on Linux systems is defined in types.h as an int
+
+#### Creating and Terminating Processes
+
+- From a programmer’s perspective, we can think of a process as being in one of three states:
+  - **Running**: The process is either executing on the CPU or waiting to be executed and will eventually be scheduled by the kernel
+  - **Stopped**: The execution of the process is suspended and will not be scheduled
+    - A process stops as a result of receiving a SIGSTOP, SIGTSTP, SIGTTIN, or SIGTTOU signal, and it remains stopped until it receives a SIGCONT signal, at which point it becomes running again
+  - **Terminated**: The process is stopped permanently. A process becomes terminated for one of three reasons:
+    1. Receiving a signal whose default action is to terminate the process
+    2. Returning from the main routine
+    3. Calling the exit function
+
+```c
+#include <stdlib.h>
+
+// This function does not return
+void exit(int status);
+```
+
+- The exit function terminates the process with an exit status of status. (The other way to set the exit status is to return an integer value from the main routine.)
