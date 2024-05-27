@@ -294,3 +294,88 @@ pid_t waitpid(pid_t pid, int *statusp, int options);
   - `WCONTINUED`: Suspend execution of the calling process until a running process in the wait set is terminated or until a stopped process in the wait set has been resumed by the receipt of a SIGCONT signal
   - `WNOHANG | WUNTRACED`:  Return immediately, with a return value of 0, if none of the children in the wait set has stopped or terminated, or with a return value equal to the PID of one of the stopped or terminated children
 
+- If the statusp argument is non-NULL, then waitpid encodes status information about the child that caused the return in status, which is the value pointed to by statusp:
+- The wait.h include file defines several macros for interpreting the status argument:
+  - `WIFEXITED(status)`: Returns true if the child terminated normally, via a call to exit or a return
+  - `WEXITSTATUS(status)`: Returns the exit status of a normally terminated child. This status is only defined if `WIFEXITED()` returned true
+  - `WIFSIGNALED(status)`: Returns true if the child process terminated because of a signal that was not caught
+  - `WTERMSIG(status)`: Returns the number of the signal that caused the child process to terminate. This status is only defined if `WIFSIGNALED()` returned true
+  - `WIFSTOPPED(status)`: Returns true if the child that caused the return is currently stopped
+  - `WSTOPSIG(status)`: Returns the number of the signal that caused the child to stop. This status is only defined if `WIFSTOPPED()` returned true
+  - `WIFCONTINUED(status)`: Returns true if the child process was restarted by receipt of a `SIGCONT` signal
+
+- If the calling process has no children, then waitpid returns −1 and sets errno to `ECHILD`
+- If the waitpid function was interrupted by a signal, then it returns −1 and sets errno to `EINTR`
+
+- The wait function is a simpler version of waitpid, calling `wait(&status)` is equivalent to calling `waitpid(-1, &status, 0)`
+
+```c
+#include <sys/types.h>
+#include <sys/wait.h>
+
+// Returns: PID of child if OK or −1 on error
+pid_t wait(int *statusp);
+```
+
+- example of using `waitpid`:
+
+```c
+#include "csapp.h"
+#define N 2
+
+int main() {
+  int status, i;
+  pid_t pid;
+  /* Parent creates N children */
+  for (i = 0; i < N; i++)
+    if ((pid = Fork()) == 0) /* Child */
+      exit(100+i);
+
+  /* Parent reaps N children in no particular order */
+  while ((pid = waitpid(-1, &status, 0)) > 0) {
+    if (WIFEXITED(status))
+      printf("child %d terminated normally with exit status=%d\n", pid, WEXITSTATUS(status));
+    else
+      printf("child %d terminated abnormally\n", pid);
+  }
+
+  /* The only normal termination is if there are no more children */
+  if (errno != ECHILD)
+    unix_error("waitpid error");
+
+  exit(0);
+}
+```
+
+- Notice that the program reaps its children in no particular order
+- Using waitpid to reap zombie children in the order they were created:
+
+```c
+#include "csapp.h"
+#define N 2
+
+int main() {
+  int status, i;
+  pid_t pid[N], retpid;
+
+  /* Parent creates N children */
+  for (i = 0; i < N; i++)
+    if ((pid[i] = Fork()) == 0) /* Child */
+      exit(100+i);
+
+  /* Parent reaps N children in order */
+  i = 0;
+  while ((retpid = waitpid(pid[i++], &status, 0)) > 0) {
+    if (WIFEXITED(status))
+      printf("child %d terminated normally with exit status=%d\n", retpid, WEXITSTATUS(status));
+    else
+    printf("child %d terminated abnormally\n", retpid);
+  }
+
+  /* The only normal termination is if there are no more children */
+  if (errno != ECHILD)
+    unix_error("waitpid error");
+
+  exit(0);
+}
+```
