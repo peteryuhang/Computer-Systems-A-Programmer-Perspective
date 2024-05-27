@@ -284,3 +284,13 @@ int main() {
 pid_t waitpid(pid_t pid, int *statusp, int options);
 ```
 
+- The members of the wait set are determined by the pid argument:
+  - If pid > 0, then the wait set is the singleton child process whose process ID is equal to pid
+  - If pid = -1, then the wait set consists of all of the parent’s child processes
+
+- The default behavior can be modified by setting options to various combinations of the `WNOHANG`, `WUNTRACED`, and `WCONTINUED` constants:
+  - `WNOHANG`: Return immediately (with a return value of 0) if none of the child processes in the wait set has terminated yet
+  - `WUNTRACED`: Suspend execution of the calling process until a process in the wait set becomes either terminated or stopped
+  - `WCONTINUED`: Suspend execution of the calling process until a running process in the wait set is terminated or until a stopped process in the wait set has been resumed by the receipt of a SIGCONT signal
+  - `WNOHANG | WUNTRACED`:  Return immediately, with a return value of 0, if none of the children in the wait set has stopped or terminated, or with a return value equal to the PID of one of the stopped or terminated children
+
