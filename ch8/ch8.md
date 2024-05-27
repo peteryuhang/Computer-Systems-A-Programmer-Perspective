@@ -379,3 +379,23 @@ int main() {
   exit(0);
 }
 ```
+
+#### Putting Processes to Sleep
+
+- The sleep function suspends a process for a specified period of time:
+
+```c
+#include <unistd.h>
+
+// Returns: seconds left to sleep
+unsigned int sleep(unsigned int secs);
+```
+
+- `pause` puts the calling function to sleep until a signal is received by the process
+
+```c
+#include <unistd.h>
+
+// Always returns −1
+int pause(void);
+```
