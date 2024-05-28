@@ -399,3 +399,35 @@ unsigned int sleep(unsigned int secs);
 // Always returns −1
 int pause(void);
 ```
+
+#### Loading and Running Programs
+
+- The `execve` function loads and runs the executable object file filename with the argument list `argv` and the environment variable list `envp`
+
+```c
+#include <unistd.h>
+
+// Does not return if OK; returns −1 on error
+int execve(const char *filename, const char *argv[], const char *envp[]);
+```
+
+- `execve` is called once and never returns unless there is an error
+- By convention, `argv[0]` is the name of the executable object file
+- There are three arguments to function main, each stored in a register according to the x86-64 stack discipline:
+  - `argc`, which gives the number of non-null pointers in the `argv[]` array
+  - `argv`, which points to the first entry in the `argv[]` array
+  - `envp`, which points to the first entry in the `envp[]` array
+- Linux provide several functions for manipulating the environment array:
+
+```c
+#include <stdlib.h>
+
+// Returns: pointer to name if it exists, NULL if no match
+char *getenv(const char *name);
+
+// Returns: 0 on success, −1 on error 
+int setenv(const char *name, const char *newvalue, int overwrite);
+
+// Returns: nothing
+void unsetenv(const char *name);
+```
