@@ -575,3 +575,11 @@ int parseline(char *buf, char **argv) {
 | 29 | SIGIO| Terminate | I/O now possible on a descriptor| 
 | 30 | SIGPWR| Terminate | Power failure|
 
+#### Signal Terminology
+
+- A signal that has been sent but not yet received is called a pending signal
+- At any point in time, there can be at most one pending signal of a particular type
+- Signal handling process:
+
+![](./signal_handling_process.png)
+
