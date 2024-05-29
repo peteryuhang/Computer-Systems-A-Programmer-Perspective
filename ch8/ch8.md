@@ -583,3 +583,39 @@ int parseline(char *buf, char **argv) {
 
 ![](./signal_handling_process.png)
 
+#### Sending Signals
+
+- Process Groups:
+  - Every process belongs to exactly one process group, which is identified by a positive integer process group ID
+
+```c
+#include <unistd.h>
+
+// Returns: process group ID of calling process
+pid_t getpgrp(void);
+```
+
+- By default, a child process belongs to the same process group as its parent
+- A process can change the process group of itself or another process by using the **setpgid** function
+  - If pid is zero, the PID of the current process is used
+  - If pgid is zero, the PID of the process specified by pid is used for the process group ID
+
+```c
+#include <unistd.h>
+
+// Returns: 0 on success, −1 on error
+int setpgid(pid_t pid, pid_t pgid);
+```
+
+- The `/bin/kill` program sends an arbitrary signal to another process, eg.
+
+```bash
+linux> /bin/kill -9 15213
+```
+
+- A negative PID causes the signal to be sent to every process in process group PID, eg.
+
+```bash
+linux> /bin/kill -9 -15213
+```
+
