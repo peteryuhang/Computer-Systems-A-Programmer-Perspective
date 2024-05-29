@@ -619,3 +619,54 @@ linux> /bin/kill -9 15213
 linux> /bin/kill -9 -15213
 ```
 
+- Unix shells use the abstraction of a job to represent the processes that are created as a result of evaluating a single command line
+- At any point in time, there is at most one foreground job and zero or more background jobs, eg.
+
+![](./foreground_and_background_process_groups.png)
+
+- Typing `Ctrl+C` at the keyboard causes the kernel to send a SIGINT signal to every process in the foreground process group
+- Typing `Ctrl+Z` causes the kernel to send a SIGTSTP signal to every process in the foreground process group
+
+- Processes send signals to other processes (including themselves) by calling the `kill` function
+  - If pid is greater than zero, then the kill function sends signal number sig to process pid
+  - If pid is equal to zero, then kill sends signal sig to every process in the process group of the calling process, including the calling process itself
+  - If pid is less than zero, then kill sends signal sig to every process in process group |pid| (the absolute value of pid)
+
+```c
+#include <sys/types.h>
+#include <signal.h>
+
+// Returns: 0 if OK, −1 on error
+int kill(pid_t pid, int sig);
+```
+
+- example usage:
+
+```c
+#include "csapp.h"
+
+int main() {
+  pid_t pid;
+  /* Child sleeps until SIGKILL signal received, then dies */
+  if ((pid = Fork()) == 0) {
+    Pause(); /* Wait for a signal to arrive */
+    printf("control should never reach here!\n");
+    exit(0);
+  }
+
+  /* Parent sends a SIGKILL signal to a child */
+  Kill(pid, SIGKILL);
+  exit(0);
+}
+```
+
+- A process can send SIGALRM signals to itself by calling the alarm function
+
+```c
+#include <unistd.h>
+
+// Returns: remaining seconds of previous alarm, or 0 if no previous alarm
+unsigned int alarm(unsigned int secs);
+```
+
+- In any event, the call to alarm cancels any pending alarms and returns the number of seconds remaining until any pending alarm was due to be delivered (had not this call to alarm canceled it), or 0 if there were no pending alarms
