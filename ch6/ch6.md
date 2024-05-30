@@ -82,7 +82,7 @@
 
 - The capacity of a disk is given by:
 
-$$Capacity = \frac{\# bytes}{sector} \times \frac{average \# sectors}{track} \times \frac{\# track}{surface} \times \frac{\# surface}{platter} \times \frac{\# platter}{disk}$$
+$$Capacity = \frac{\\# bytes}{sector} \times \frac{average \\# sectors}{track} \times \frac{\\# track}{surface} \times \frac{\\# surface}{platter} \times \frac{\\# platter}{disk}$$
 
 - For example, suppose we have a disk with five platters, 512 bytes per sector, 20,000 tracks per surface, and an average of 300 sectors per track. Then the capacity of the disk is:
 
