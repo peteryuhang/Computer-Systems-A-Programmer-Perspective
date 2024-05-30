@@ -670,3 +670,32 @@ unsigned int alarm(unsigned int secs);
 ```
 
 - In any event, the call to alarm cancels any pending alarms and returns the number of seconds remaining until any pending alarm was due to be delivered (had not this call to alarm canceled it), or 0 if there were no pending alarms
+
+#### Receiving Signals
+
+- Each signal type has a predefined default action, which is one of the following:
+  - The process terminates
+  - The process terminates and dumps core
+  - The process stops (suspends) until restartede by a SIGCONT signal
+  - The process ignores the signal
+
+```c
+#include <signal.h>
+typedef void (*sighandler_t)(int);
+
+// Returns: pointer to previous handler if OK, SIG_ERR on error (does not set errno)
+sighandler_t signal(int signum, sighandler_t handler);
+```
+
+- The signal function can change the action associated with a signal signum in one of three ways
+  - If handler is SIG_IGN, then signals of type signum are ignored
+  - If handler is SIG_DFL, then the action for signals of type signum reverts to the default action
+  - Otherwise, handler is the address of a user-defined function, called a signal handler, that will be called whenever the process receives a signal of type signum
+
+- This argument allows the same handler function to catch different types of signals
+
+- Signal handlers can be interrupted by other handlers
+
+![](./handlers_can_be_interrupted_by_other_handler.png)
+
+
