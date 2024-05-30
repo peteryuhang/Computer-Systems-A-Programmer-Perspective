@@ -89,8 +89,8 @@ $$Capacity = \frac{\\# bytes}{sector} \times \frac{average \\# sectors}{track} \
 $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \frac{20000 track}{surface} \times \frac{2 surface}{platter} \times \frac{5 platter}{disk} = 30,720,000,000 \ bytes = 30.72 \ GB$$
 
 - The storage unit is depend on context:
-  - For measures that relate to the capacity of DRAMs and SRAMs, typically $K = 2^10$, $M = 2^20$, $G = 2^30$, $T = 2^40$
-  - For measures that relate to the capacity of I/O devices such as disks and networks, typically $K = 10^3$, $M = 10^6$, $G = 10^9$, $T = 10^12$
+  - For measures that relate to the capacity of DRAMs and SRAMs, typically $K = 2^{10}$, $M = 2^{20}$, $G = 2^{30}$, $T = 2^{40}$
+  - For measures that relate to the capacity of I/O devices such as disks and networks, typically $K = 10^3$, $M = 10^6$, $G = 10^9$, $T = 10^{12}$
 - Rates and throughputs usually use these prefix values as well
 
 ##### Disk Operation
