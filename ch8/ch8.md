@@ -698,4 +698,21 @@ sighandler_t signal(int signum, sighandler_t handler);
 
 ![](./handlers_can_be_interrupted_by_other_handler.png)
 
+#### Blocking and Unblocking Signals
 
+- **Implicit blocking mechanism**: By default, the kernel blocks any pending signals of the type currently being processed by a handler
+- **Explicit blocking mechanism**: Applications can explicitly block and unblock selected signals using the sigprocmask function and its helpers
+
+```c
+#include <signal.h>
+
+// Returns: 0 if OK, −1 on error
+int sigprocmask(int how, const sigset_t *set, sigset_t *oldset);
+int sigemptyset(sigset_t *set);
+int sigfillset(sigset_t *set);
+int sigaddset(sigset_t *set, int signum);
+int sigdelset(sigset_t *set, int signum);
+
+// Returns: 1 if member, 0 if not, −1 on error
+int sigismember(const sigset_t *set, int signum);
+```
