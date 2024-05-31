@@ -716,3 +716,97 @@ int sigdelset(sigset_t *set, int signum);
 // Returns: 1 if member, 0 if not, −1 on error
 int sigismember(const sigset_t *set, int signum);
 ```
+
+#### Writing Signal Handlers
+
+- Safe Signal Handling:
+  - Keep handlers as simple as possible
+  - Call only async-signal-safe functions in your handlers
+  - Save and restore errno
+  - Protect accesses to shared global data structures by blocking all signals
+  - Declare global variables with `volatile` (You can tell the compiler not to cache a variable by declaring it with the volatile type qualifier)
+  - Declare flags with `sig_atomic_t`
+
+- The key idea is that the existence of a pending signal merely indicates that at least one signal has arrived
+- The below progran is flawed because it assumes that signals are queued
+
+```c
+/* WARNING: This code is buggy! */
+void handler1(int sig) {
+  int olderrno = errno;
+  if ((waitpid(-1, NULL, 0)) < 0)
+    sio_error("waitpid error");
+
+  Sio_puts("Handler reaped child\n");
+  Sleep(1);
+  errno = olderrno;
+}
+
+int main() {
+  int i, n;
+  char buf[MAXBUF];
+  if (signal(SIGCHLD, handler1) == SIG_ERR)
+    unix_error("signal error");
+
+  /* Parent creates children */
+  for (i = 0; i < 3; i++) {
+    if (Fork() == 0) {
+      printf("Hello from child %d\n", (int)getpid());
+      exit(0);
+    }
+  }
+
+  /* Parent waits for terminal input and then processes it */
+  if ((n = read(STDIN_FILENO, buf, sizeof(buf))) < 0)
+    unix_error("read");
+
+  printf("Parent processing input\n");
+  while (1)
+    ;
+
+  exit(0);
+}
+```
+
+- The crucial lesson is that signals cannot be used to count the occurrence of events in other processes
+- Correct version:
+
+```c
+void handler2(int sig) {
+  int olderrno = errno;
+
+  while (waitpid(-1, NULL, 0) > 0) {
+    Sio_puts("Handler reaped child\n");
+  }
+
+  if (errno != ECHILD)
+    Sio_error("waitpid error");
+  Sleep(1);
+  errno = olderrno;
+}
+```
+
+- Another ugly aspect of Unix signal handling is that different systems have different signal-handling semantics:
+  - The semantics of the signal function varies
+  - System calls can be interrupted
+- To deal with these issues, the Posix standard defines the sigaction function, which allows users to clearly specify the signal-handling semantics they want when they install a handler
+
+```c
+#include <signal.h>
+
+// Returns: 0 if OK, −1 on error
+int sigaction(int signum, struct sigaction *act, struct sigaction *oldact);
+
+// A wrapper for sigaction that provides portable signal handling on Posix-compliant systems
+handler_t *Signal(int signum, handler_t *handler) {
+  struct sigaction action, old_action;
+
+  action.sa_handler = handler;
+  sigemptyset(&action.sa_mask); /* Block sigs of type being handled */
+  action.sa_flags = SA_RESTART; /* Restart syscalls if possible */
+
+  if (sigaction(signum, &action, &old_action) < 0)
+    unix_error("Signal error");
+  return (old_action.sa_handler);
+}
+```
