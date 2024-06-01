@@ -900,3 +900,81 @@ int main(int argc, char **argv) {
 ```
 
 - Notice that children inherit the blocked set of their parents, so we must be careful to unblock the SIGCHLD signal in the child before calling `execve`
+
+#### Explicitly Waiting for Signals
+
+- Sometimes a main program needs to explicitly wait for a certain signal handler to run
+
+```c
+#include "csapp.h"
+
+volatile sig_atomic_t pid;
+void sigchld_handler(int s) {
+  int olderrno = errno;
+  pid = waitpid(-1, NULL, 0);
+  errno = olderrno;
+}
+
+void sigint_handler(int s) { }
+
+int main(int argc, char **argv) {
+  sigset_t mask, prev;
+
+  Signal(SIGCHLD, sigchld_handler);
+  Signal(SIGINT, sigint_handler);
+  Sigemptyset(&mask);
+  Sigaddset(&mask, SIGCHLD);
+
+  while (1) {
+    Sigprocmask(SIG_BLOCK, &mask, &prev); /* Block SIGCHLD */
+    if (Fork() == 0) /* Child */
+      exit(0);
+
+    /* Parent */
+    pid = 0;
+    Sigprocmask(SIG_SETMASK, &prev, NULL); /* Unblock SIGCHLD */
+
+    /* Wait for SIGCHLD to be received (wasteful) */
+    while (!pid)
+      ;
+
+    /* Do some work after receiving SIGCHLD */
+    printf(".");
+  }
+
+  exit(0);
+}
+```
+
+- While this code is correct, the spin loop is wasteful of processor resources
+
+- The code below also have problem
+
+```c
+while (!pid) /* Race! */
+  pause();
+
+while (!pid) /* Too slow! */
+  sleep(1);
+```
+
+- The proper solution is to use `sigsuspend`
+
+```c
+#include <signal.h>
+
+// Returns: −1
+int sigsuspend(const sigset_t *mask);
+```
+
+- The sigsuspend function temporarily replaces the current blocked set with mask and then suspends the process until the receipt of a signal whose action is either to run a handler or to terminate the process
+  - If the action is to terminate, then the process terminates without returning from `sigsuspend`
+  - If the action is to run a handler, then `sigsuspend` returns after the handler returns, restoring the blocked set to its state when `sigsuspend` was called
+
+```c
+sigprocmask(SIG_BLOCK, &mask, &prev);
+pause();
+sigprocmask(SIG_SETMASK, &prev, NULL);
+```
+
+- The atomic property guarantees that the calls to sigprocmask (line 1) and pause (line 2) occur together, without being interrupted
