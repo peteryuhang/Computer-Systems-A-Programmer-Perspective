@@ -1078,3 +1078,13 @@ int main() {
   - `sigsetjmp` and `siglongjmp` functions are not on the list of async-signal-safe functions, we must be careful to call only safe functions in any code reachable from a siglongjmp
 
 - catch clause inside a try statement as being akin to a `setjmp`. throw statement is similar to a `longjmp` function
+
+### Tools for Manipulating Processes
+
+- **strace**: Prints a trace of each system call invoked by a running program and its children
+  - Compile your program with -static to get a cleaner trace without a lot of output related to shared libraries
+- **ps**: Lists processes (including zombies) currently in the system
+- **top**: Prints information about the resource usage of current processes
+- **pmap**: Displays the memory map of a process
+- **/proc**: A virtual filesystem that exports the contents of numerous kernel data structures in an ASCII text form that can be read by user programs
+  - eg. `cat /proc/loadavg` to see the current load average on your Linux system
