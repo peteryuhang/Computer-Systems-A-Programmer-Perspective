@@ -978,3 +978,103 @@ sigprocmask(SIG_SETMASK, &prev, NULL);
 ```
 
 - The atomic property guarantees that the calls to sigprocmask (line 1) and pause (line 2) occur together, without being interrupted
+
+### Nonlocal Jumps
+
+- C provides a form of user-level exceptional control flow, called a **nonlocal jump**
+  - Transfers control directly from one function to another currently executing function without having to go through the normal call-and-return sequence
+
+```c
+#include <setjmp.h>
+
+// Returns: 0 from setjmp, nonzero from longjmps
+// called once, return multiple
+int setjmp(jmp_buf env);
+int sigsetjmp(sigjmp_buf env, int savesigs); // version that can be used by signal handler
+
+// called once, Never returns
+void longjmp(jmp_buf env, int retval);
+void siglongjmp(sigjmp_buf env, int retval); // // version that can be used by signal handler
+```
+
+- The `setjmp` function saves the current calling environment in the env buffer, for later use by `longjmp`, and returns 0
+- For subtle reasons beyond our scope, the value that `setjmp` returns should not be assigned to a variable
+
+```c
+rc = setjmp(env); /* Wrong! */
+```
+
+- The `longjmp` function restores the calling environment from the env buffer and then triggers a return from the most recent `setjmp` call that initialized env
+
+- eg. using nonlocal jumps to recover from error conditions in deeply nested functions without having to unwind the entire stack
+
+```c
+#include "csapp.h"
+
+jmp_buf buf;
+int error1 = 0;
+int error2 = 1;
+
+void foo(void), bar(void);
+int main() {
+  switch(setjmp(buf)) {
+  case 0:
+    foo();
+    break;
+  case 1:
+    printf("Detected an error1 condition in foo\n");
+    break;
+  case 2:
+    printf("Detected an error2 condition in foo\n");
+    break;
+  default:
+    printf("Unknown error condition in foo\n");
+  }
+  exit(0);
+}
+
+/* Deeply nested function foo */
+void foo(void) {
+  if (error1)
+    longjmp(buf, 1);
+  bar();
+}
+
+void bar(void) {
+  if (error2)
+    longjmp(buf, 2);
+}
+```
+
+- The `longjmp` could make unexpected consequences such as memory leak since it skip all intermediate calls
+
+- eg. A program that uses nonlocal jumps to restart itself when the user types Ctrl+C
+
+```c
+#include "csapp.h"
+
+sigjmp_buf buf;
+void handler(int sig) {
+  siglongjmp(buf, 1);
+}
+
+int main() {
+  if (!sigsetjmp(buf, 1)) {
+    Signal(SIGINT, handler);
+    Sio_puts("starting\n");
+  }
+  else
+    Sio_puts("restarting\n");
+
+  while(1) {
+    Sleep(1);
+    Sio_puts("processing...\n");
+  }
+  exit(0); /* Control never reaches here */
+}
+```
+- Something need to take care about above program:
+  - To avoid a race, we must install the handler after we call sigsetjmp. If not, we would run the risk of the handler running before the initial call to sigsetjmp sets up the calling environment for siglongjmp
+  - `sigsetjmp` and `siglongjmp` functions are not on the list of async-signal-safe functions, we must be careful to call only safe functions in any code reachable from a siglongjmp
+
+- catch clause inside a try statement as being akin to a `setjmp`. throw statement is similar to a `longjmp` function
