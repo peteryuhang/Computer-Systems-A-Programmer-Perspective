@@ -59,4 +59,4 @@
 - allocating pages happen when operating system allocates a new page of virtual memory, eg. as a result of calling `malloc`
 
 - In practice, virtual memory works well, mainly because of our old friend locality
-- If the working set size exceeds the size of physical memory, then the program can produce an unfortunate situation known asthrashing, where pages are swapped in and out continuously
+- If the working set size exceeds the size of physical memory, then the program can produce an unfortunate situation known as **thrashing**, where pages are swapped in and out continuously
