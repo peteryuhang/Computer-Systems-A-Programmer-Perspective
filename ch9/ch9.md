@@ -48,4 +48,15 @@
 
 ![](./vm_page_fault.png)
 
-- 
+- The activity of transferring a page between disk and memory is known as **swapping or paging**
+  - Pages are swapped in (paged in) from disk to DRAM, and swapped out (paged out) from DRAM to disk
+-  The strategy of waiting until the last moment to swap in a page, when a miss occurs, is known as **demand paging**
+
+- eg. allocating pages
+
+![](./allocating_a_new_virtual_page.png)
+
+- allocating pages happen when operating system allocates a new page of virtual memory, eg. as a result of calling `malloc`
+
+- In practice, virtual memory works well, mainly because of our old friend locality
+- If the working set size exceeds the size of physical memory, then the program can produce an unfortunate situation known asthrashing, where pages are swapped in and out continuously
