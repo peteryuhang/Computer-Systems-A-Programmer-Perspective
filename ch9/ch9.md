@@ -20,3 +20,11 @@
 - eg.
 
 ![](./vm_system_use_main_memory_as_cache.png)
+
+### DRAM Cache Organization
+
+- The position of the DRAM cache in the memory hierarchy has a big impact on the way that it is organized
+  - A DRAM is at least 10 times slower than an SRAM and that disk is about 100,000 times slower than a DRAM
+- Because of the large miss penalty and the expense of accessing the first byte, virtual pages tend to be large—typically 4 KB to 2 MB
+- DRAM caches are fully associative; that is, any virtual page can be placed in any physical page
+- DRAM caches always use write-back instead of write-through
