@@ -69,3 +69,16 @@
   - **Simplifying loading**
   - **Simplifying sharing**
   - **Simplifying memory allocation**
+
+### VM as a Tool for Memory Protection
+
+- A user process should not be allowed to modify its read-only code section
+  - Not allowed to read or modify any of the code and data structures in the kernel
+  - Not allowed to read or write the private memory of other processes
+  - Not allowed to modify any virtual pages that are shared with other processes
+
+- eg. 
+
+![](./vm_provide_page_level_memory_protection.png)
+
+- In this example, we have added three permission bits to each PTE
