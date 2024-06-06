@@ -60,3 +60,12 @@
 
 - In practice, virtual memory works well, mainly because of our old friend locality
 - If the working set size exceeds the size of physical memory, then the program can produce an unfortunate situation known as **thrashing**, where pages are swapped in and out continuously
+
+### VM as a Tool for Memory Management
+
+- Multiple virtual pages can be mapped to the same shared physical page
+- Advantage of VM:
+  - **Simplifying linking**
+  - **Simplifying loading**
+  - **Simplifying sharing**
+  - **Simplifying memory allocation**
