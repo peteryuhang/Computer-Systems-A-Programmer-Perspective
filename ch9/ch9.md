@@ -116,3 +116,24 @@
 - Page hits and page faults:
 
 ![](./operational_view_of_page_hits_and_page_faults.png)
+
+#### Integrating Caches and VM
+
+- In any system that uses both virtual memory and SRAM caches, SRAM can be put intermediate instead of separate:
+
+![](./integrating_vm_with_a_physically_addressed_cache.png)
+
+- The main idea is that the address translation occurs before the cache lookup
+- Notice that page table entries can be cached, just like any other data words
+
+#### Speeding Up Address Translation with a TLB
+
+- Structure of TLB:
+
+![](./components_of_a_virtual_address_used_tlb.png)
+
+- The index and tag fields that are used for set selection and line matching are extracted from the virtual page number in the virtual address
+
+- Position of TLB:
+
+![](./operational_view_of_a_tlb_hit_and_miss.png)
