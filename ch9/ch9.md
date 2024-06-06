@@ -137,3 +137,25 @@
 - Position of TLB:
 
 ![](./operational_view_of_a_tlb_hit_and_miss.png)
+
+#### Multi-Level Page Tables
+
+- The common approach for compacting the page table is to use a hierarchy of page tables instead
+
+- eg. 
+
+![](./two_level_page_table_hierarchy.png)
+
+- If every page in chunk i is unallocated, then level 1 PTE i is null
+- This scheme reduces memory requirements in two ways:
+  1. If a PTE in the level 1 table is null, then the corresponding level 2 page table does not even have to exist
+    - most of the 4 GB virtual address space for a typical program is unallocated
+  2. Only the level 1 table needs to be in main memory at all times
+    - The level 2 page tables can be created and paged in and out by the VM system as they are needed, which reduces pressure on main memory
+    - Only the most heavily used level 2 page tables need to be cached in main memory
+
+- eg. k-level page table:
+
+![](./address_translation_with_k_level_page_table.png)
+
+- Accessing k PTEs may seem expensive and impractical at first glance. However, the TLB comes to the rescue here by caching PTEs from the page tables at the different levels
