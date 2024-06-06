@@ -82,3 +82,37 @@
 ![](./vm_provide_page_level_memory_protection.png)
 
 - In this example, we have added three permission bits to each PTE
+
+### Address Translation
+
+- Summary of address translation symbols:
+
+|Symbol | Description|
+|:------ | :---------|
+|Basic parameters| |
+|$N = 2^n$| Number of addresses in virtual address space|
+|$M = 2^m$| Number of addresses in physical address space|
+|$P = 2^p$| Page size (bytes)|
+|Components of a virtual address (VA)| |
+|VPO |Virtual page offset (bytes)|
+|VPN |Virtual page number|
+|TLBI| TLB index|
+|TLBT| TLB tag|
+|Components of a physical address (PA)||
+|PPO| Physical page offset (bytes)|
+|PPN| Physical page number|
+|CO| Byte offset within cache block|
+|CI| Cache index|
+|CT| Cache tag|
+
+- How the MMU uses the page table to perform mapping:
+
+![](./address_translation_with_a_page_table.png)
+
+- A control register in the CPU, the **page table base register (PTBR)** points to the current page table
+- The n-bit virtual address has two components: a p-bit virtual page offset (VPO) and an (n − p)bit virtual page number (VPN)
+- The MMU uses the VPN to select the appropriate PTE
+
+- Page hits and page faults:
+
+![](./operational_view_of_page_hits_and_page_faults.png)
