@@ -224,3 +224,35 @@
 - The CR3 register contains the physical address of the L1 page table
 - VPN 1 provides an offset to an L1 PTE, which contains the base address of the L2 page table
 - VPN 2 provides an offset to an L2 PTE, and so on
+
+- In our discussion of address translation, we have described a sequential two-step process where the
+  1. Translates the virtual address to a physical address
+  2. Passes the physical address to the L1 cache
+- However, real hardware implementations use a neat trick that allows these steps to be partially overlapped, thus speeding up accesses to the L1 cache
+
+#### Linux Virtual Memory System
+
+- The virtual memory of a linux process (filled in some more details about the kernel virtual memory that lies above the user stack)
+
+![](./virtual_memory_of_a_linux_process.png)
+
+##### Linux Virtual Memory Areas
+
+- Linux organizes the virtual memory as a collection of areas (also called segments). An area is a contiguous chunk of existing (allocated) virtual memory whose pages are related in some way
+- The notion of an area is important because it allows the virtual address space to have gaps
+
+![](./how_linux_organizes_virtual_memory.png)
+
+- The elements of the **task structure** either contain or point to all of the information that the kernel needs to run the process (e.g., the PID, pointer to the user stack, name of the executable object file, and program counter)
+
+- `mm_struct` that characterizes the current state of the virtual memory
+- `pgd` points to the base of the level 1 table (the page global directory)
+- a list of `vm_area_structs` (area structs) each of which characterizes an area of the current virtual address space
+- When the kernel runs this process, it stores pgd in the CR3 control register
+- For our purposes, the area struct for a particular area contains the following fields:
+  - **fvm_start**: Points to the beginning of the area
+  - **vm_end**: Points to the end of the area
+  - **vm_prot**: Describes the read/write permissions for all of the pages contained in the area
+  - **vm_flags**: Describes (among other things) whether the pages in the area are shared with other processes or private to this process
+  - **vm_next**: Points to the next area struct in the list
+
