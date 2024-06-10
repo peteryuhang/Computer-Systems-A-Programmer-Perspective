@@ -159,3 +159,36 @@
 ![](./address_translation_with_k_level_page_table.png)
 
 - Accessing k PTEs may seem expensive and impractical at first glance. However, the TLB comes to the rescue here by caching PTEs from the page tables at the different levels
+
+#### Putting It Together: End-to-End Address Translation
+
+- eg. assuming:
+  - The memory is byte addressable
+  - Memory accesses are to 1-byte words (not 4-byte words)
+  - Virtual addresses are 14 bits wide (n = 14)
+  - Physical addresses are 12 bits wide (m = 12)
+  - The page size is 64 bytes (P = 64)
+  - The TLB is 4-way set associative with 16 total entries
+  - The L1 d-cache is physically addressed and direct mapped, with a 4-byte line size and 16 total sets
+- Since each page is $2^6 = 64$ bytes, the low-order 6 bits of the virtual and physical addresses serve as the VPO and PPO, respectively:
+
+![](./addressing_for_small_memory_system.png)
+
+- Memory system:
+
+![](./tlb_page_table_cache_for_small_memory_system.png)
+
+- **TLB**: The TLB is virtually addressed using the bits of the VPN
+- **Page table**: The page table is a single-level design with a total of $2^8 = 256$ page table entries (PTEs). However, we are only interested in the first 16 of these
+- **Cache**:
+  - Since each block is 4 bytes, the low-order 2 bits of the physical address serve as the block offset (CO)
+  - Since there are 16 sets, the next 4 bits serve as the set index (CI)
+  - The remaining 6 bits serve as the tag (CT)
+
+- When the CPU executes a load instruction that reads the byte at address `0x03d4`
+  - MMU -> TLB
+  ![](./small_memory_system_eg_tlb_hit.png)
+  - MMU concatenating the PPN(`0x0D`) from the PTE with VPO(`0x14`) -> physical address (`0x354`)
+  - MMU sends the physical address to the cache
+  ![](./small_memory_system_eg_cache_hit.png)
+  - Cache detects a hit, reads out the data byte (`0x36`) at offset CO, and returns it to the MMU, which then passes it back to the CPU
