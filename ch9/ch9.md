@@ -199,4 +199,28 @@
 
 ![](./the_core_i7_memory_system.png)
 
+#### Core i7 Address Translation
 
+- Core i7 Address Translation process:
+
+![](./summary_of_core_i7_address_translation.png)
+
+- The Core i7 uses a four-level page table hierarchy. Each process has its own private page table hierarchy
+- When a Linux process is running, the page tables associated with allocated pages are all memory-resident, although the Core i7 architecture allows these page tables to be swapped in and out
+- The value of CR3 is part of each process context, and is restored during each context switch
+- format of an entry in a level 1, level 2, or level 3 page table:
+
+![](./format_of_level_1_to_3_page_table.png)
+
+- format of an entry in a level 4 page table:
+
+![](./format_of_level_4_page_table.png)
+
+- How the Core i7 MMU uses the four levels of page tables to translate a virtual address to a physical address:
+
+![](./core_i7_page_table_translation.png)
+
+- The 36-bit VPN is partitioned into four 9-bit chunks, each of which is used as an offset into a page table
+- The CR3 register contains the physical address of the L1 page table
+- VPN 1 provides an offset to an L1 PTE, which contains the base address of the L2 page table
+- VPN 2 provides an offset to an L2 PTE, and so on
