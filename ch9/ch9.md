@@ -256,3 +256,15 @@
   - **vm_flags**: Describes (among other things) whether the pages in the area are shared with other processes or private to this process
   - **vm_next**: Points to the next area struct in the list
 
+##### Linux Page Fault Exception Handling
+
+- kernel’s page fault handler performs the following steps:
+  1. Is virtual address A legal?
+    - The fault handler searches the list of area structs, comparing A with the vm_start and vm_end in each area struct (in practice, search in a tree)
+    - Not legal -> triggers a segmentation fault
+  2. Is the attempted memory access legal?
+    - does the process have permission to read, write, or execute the pages in this area?
+    - Not legal -> triggers a protection exception
+  3. The kernel knows that the page fault resulted from a legal operation on a legal virtual address
+
+![](./linux_page_fault_handling.png)
