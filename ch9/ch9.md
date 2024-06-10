@@ -192,3 +192,11 @@
   - MMU sends the physical address to the cache
   ![](./small_memory_system_eg_cache_hit.png)
   - Cache detects a hit, reads out the data byte (`0x36`) at offset CO, and returns it to the MMU, which then passes it back to the CPU
+
+### Case Study: The Intel Core i7/Linux Memory System
+
+- An Intel Core i7 running Linux:
+
+![](./the_core_i7_memory_system.png)
+
+
