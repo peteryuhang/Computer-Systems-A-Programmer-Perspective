@@ -268,3 +268,13 @@
   3. The kernel knows that the page fault resulted from a legal operation on a legal virtual address
 
 ![](./linux_page_fault_handling.png)
+
+### Memory Mapping
+
+- Linux initializes the contents of a virtual memory area by associating it with an object on disk, a process known as **memory mapping**
+- Areas can be mapped to one of two types of objects:
+  - **Regular file in the Linux file system**: An area can be mapped to a contiguous section of a regular disk file, such as an executable object file
+  - **Anonymous file**: An area can also be mapped to an anonymous file, created by the kernel, that contains all binary zeros
+- In either case, once a virtual page is initialized, it is swapped back and forth between a special **swap file** maintained by the kernel
+- The swap file is also known as the swap space or the swap area
+- An important point to realize is that at any point in time, **the swap space bounds the total amount of virtual pages that can be allocated by the currently running processes**
