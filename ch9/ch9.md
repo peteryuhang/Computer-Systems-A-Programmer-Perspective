@@ -318,3 +318,37 @@
   3. **Map Shared areas**: eg. `libc.so` dynamically linked into the program, and then mapped into the shared region of the user’s virtual address space
   4. **Set the program counter(PC)**: set the program counter in the current process’s context to point to the entry point in the code area
 
+#### User-Level Memory Mapping with the mmap Function
+
+- Linux processes can use the `mmap` function to create new areas of virtual memory and to map objects into these areas
+
+```c
+#include <unistd.h>
+#include <sys/mman.h>
+
+// Returns: pointer to mapped area if OK, MAP_FAILED (−1) on error
+void *mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset);
+```
+
+- arguments interpretation:
+
+![](./visual_interpretation_of_mmap_arguments.png)
+
+- The `mmap` function asks the kernel to create a new virtual memory area
+- map a contiguous chunk of the object specified by file descriptor `fd` to the new area
+- The start address is merely a hint, and is usually specified as NULL
+- The prot argument contains bits that describe the access permissions of the newly mapped virtual memory area (eg. `vm_prot` in the corresponding area struct):
+  - `PROT_EXEC`: Pages in the area consist of instructions that may be executed by the CPU
+  - `PROT_READ`: Pages in the area may be read
+  - `PROT_WRITE`: Pages in the area may be written
+  - `PROT_NONE`: Pages in the area cannot be accessed
+
+- The `munmap` function deletes regions of virtual memory:
+
+```c
+#include <unistd.h>
+#include <sys/mman.h>
+
+// Returns: 0 if OK, −1 on error
+int munmap(void *start, size_t length);
+```
