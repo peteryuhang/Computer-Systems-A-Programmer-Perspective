@@ -352,3 +352,21 @@ void *mmap(void *start, size_t length, int prot, int flags, int fd, off_t offset
 // Returns: 0 if OK, −1 on error
 int munmap(void *start, size_t length);
 ```
+
+### Dynamic Memory Allocation
+
+- A dynamic memory allocator maintains an area of a process’s virtual memory known as the **heap**
+
+![](./the_heap.png)
+
+- An allocator maintains the heap as a collection of various-size blocks
+- Each block is a contiguous chunk of virtual memory that is either allocated or free
+- An allocated block has been explicitly reserved for use by the application
+- A free block is available to be allocated
+
+- **Explicit allocators**: require the application to explicitly free any allocated blocks
+- **Implicit allocators**: require the allocator to detect when an allocated block is no longer being used by the program and then free the block, known as **garbage collectors**
+
+- You should be aware that memory allocation is a general idea that arises in a variety of contexts
+
+
