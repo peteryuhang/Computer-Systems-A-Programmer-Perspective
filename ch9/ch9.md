@@ -406,3 +406,28 @@ void free(void *ptr);
 ![](./allocating_and_freeing_blocks.png)
 
 - Notice that after the call to free returns, the pointer p2 still points to the freed block
+
+#### Allocator Requirement and Goals
+
+- Requirements:
+  - Handling arbitrary request sequences
+  - Making immediate responses to requests
+  - Using only the heap
+  - Aligning blocks (alignment requirement)
+  - Not modifying allocated blocks
+
+- Goals:
+  - Maximizing throughput
+    - we can maximize throughput by minimizing the average time to satisfy allocate and free requests
+  - Maximizing memory utilization
+    - the total amount of virtual memory allocated by all of the processes in a system is limited by the amount of swap space on disk
+- One of the interesting challenges in any allocator design is finding an appropriate balance between the two goals
+
+#### Fragmentation
+
+- **Internal fragmentation**:
+  - Occurs when an allocated block is larger than the payload
+  - At any point in time, the amount of internal fragmentation depends only on the pattern of previous requests and the allocator implementation
+- **External fragmentation**:
+  - Occurs when there is enough aggregate free memory to satisfy an allocate request, but no single free block is large enough to handle the request
+  - External fragmentation is much more difficult to quantify than internal fragmentation because it depends not only on the pattern of previous requests and the allocator implementation but also on the pattern of future requests
