@@ -369,4 +369,40 @@ int munmap(void *start, size_t length);
 
 - You should be aware that memory allocation is a general idea that arises in a variety of contexts
 
+#### The malloc and free Functions
 
+```c
+#include <stdlib.h>
+
+// Returns: pointer to allocated block if OK, NULL on error
+void *malloc(size_t size);
+```
+
+- In 32-bit mode, malloc returns a block whose address is always a multiple of 8
+- In 64-bit mode, the address is always a multiple of 16
+- `Malloc` does not initialize the memory it returns
+- Applications that want initialized dynamic memory can use `calloc`, a thin wrapper around the `malloc` function that initializes the allocated memory to zero
+- Applications that want to change the size of a previously allocated block can use the `realloc` function
+
+- The `sbrk` function grows or shrinks the heap by adding incr to the kernel’s brk pointer
+```c
+#include <unistd.h>
+
+// Returns: old brk pointer on success, −1 on error
+void *sbrk(intptr_t incr);
+```
+
+- Programs free allocated heap blocks by calling the `free` function
+```c
+#include <stdlib.h>
+
+// Returns: nothing
+void free(void *ptr);
+```
+- The `ptr` argument must point to the beginning of an allocated block that was obtained from `malloc`, `calloc`, or `realloc`
+
+- eg.
+
+![](./allocating_and_freeing_blocks.png)
+
+- Notice that after the call to free returns, the pointer p2 still points to the freed block
