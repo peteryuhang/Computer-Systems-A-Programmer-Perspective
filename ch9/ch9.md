@@ -278,3 +278,25 @@
 - In either case, once a virtual page is initialized, it is swapped back and forth between a special **swap file** maintained by the kernel
 - The swap file is also known as the swap space or the swap area
 - An important point to realize is that at any point in time, **the swap space bounds the total amount of virtual pages that can be allocated by the currently running processes**
+
+#### Shared Objects Revisited
+
+- An object can be mapped into an area of virtual memory as either a shared object or a private object
+- **shared object**
+  - Any writes that the process makes to that area are visible to any other processes that have also mapped the shared object into their virtual memory
+  - The changes are also reflected in the original object on disk
+
+![](./a_shared_object.png)
+
+- The key point is that only a single copy of the shared object needs to be stored in physical memory
+
+- **private object**
+  - Not visible to other processes
+  - Any writes that the process makes to the area are not reflected back to the object on disk
+
+![](./a_private_copy_on_write_object.png)
+
+- A private object begins life in exactly the same way as a shared object, with only one copy of the private object stored in physical memory
+- For each process that maps the private object, the page table entries for the corresponding private area are flagged as read-only, and the area struct is flagged as private copy-on-write
+- As soon as a process attempts to write to some page in the private area, the write triggers a protection fault, and the handler make the copy
+- Copy-on-write makes the most efficient use of scarce physical memory
