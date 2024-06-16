@@ -300,3 +300,21 @@
 - For each process that maps the private object, the page table entries for the corresponding private area are flagged as read-only, and the area struct is flagged as private copy-on-write
 - As soon as a process attempts to write to some page in the private area, the write triggers a protection fault, and the handler make the copy
 - Copy-on-write makes the most efficient use of scarce physical memory
+
+#### The fork Function Revisited
+
+- To create the virtual memory for the new process, it creates exact copies of the current process’s `mm_struct`, `area structs`, and `page tables`
+- It flags each page in both processes as read-only, and flags each area struct in both processes as private copy-on-write
+
+#### The execve Function Revisited
+
+- Steps:
+  1. **Delete existing user area**: Delete the existing area structs in the user portion of the current process’s virtual address
+  2. **Map private areas**:
+    - Create new area structs for the code, data, bss, and stack areas of the new program
+    - All of these new areas are private copy-on-write
+    
+    ![](./how_the_loader_maps_areas_of_the_user_address_space.png)
+  3. **Map Shared areas**: eg. `libc.so` dynamically linked into the program, and then mapped into the shared region of the user’s virtual address space
+  4. **Set the program counter(PC)**: set the program counter in the current process’s context to point to the entry point in the code area
+
