@@ -431,3 +431,11 @@ void free(void *ptr);
 - **External fragmentation**:
   - Occurs when there is enough aggregate free memory to satisfy an allocate request, but no single free block is large enough to handle the request
   - External fragmentation is much more difficult to quantify than internal fragmentation because it depends not only on the pattern of previous requests and the allocator implementation but also on the pattern of future requests
+
+#### Implementation Issues
+
+- **Free block organization**: How do we keep track of free blocks?
+- **Placement**: How do we choose an appropriate free block in which to place a newly allocated block?
+- **Splitting**: After we place a newly allocated block in some free block, what do we do with the remainder of the free block?
+- **Coalescing**: What do we do with a block that has just been freed?
+
