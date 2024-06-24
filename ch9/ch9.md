@@ -439,3 +439,21 @@ void free(void *ptr);
 - **Splitting**: After we place a newly allocated block in some free block, what do we do with the remainder of the free block?
 - **Coalescing**: What do we do with a block that has just been freed?
 
+#### Implicit Free Lists
+
+- Format of a simple heap block
+
+![](./format_of_a_simple_heap_block.png)
+
+- If we impose a double-word alignment constraint, then the block size is always a multiple of 8 and the 3 low-order bits of the block size are always zero
+- The block format induces a minimum block size of two words: one word for the header and another to maintain the alignment requirement
+
+- eg. free block
+
+![](./organizing_the_heap_with_an_implicit_free_list.png)
+
+- We call this organization an **implicit free list** because the free blocks are linked implicitly by the size fields in the headers
+- The advantage of an implicit free list is simplicity
+- A significant disadvantage is that the cost of any operation will be linear in the total number of allocated and free blocks in the heap
+
+- No allocated or free block may be smaller than this minimum
