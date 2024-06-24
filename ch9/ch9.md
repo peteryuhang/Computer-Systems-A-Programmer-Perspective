@@ -457,3 +457,38 @@ void free(void *ptr);
 - A significant disadvantage is that the cost of any operation will be linear in the total number of allocated and free blocks in the heap
 
 - No allocated or free block may be smaller than this minimum
+
+#### Placing Allocated Blocks
+
+- The manner in which the allocator performs this search is determined by the placement policy
+- Some common policies are first fit, next fit, and best fit
+- Next fit: If we found a fit in some free block the last time, there is a good chance that we will find a fit the next time in the remainder of the block
+
+#### Splitting Free Blocks
+
+- Once the allocator has located a free block that fits, it must make another policy decision about how much of the free block to allocate
+  - Use the entire free block: Simple but will introduce internal fragmentation
+  - Split the free block into two parts: The first part becomes the allocated block, and the remainder becomes a new free block
+
+![](./splitting_a_free_block_to_satisfy_a_three_word_allocation_request.png)
+
+#### Getting Additional Heap Memory
+
+- What happens if the allocator is unable to find a fit for the requested block? 
+  1. Create some larger free blocks by merging (coalescing) free blocks that are physically adjacent in memory
+  2. If 1 doesn't work, asks kernel for additional heap memory by calling the `sbrk` function
+
+#### Coalescing Free Blocks
+
+- **False fragmentation**:
+
+![](./an_example_of_false_fragmentation.png)
+
+- To combat false fragmentation, any practical allocator must merge adjacent free blocks in a process known as **coalescing**
+
+- When to perform coalescing:
+  - **immediate coalescing**: merge any adjacent blocks each time a block is freed
+  - **deferred coalescing**: wait to coalesce free blocks at some later time, eg. defer coalescing until some allocation request fails
+
+- Immediate coalescing is straightforward and can be performed in constant time, but with some request patterns it can introduce a form of thrashing where a block is repeatedly coalesced and then split soon thereafter
+- You should be aware that fast allocators often opt for some form of deferred coalescing
