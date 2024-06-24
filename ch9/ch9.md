@@ -492,3 +492,16 @@ void free(void *ptr);
 
 - Immediate coalescing is straightforward and can be performed in constant time, but with some request patterns it can introduce a form of thrashing where a block is repeatedly coalesced and then split soon thereafter
 - You should be aware that fast allocators often opt for some form of deferred coalescing
+
+#### Coalescing with Boundary Tags
+
+- **Boundary tags**: Allows for constant-time coalescing of the previous block
+
+![](./format_of_heap_block_uses_a_boundary_tag.png)
+
+- Requiring each block to contain both a header and a footer can introduce significant memory overhead if an application manipulates many small blocks
+- Optimization: If we were to store the allocated/free bit of the previous block in one of the excess loworder bits of the current block, then allocated blocks would not need footers, and we could use that extra space for payload. Note, however, that free blocks would still need footers
+
+- eg.
+
+![](./coalescing_with_boundary_tags.png)
