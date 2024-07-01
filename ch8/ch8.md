@@ -676,7 +676,7 @@ unsigned int alarm(unsigned int secs);
 - Each signal type has a predefined default action, which is one of the following:
   - The process terminates
   - The process terminates and dumps core
-  - The process stops (suspends) until restartede by a SIGCONT signal
+  - The process stops (suspends) until restarted by a SIGCONT signal
   - The process ignores the signal
 
 ```c
