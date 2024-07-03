@@ -728,7 +728,7 @@ int sigismember(const sigset_t *set, int signum);
   - Declare flags with `sig_atomic_t`
 
 - The key idea is that the existence of a pending signal merely indicates that at least one signal has arrived
-- The below progran is flawed because it assumes that signals are queued
+- The below program is flawed because it assumes that signals are queued
 
 ```c
 /* WARNING: This code is buggy! */
