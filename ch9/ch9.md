@@ -699,3 +699,32 @@ void *mm_malloc(size_t size) {
 ![](./format_of_heap_blocks_that_use_doubly_linked_free_lists.png)
 
 - A disadvantage of explicit lists in general is that free blocks must be large enough to contain all of the necessary pointers, as well as the header and possibly a footer. This results in a larger minimum block size and increases the potential for internal fragmentation
+
+#### Segregated Free Lists
+
+- A popular approach for reducing the allocation time, known generally as segregated storage, is to maintain multiple free lists, where each list holds blocks that are roughly the same size
+- The allocator maintains an array of free lists, with one free list per size class, ordered by increasing size
+
+##### Simple Segregated Storage
+
+- To allocate a block of some given size, we check the appropriate free list
+- If the list is not empty, we simply allocate the first block in its entirety
+- Free blocks are never split to satisfy allocation requests
+- Since each chunk has only samesize blocks, the size of an allocated block can be inferred from its address
+- Allocated blocks require no headers, and since there is no coalescing, they do not require any footers either
+- A significant disadvantage is that simple segregated storage is susceptible to internal and external fragmentation
+
+##### Segregated Fits
+
+- Each free list is associated with a size class and is organized as some kind of explicit or implicit list
+- To allocate a block, we determine the size class of the request and do a firstfit search of the appropriate free list for a block that fits. If we find one, then we (optionally) split it and insert the fragment in the appropriate free list. If we cannot find a block that fits, then we search the free list for the next larger size class
+- To free a block, we coalesce and place the result on the appropriate free list
+- The segregated fits approach is a popular choice with production-quality allocators such as the GNU malloc package provided in the C standard library because it is both fast and memory efficient
+
+##### Buddy Systems
+
+- A **buddy system** is a special case of segregated fits where each size class is a power of 2
+- To allocate a block of size $2^k$, we find the first available block of size $2^j$, such that `k ≤ j ≤ m`. If j = k, then we are done. Otherwise, we recursively split the block in half until j = k
+- To free a block of size $2^k$, we continue coalescing with the free buddies. When we encounter an allocated buddy, we stop the coalescing
+- A key fact about buddy systems is that, given the address and size of a block, it is easy to compute the address of its buddy, eg. `xxx...x00000` has its buddy at address `xxx...x10000`
+
