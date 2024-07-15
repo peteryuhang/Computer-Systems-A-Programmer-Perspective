@@ -691,3 +691,11 @@ void *mm_malloc(size_t size) {
   return bp;
 }
 ```
+
+#### Explicit Free Lists
+
+- Using a doubly linked list instead of an implicit free list reduces the first-fit allocation time from linear in the total number of blocks to linear in the number of free blocks
+
+![](./format_of_heap_blocks_that_use_doubly_linked_free_lists.png)
+
+- A disadvantage of explicit lists in general is that free blocks must be large enough to contain all of the necessary pointers, as well as the header and possibly a footer. This results in a larger minimum block size and increases the potential for internal fragmentation
