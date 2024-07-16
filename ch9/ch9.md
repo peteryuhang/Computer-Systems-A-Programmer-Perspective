@@ -767,3 +767,13 @@ void *mm_malloc(size_t size) {
 
 ![](./mark_sweep_eg.png)
 
+#### Conservative Mark&Sweep for C Programs
+
+- Mark&Sweep is an appropriate approach for garbage collecting C programs because it works in place without moving any blocks
+- First, C does not tag memory locations with any type information. Thus, there is no obvious way for isPtr to determine if its input parameter p is a pointer or not.
+- Second, even if we were to know that p was a pointer, there would be no obvious way for isPtr to determine whether p points to some location in the payload of an allocated block
+- One solution to the latter problem is to maintain the set of allocated blocks as a balanced binary tree that maintains the invariant that all blocks in the left subtree are located at smaller addresses and all blocks in the right subtree are located in larger addresses:
+
+![](./left_and_right_pointers_in_a_balanced_tree_of_allocated_blocks.png)
+
+- While this does not affect the correctness of application programs, it can result in unnecessary external fragmentation
