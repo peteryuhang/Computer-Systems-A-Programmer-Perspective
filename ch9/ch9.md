@@ -747,4 +747,23 @@ void *mm_malloc(size_t size) {
 
 - The key idea is that the collector calls `free` instead of the application
 
+#### Mark&Sweep Garbage Collectors
+
+- A Mark&Sweep garbage collector consists of a mark phase, which marks all reachable and allocated descendants of the root nodes, followed by a sweep phase, which frees each unmarked allocated block
+- Related functions:
+  - `ptr isPtr(ptr p)`: If p points to some word in an allocated block, it returns a pointer b to the beginning of that block. Returns NULL otherwise
+  - `int blockMarked(ptr b)`: Returns true if block b is already marked
+  - `int blockAllocated(ptr b)`: Returns true if block b is allocated
+  - `void markBlock(ptr b)`: Marks block b
+  - `int length(ptr b)`: Returns the length in words (excluding the header) of block b
+  - `void unmarkBlock(ptr b)`: Changes the status of block b from marked to unmarked
+  - `ptr nextBlock(ptr b)`: Returns the successor of block b in the heap
+
+- Mark&Sweep functions:
+
+![](./mark_and_sweep_funcs.png)
+
+- eg.
+
+![](./mark_sweep_eg.png)
 
