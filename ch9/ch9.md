@@ -728,3 +728,9 @@ void *mm_malloc(size_t size) {
 - To free a block of size $2^k$, we continue coalescing with the free buddies. When we encounter an allocated buddy, we stop the coalescing
 - A key fact about buddy systems is that, given the address and size of a block, it is easy to compute the address of its buddy, eg. `xxx...x00000` has its buddy at address `xxx...x10000`
 
+### Garbage Collection
+
+- A **garbage collector** is a dynamic storage allocator that automatically frees allocated blocks that are no longer needed by the program
+  - Blocks are known as **garbage**
+  - The process of automatically reclaiming heap storage is known as **garbage collection**
+
