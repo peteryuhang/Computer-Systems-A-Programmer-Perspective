@@ -734,3 +734,17 @@ void *mm_malloc(size_t size) {
   - Blocks are known as **garbage**
   - The process of automatically reclaiming heap storage is known as **garbage collection**
 
+#### Garbage Collector Basics
+
+- A garbage collector views memory as a directed **reachability graph**:
+
+![](./garbage_collector_view_of_memory_as_a_directed_graph.png)
+
+- Root nodes correspond to locations not in the heap that contain pointers into the heap
+- They are conservative in the sense that each reachable block is correctly identified as reachable, while some unreachable nodes might be incorrectly identified as reachable
+
+![](./integrating_a_conservative_garbage_collector_and_a_C_malloc_package.png)
+
+- The key idea is that the collector calls `free` instead of the application
+
+
