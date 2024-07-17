@@ -843,3 +843,89 @@ int **makeArray1(int n, int m) {
 
 - Because the programmer has written `sizeof(int)` instead of `sizeof(int *)` in line 4, the code actually creates an array of ints
 
+#### Making Off-by-One Errors
+
+- Off-by-one errors are another common source of overwriting bugs:
+
+```c
+/* Create an nxm array */
+int **makeArray2(int n, int m) {
+  int i;
+  int **A = (int **)Malloc(n * sizeof(int *));
+  for (i = 0; i <= n; i++)
+    A[i] = (int *)Malloc(m * sizeof(int));
+  return A;
+}
+```
+
+#### Referencing a Pointer Instead of the Object It Points To
+
+- eg.
+
+```c
+int *binheapDelete(int **binheap, int *size) {
+  int *packet = binheap[0];
+  binheap[0] = binheap[*size - 1];
+  *size--; /* This should be (*size)-- */
+  heapify(binheap, *size, 0);
+  return(packet);
+}
+```
+
+- the code in line 4 actually decrements the pointer itself instead of the integer value that it points to
+
+#### Misunderstanding Pointer Arithmetic
+
+- Arithmetic operations on pointers are performed in units that are the size of the objects they point to:
+
+```c
+int *search(int *p, int val) {
+  while (*p && *p != val)
+    p += sizeof(int); /* Should be p++ */
+  return p;
+}
+```
+
+#### Referencing Nonexistent Variables
+
+- Naive C programmers who do not understand the stack discipline will sometimes reference local variables that are no longer valid, as in the following example:
+
+```c
+int *stackref() {
+  int val;
+  return &val;
+}
+```
+
+- This function returns a pointer (say, p) to a local variable on the stack and then pops its stack frame
+
+#### Referencing Data in Free Heap Blocks
+
+- eg.
+
+```c
+int *heapref(int n, int m) {
+  int i;
+  int *x, *y;
+  x = (int *)Malloc(n * sizeof(int));
+  .
+  . // Other calls to malloc and free go here
+  . 
+  free(x);
+  y = (int *)Malloc(m * sizeof(int));
+  for (i = 0; i < m; i++)
+    y[i] = x[i]++; /* Oops! x[i] is a word in a free block */
+  return y;
+}
+```
+
+#### Introducing Memory Leaks
+
+- eg.
+
+```c
+void leak(int n) {
+  int *x = (int *)Malloc(n * sizeof(int));
+  return; /* x is garbage at this point */
+}
+```
