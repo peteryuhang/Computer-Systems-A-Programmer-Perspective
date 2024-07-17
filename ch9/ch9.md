@@ -929,3 +929,11 @@ void leak(int n) {
   return; /* x is garbage at this point */
 }
 ```
+
+### Conclusion
+
+- Virtual memory provides three important capabilities:
+  1. It automatically caches recently used contents of the virtual address space stored on disk in main memory
+  2. Virtual memory simplifies memory management, which in turn simplifies linking, sharing data between processes, the allocation of memory for processes, and program loading
+  3. Virtual memory simplifies memory protection by incorporating protection bits into every page table entry
+
