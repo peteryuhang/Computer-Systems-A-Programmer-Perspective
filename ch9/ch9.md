@@ -794,3 +794,52 @@ scanf("%d", &val)
 
 - In this case, scanf will interpret the contents of val as an address and attempt to write a word to that location
 
+#### Reading Uninitialized Memory
+
+- A common error is to assume that heap memory is initialized to zero:
+
+```c
+/* Return y = Ax */
+int *matvec(int **A, int *x, int n) {
+  int i, j;
+  int *y = (int *)Malloc(n * sizeof(int));
+  for (i = 0; i < n; i++)
+    for (j = 0; j < n; j++)
+      y[i] += A[i][j] * x[j];
+  return y;
+}
+```
+
+- A correct implementation would explicitly zero `y[i]` or use `calloc`
+
+#### Allowing Stack Buffer Overflows
+
+- A program has a **buffer overflow bug** if it writes to a target buffer on the stack without examining the size of the input string, eg.
+
+```c
+void bufoverflow() {
+  char buf[64];
+  gets(buf); /* Here is the stack buffer overflow bug */
+  return;
+}
+```
+
+- To fix this, we would need to use the `fgets` function, which limits the size of the input string
+
+#### Assuming That Pointers and the Objects They Point to Are the Same Size
+
+- eg.
+
+```c
+/* Create an nxm array */
+int **makeArray1(int n, int m) {
+  int i;
+  int **A = (int **)Malloc(n * sizeof(int));
+  for (i = 0; i < n; i++)
+    A[i] = (int *)Malloc(m * sizeof(int));
+  return A;
+}
+```
+
+- Because the programmer has written `sizeof(int)` instead of `sizeof(int *)` in line 4, the code actually creates an array of ints
+
