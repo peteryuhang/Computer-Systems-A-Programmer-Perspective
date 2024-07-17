@@ -777,3 +777,20 @@ void *mm_malloc(size_t size) {
 ![](./left_and_right_pointers_in_a_balanced_tree_of_allocated_blocks.png)
 
 - While this does not affect the correctness of application programs, it can result in unnecessary external fragmentation
+
+### Common Memory-Related Bugs in C Programs
+
+#### Dereferencing Bad Pointers
+
+- eg.
+
+```c
+// Wrong
+scanf("%d", val)
+
+// Correct
+scanf("%d", &val)
+```
+
+- In this case, scanf will interpret the contents of val as an address and attempt to write a word to that location
+
