@@ -309,13 +309,14 @@
 #### The execve Function Revisited
 
 - Steps:
-  1. **Delete existing user area**: Delete the existing area structs in the user portion of the current process’s virtual address
+  1. **Delete existing user area**: Delete the existing area structs in the user portion of the current process's virtual address
   2. **Map private areas**:
     - Create new area structs for the code, data, bss, and stack areas of the new program
     - All of these new areas are private copy-on-write
     
     ![](./how_the_loader_maps_areas_of_the_user_address_space.png)
   3. **Map Shared areas**: eg. `libc.so` dynamically linked into the program, and then mapped into the shared region of the user’s virtual address space
+
   4. **Set the program counter(PC)**: set the program counter in the current process’s context to point to the entry point in the code area
 
 #### User-Level Memory Mapping with the mmap Function
