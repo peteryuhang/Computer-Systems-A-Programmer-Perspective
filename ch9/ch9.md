@@ -358,7 +358,7 @@ int munmap(void *start, size_t length);
 
 ### Dynamic Memory Allocation
 
-- A dynamic memory allocator maintains an area of a process’s virtual memory known as the **heap**
+- A dynamic memory allocator maintains an area of a process's virtual memory known as the **heap**
 
 ![](./the_heap.png)
 
