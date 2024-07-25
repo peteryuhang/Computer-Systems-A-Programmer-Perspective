@@ -258,7 +258,7 @@
 
 ##### Linux Page Fault Exception Handling
 
-- kernel’s page fault handler performs the following steps:
+- kernel's page fault handler performs the following steps:
   1. Is virtual address A legal?
     - The fault handler searches the list of area structs, comparing A with the vm_start and vm_end in each area struct (in practice, search in a tree)
     - Not legal -> triggers a segmentation fault
@@ -303,7 +303,7 @@
 
 #### The fork Function Revisited
 
-- To create the virtual memory for the new process, it creates exact copies of the current process’s `mm_struct`, `area structs`, and `page tables`
+- To create the virtual memory for the new process, it creates exact copies of the current process's `mm_struct`, `area structs`, and `page tables`
 - It flags each page in both processes as read-only, and flags each area struct in both processes as private copy-on-write
 
 #### The execve Function Revisited
@@ -317,9 +317,9 @@
     
     ![](./how_the_loader_maps_areas_of_the_user_address_space.png)
 
-  3. **Map Shared areas**: eg. `libc.so` dynamically linked into the program, and then mapped into the shared region of the user’s virtual address space
+  3. **Map Shared areas**: eg. `libc.so` dynamically linked into the program, and then mapped into the shared region of the user's virtual address space
 
-  4. **Set the program counter(PC)**: set the program counter in the current process’s context to point to the entry point in the code area
+  4. **Set the program counter(PC)**: set the program counter in the current process's context to point to the entry point in the code area
 
 #### User-Level Memory Mapping with the mmap Function
 
@@ -387,7 +387,7 @@ void *malloc(size_t size);
 - Applications that want initialized dynamic memory can use `calloc`, a thin wrapper around the `malloc` function that initializes the allocated memory to zero
 - Applications that want to change the size of a previously allocated block can use the `realloc` function
 
-- The `sbrk` function grows or shrinks the heap by adding incr to the kernel’s brk pointer
+- The `sbrk` function grows or shrinks the heap by adding incr to the kernel's brk pointer
 ```c
 #include <unistd.h>
 
