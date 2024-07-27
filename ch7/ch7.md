@@ -97,7 +97,7 @@ typedef struct {
 } Elf64_Symbol;
 ```
 
-- There are three special pseudosections that don’t have entries in the section header table:
+- There are three special pseudosections that don't have entries in the section header table:
   - **ABS**: symbols that should not be relocated
   - **UNDEF**: undefined symbols—that is, symbols that are referenced in this object module but defined elsewhere
   - **COMMON**: uninitialized data objects that are not yet allocated
@@ -170,7 +170,7 @@ int main() {
 #### How Linkers Use Static Libraries to Resolve References
 
 - During the symbol resolution phase, the linker scans the relocatable object files and archives left to right in the same sequential order that they appear on the
-compiler driver’s command line (The driver automatically translates any .c files on the command line into .o files)
+compiler driver's command line (The driver automatically translates any .c files on the command line into .o files)
 - During scan, the linker maintain three sets (initially, they are empty):
   - `E`: relocatable object files that will be merged to form the executable
   - `U`: unresolved symbols
@@ -185,8 +185,8 @@ compiler driver’s command line (The driver automatically translates any .c fil
 - If the library that defines a symbol appears on the command line before the object file that references that symbol, then the reference will not be resolved and linking will fail:
   ```bash
   linux> gcc -static ./libvector.a main2.c
-  /tmp/cc9XH6Rp.o: In function ‘main’:
-  /tmp/cc9XH6Rp.o(.text+0x18): undefined reference to ‘addvec’
+  /tmp/cc9XH6Rp.o: In function ‘main':
+  /tmp/cc9XH6Rp.o(.text+0x18): undefined reference to ‘addvec'
   ```
 - The general rule for libraries is to place them at the end of the command line
 - eg. suppose `foo.c` calls functions in `libx.a` and `libz.a` that call functions in `liby.a`:
@@ -236,7 +236,7 @@ foreach section s {
     refptr=s+ r.offset; /* ptr to reference to be relocated */
     /* Relocate a PC-relative reference */
     if (r.type == R_X86_64_PC32) {
-      refaddr = ADDR(s) + r.offset; /* ref’s run-time address */
+      refaddr = ADDR(s) + r.offset; /* ref's run-time address */
       *refptr = (unsigned) (ADDR(r.symbol) + r.addend - refaddr);
     }
 
@@ -386,6 +386,6 @@ linux> gcc -Wl,--wrap,malloc -Wl,--wrap,free -o intl int.o mymalloc.o
 
 #### Run-Time Interpositioning
 
-- Requires access only to the executable object file is based on the dynamic linker’s `LD_PRELOAD` environment variable
+- Requires access only to the executable object file is based on the dynamic linker's `LD_PRELOAD` environment variable
 
 ![](./run_time_interpositioning.png)
