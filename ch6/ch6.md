@@ -231,7 +231,7 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
 #### Issues with Writes
 
 - After the cache updates its copy of `w`, what does it do about updating the copy of `w` in the next lower level of the hierarchy?
-  - **write-through**: immediately write `w`’s cache block to the next lower level, causing bus traffic with every write
+  - **write-through**: immediately write `w`'s cache block to the next lower level, causing bus traffic with every write
   - **write-back**: defers the update as long as possible by writing the updated block to the next lower level only when it is evicted from the cache by the replacement algorithm,  it has the disadvantage of additional complexity. The cache must maintain an additional dirty bit for each cache line that indicates whether or not the cache block has been modified
 
 - Another issue is how to deal with write misses
@@ -306,7 +306,7 @@ $$Capacity = \frac{512 bytes}{sector} \times \frac{300 sectors}{track} \times \f
 - Even though the array is much larger than any of the SRAM cache memories, the prefetching hardware is smart enough to recognize the stride-1 access pattern, and fast enough to keep up with memory accesses in the tight inner loop
 - **Blocking**:
   - The general idea of blocking is to organize the data structures in a program into large chunks called blocks
-  - It is a general concept that can produce big performance gains on systems that don’t prefetch
+  - It is a general concept that can produce big performance gains on systems that don't prefetch
 
 #### Exploiting Locality in Your Programs
 
