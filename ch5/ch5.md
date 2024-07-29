@@ -289,7 +289,7 @@ double poly(double a[], double x, long degree) {
 ```
 
 ```c
-/* Apply Horner’s method */
+/* Apply Horner's method */
 double polyh(double a[], double x, long degree) {
   long i;
   double result = a[degree];
