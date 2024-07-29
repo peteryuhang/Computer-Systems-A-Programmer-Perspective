@@ -302,7 +302,7 @@ bool need_regid = icode in { IIRMOVQ, IRMMOVQ, IMRMOVQ, IJXX, ICALL  };
 word srcA = [
   icode in { IRRMOVQ, IRMMOVQ, IOPQ, IPUSHQ } : rA;
   icode in { IPOPQ, IRET } : RRSP;
-  1 : RNONE; # Don’t need register
+  1 : RNONE; # Don't need register
   ];
 ```
 
@@ -313,7 +313,7 @@ word dstE = [
   icode in { IRRMOVQ } : rB;
   icode in { IIRMOVQ, IOPQ} : rB;
   icode in { IPUSHQ, IPOPQ, ICALL, IRET } : RRSP;
-  1 : RNONE; # Don’t write any register
+  1 : RNONE; # Don't write any register
 ];
 ```
 
@@ -329,7 +329,7 @@ word aluA = [
   icode in { IIRMOVQ, IRMMOVQ, IMRMOVQ } : valC;
   icode in { ICALL, IPUSHQ } : -8;
   icode in { IRET, IPOPQ } : 8;
-  # Other instructions don’t need ALU
+  # Other instructions don't need ALU
 ];
 ```
 
@@ -339,7 +339,7 @@ word aluA = [
 word aluB = [
   icode in { IOPQ, IRMMOVQ, IMRMOVQ, ICALL, IPUSHQ, IRET, IPOPQ } : valB;
   icode in { IRRMOVQ, IIRMOVQ } : 0;
-  # Other instructions don’t need ALU
+  # Other instructions don't need ALU
 ];
 ```
 
@@ -366,7 +366,7 @@ bool set_cc = icode in { IOPQ };
 word mem_addr = [
   icode in { IRMMOVQ, IPUSHQ, ICALL, IMRMOVQ } : valE;
   icode in { IPOPQ, IRET } : valA;
-  # Other instructions don’t need address
+  # Other instructions don't need address
 ];
 ```
 
