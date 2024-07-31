@@ -981,7 +981,7 @@ double uu2double(unsigned word0, unsigned word1) {
 
 ```
 movq %rbp, %rsp                         Set stack pointer to beginning of frame
-popq %rbp                               Restore saved %rbp and set stack ptr to end of caller’s frame
+popq %rbp                               Restore saved %rbp and set stack ptr to end of caller's frame
 ```
 
 - The stack frame is showed below
