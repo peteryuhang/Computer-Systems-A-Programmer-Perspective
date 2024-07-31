@@ -202,7 +202,7 @@ pid_t getppid(void);
 
 #### Creating and Terminating Processes
 
-- From a programmer’s perspective, we can think of a process as being in one of three states:
+- From a programmer's perspective, we can think of a process as being in one of three states:
   - **Running**: The process is either executing on the CPU or waiting to be executed and will eventually be scheduled by the kernel
   - **Stopped**: The execution of the process is suspended and will not be scheduled
     - A process stops as a result of receiving a SIGSTOP, SIGTSTP, SIGTTIN, or SIGTTOU signal, and it remains stopped until it receives a SIGCONT signal, at which point it becomes running again
@@ -268,7 +268,7 @@ int main() {
 #### Reaping Child Processes
 
 - When a process terminates for any reason, the kernel does not remove it from the system immediately. Instead, the process is kept around in a terminated state until it is reaped by its parent
-- When the parent reaps the terminated child, the kernel passes the child’s exit status to the parent and then discards the terminated process, at which point it ceases to exist
+- When the parent reaps the terminated child, the kernel passes the child's exit status to the parent and then discards the terminated process, at which point it ceases to exist
 - A terminated process that has not yet been reaped is called a **zombie**
 - When a parent process terminates, the kernel arranges for the **init process** to become the adopted parent of any orphaned children
   - The init process, which has a PID of 1, is created by the kernel during system start-up, never terminates, and is the ancestor of every process
@@ -286,7 +286,7 @@ pid_t waitpid(pid_t pid, int *statusp, int options);
 
 - The members of the wait set are determined by the pid argument:
   - If pid > 0, then the wait set is the singleton child process whose process ID is equal to pid
-  - If pid = -1, then the wait set consists of all of the parent’s child processes
+  - If pid = -1, then the wait set consists of all of the parent's child processes
 
 - The default behavior can be modified by setting options to various combinations of the `WNOHANG`, `WUNTRACED`, and `WCONTINUED` constants:
   - `WNOHANG`: Return immediately (with a return value of 0) if none of the child processes in the wait set has terminated yet
@@ -511,18 +511,18 @@ int parseline(char *buf, char **argv) {
   char *delim; /* Points to first space delimiter */
   int argc; /* Number of args */
   int bg; /* Background job? */
-  buf[strlen(buf)-1] = ' '; /* Replace trailing ’\n’ with space */
+  buf[strlen(buf)-1] = ' '; /* Replace trailing '\n' with space */
 
   while (*buf && (*buf == ' ')) /* Ignore leading spaces */
   buf++;
 
   /* Build the argv list */
   argc = 0;
-  while ((delim = strchr(buf, ’ ’))) {
+  while ((delim = strchr(buf, ' '))) {
     argv[argc++] = buf;
-    *delim = ’\0’;
+    *delim = '\0';
     buf = delim + 1;
-    while (*buf && (*buf == ’ ’)) /* Ignore spaces */
+    while (*buf && (*buf == ' ')) /* Ignore spaces */
       buf++;
   }
 
@@ -530,7 +530,7 @@ int parseline(char *buf, char **argv) {
   if (argc == 0) /* Ignore blank line */
     return 1;
   /* Should the job run in the background? */
-  if ((bg = (*argv[argc-1] == ’&’)) != 0)
+  if ((bg = (*argv[argc-1] == '&')) != 0)
     argv[--argc] = NULL;
 
   return bg;
@@ -539,7 +539,7 @@ int parseline(char *buf, char **argv) {
 
 ### Signals
 
-- Low-level hardware exceptions are processed by the kernel’s exception handlers and would not normally be visible to user processes. Signals provide a mechanism for exposing the occurrence of such exceptions to user processes
+- Low-level hardware exceptions are processed by the kernel's exception handlers and would not normally be visible to user processes. Signals provide a mechanism for exposing the occurrence of such exceptions to user processes
 
 
 | Number | Name| Default action | Corresponding event| 
