@@ -266,7 +266,7 @@ foreach section s {
 ### Dynamic Linking with Shared Libraries
 
 - A shared library is an object module that, at either run time or load time, can be loaded at an arbitrary memory address and linked with a program in memory
-- Shared libraries are “shared” in two different ways:
+- Shared libraries are "shared" in two different ways:
   - Shared by object file
   - Shared by process
 - Dynamic linking process example:
